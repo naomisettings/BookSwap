@@ -2,4 +2,16 @@
     <string name="app_name">BookSwap</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo">logo</string>
+    <string name="afegir_llibre">Afegir Llibre</string>
+    <string name="assignatura">Assignatura:</string>
+    <string name="campCurs">Curs:</string>
+    <string name="editorialCamp">Editorial:</string>
+    <string name="idiomaCamp">Idioma</string>
+    <string name="fotoCamp">Foto:</string>
+    <string name="guardarText">Guardar</string>
+    <string name="imatgeCam">Camera</string>
+    <string name="login_adresa">Adreça electrònica</string>
+    <string name="accedir">Accedir</string>
+    <string name="registre">Registre</string>
+    <string name="contrasenya">Contrasenya:</string>
 </resources>
