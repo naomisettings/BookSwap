@@ -19,4 +19,5 @@
     <string name="titolEditTextEspais">&#160;&#160;Titol</string>
     <string name="els_meus_llibres">Els meus llibres</string>
     <string name="imgCardView">Imatge que canvia segons el llibre</string>
+    <string name="telefonCamp">Telèfon:</string>
 </resources>
