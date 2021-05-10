@@ -22,6 +22,7 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/afegir_llibre"
+                android:textColor="@color/blauTransp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -30,19 +31,17 @@
                 android:id="@+id/txtLogin"
                 style="@style/CampsText"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="50dp"
                 android:text="@string/assignatura"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtTitolAfegirLlibre" />
+                app:layout_constraintTop_toBottomOf="@+id/txtIdioma" />
 
             <EditText
                 android:id="@+id/editTextAssignatura"
                 style="@style/EditTexts"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="45dp"
                 android:autofillHints=""
                 app:layout_constraintStart_toEndOf="@+id/txtLogin"
-                app:layout_constraintTop_toBottomOf="@+id/txtTitolAfegirLlibre"
+                app:layout_constraintTop_toBottomOf="@+id/editTextIdioma"
                 tools:ignore="LabelFor" />
 
             <TextView
@@ -87,19 +86,17 @@
                 android:id="@+id/txtIdioma"
                 style="@style/CampsText"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="40dp"
-                android:text="@string/idiomaCamp"
+                android:text="@string/titolCamp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
+                app:layout_constraintTop_toBottomOf="@+id/txtTitolAfegirLlibre" />
 
             <EditText
                 android:id="@+id/editTextIdioma"
                 style="@style/EditTexts"
-                android:layout_marginStart="64dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginStart="82dp"
                 android:autofillHints=""
                 app:layout_constraintStart_toEndOf="@+id/txtIdioma"
-                app:layout_constraintTop_toBottomOf="@+id/editTextEditorial"
+                app:layout_constraintTop_toBottomOf="@+id/txtTitolAfegirLlibre"
                 tools:ignore="LabelFor" />
 
             <TextView
@@ -108,20 +105,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/fotoCamp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtIdioma" />
+                app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="111dp"
                 android:layout_height="106dp"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="7dp"
                 android:contentDescription="@string/imatgeCam"
                 app:layout_constraintStart_toEndOf="@+id/txtFoto"
-                app:layout_constraintTop_toBottomOf="@+id/editTextIdioma"
+                app:layout_constraintTop_toBottomOf="@+id/editTextEditorial"
                 app:srcCompat="@drawable/camera" />
 
             <Button

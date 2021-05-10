@@ -9,9 +9,9 @@
     <string name="idiomaCamp">Idioma</string>
     <string name="fotoCamp">Foto:</string>
     <string name="guardarText">Guardar</string>
-    <string name="imatgeCam">Camera</string>
-    <string name="login_adresa">Adreça electrònica</string>
+    <string name="login_adresa">Adreça electrònica:</string>
     <string name="accedir">Accedir</string>
     <string name="registre">Registre</string>
     <string name="contrasenya">Contrasenya:</string>
+    <string name="titolCamp">Titol:</string>
 </resources>
