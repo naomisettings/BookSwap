@@ -31,6 +31,7 @@
                 android:id="@+id/txtLogin"
                 style="@style/CampsText"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/assignatura"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtIdioma" />
@@ -39,6 +40,7 @@
                 android:id="@+id/editTextAssignatura"
                 style="@style/EditTexts"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="25dp"
                 android:autofillHints=""
                 app:layout_constraintStart_toEndOf="@+id/txtLogin"
                 app:layout_constraintTop_toBottomOf="@+id/editTextIdioma"
@@ -86,6 +88,7 @@
                 android:id="@+id/txtIdioma"
                 style="@style/CampsText"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
                 android:text="@string/titolCamp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtTitolAfegirLlibre" />
@@ -94,6 +97,7 @@
                 android:id="@+id/editTextIdioma"
                 style="@style/EditTexts"
                 android:layout_marginStart="82dp"
+                android:layout_marginTop="35dp"
                 android:autofillHints=""
                 app:layout_constraintStart_toEndOf="@+id/txtIdioma"
                 app:layout_constraintTop_toBottomOf="@+id/txtTitolAfegirLlibre"
@@ -110,23 +114,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="111dp"
-                android:layout_height="106dp"
+            <Button
+                android:id="@+id/bttnGuardarAfegirLli"
+                style="@style/buttons"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/guardarText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="112dp"
+                android:layout_height="96dp"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="7dp"
-                android:contentDescription="@string/imatgeCam"
+                android:layout_marginTop="15dp"
                 app:layout_constraintStart_toEndOf="@+id/txtFoto"
                 app:layout_constraintTop_toBottomOf="@+id/editTextEditorial"
                 app:srcCompat="@drawable/camera" />
-
-            <Button
-                android:id="@+id/bttnGuardarAfegirLli"
-                android:text="@string/guardarText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"
-                style="@style/buttons" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

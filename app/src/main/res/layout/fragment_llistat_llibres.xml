@@ -1,16 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".llistatllibres.LlistatLlibres">
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:background="@color/backgroundbook">
 
+            <EditText
+                android:id="@+id/edTxtTitol"
+                style="@style/EditTexts"
+                android:layout_width="271dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/titolEditTextEspais"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/bttnBuscar"
+                style="@style/buttons"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/buscar"
+                app:layout_constraintStart_toEndOf="@+id/edTxtTitol"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/spnCurs"
+                style="@style/EditTexts"
+                android:layout_width="178dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edTxtTitol" />
+
+            <Spinner
+                android:id="@+id/spnPoblacio"
+                style="@style/EditTexts"
+                android:layout_width="368dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spnCurs" />
+
+            <Spinner
+                android:id="@+id/spnAssignatura"
+                style="@style/EditTexts"
+                android:layout_width="180dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toEndOf="@+id/spnCurs"
+                app:layout_constraintTop_toBottomOf="@+id/edTxtTitol" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyViewLlibres"
+                android:layout_width="378dp"
+                android:layout_height="397dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spnPoblacio" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>
