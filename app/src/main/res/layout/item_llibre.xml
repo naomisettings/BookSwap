@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundbook"
+        android:color="@android:color/transparent"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewTiquet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:isScrollContainer="false"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="false">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/et_style">
+
+                <TextView
+                    android:id="@+id/titol"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:text="Llibre de Prova"
+                    android:textColor="@color/blauTransp"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/campAssigunatura"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/assignatura"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/titol" />
+
+                <TextView
+                    android:id="@+id/campCurs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/campCurs"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/campAssigunatura" />
+
+                <TextView
+                    android:id="@+id/campEditorial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/editorialCamp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/campCurs" />
+
+                <TextView
+                    android:id="@+id/edAssignatura"
+                    android:layout_width="150dp"
+                    android:layout_height="19dp"
+                    android:layout_marginStart="10dp"
+                    android:text="TextView"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/campAssigunatura"
+                    app:layout_constraintStart_toEndOf="@+id/campAssigunatura" />
+
+                <TextView
+                    android:id="@+id/edEditorial"
+                    android:layout_width="150dp"
+                    android:layout_height="19dp"
+                    android:layout_marginStart="34dp"
+                    android:text="TextView"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/campEditorial"
+                    app:layout_constraintStart_toEndOf="@+id/campEditorial" />
+
+                <TextView
+                    android:id="@+id/edCurs"
+                    android:layout_width="150dp"
+                    android:layout_height="19dp"
+                    android:layout_marginStart="34dp"
+                    android:text="TextView"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/campCurs"
+                    app:layout_constraintStart_toEndOf="@+id/campEditorial" />
+
+                <ImageView
+                    android:id="@+id/imgCardView"
+                    android:layout_width="91dp"
+                    android:layout_height="95dp"
+                    android:layout_marginStart="20dp"
+                    android:contentDescription="@string/imgCardView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/titol"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_launcher_background" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</layout>
