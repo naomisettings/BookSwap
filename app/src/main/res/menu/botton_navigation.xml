@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/llistatLlibres"
+        android:title="Llibres"/>
+
+    <item
+        android:id="@+id/meusLlibres"
+        android:title="Els meus llibres"/>
+    <item
+        android:id="@+id/modificarUsuari"
+        android:icon="@drawable/perfil"
+        android:title="Perfil" />
 
 </menu>
