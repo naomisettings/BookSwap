@@ -2,14 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/llistatLlibres"
-        android:title="Llibres"/>
+        android:icon="@drawable/books"
+        android:title="Llibres" />
 
     <item
         android:id="@+id/meusLlibres"
-        android:title="Els meus llibres"/>
+        android:icon="@drawable/book"
+        android:title="Els meus llibres" />
     <item
         android:id="@+id/modificarUsuari"
-        android:icon="@drawable/perfil"
+        android:icon="@drawable/group"
         android:title="Perfil" />
 
 </menu>

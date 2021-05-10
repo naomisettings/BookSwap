@@ -8,20 +8,20 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="cat.copernic.bookswap.login.LoginFragment"
-        android:label="LoginFragment"
+        android:label="Login Fragment"
         tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_loginFragment_to_registreFragment"
-            app:destination="@id/registreFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_llistatLlibres"
             app:destination="@id/llistatLlibres" />
+        <action
+            android:id="@+id/action_loginFragment_to_registreFragment"
+            app:destination="@id/registreFragment" />
     </fragment>
     <fragment
         android:id="@+id/registreFragment"
         android:name="cat.copernic.bookswap.registre.RegistreFragment"
-        android:label="RegistreFragment"
+        android:label="Registre Fragment"
         tools:layout="@layout/fragment_registre">
         <action
             android:id="@+id/action_registreFragment_to_loginFragment"
@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/afegirLlibre"
         android:name="cat.copernic.bookswap.afegirllibre.AfegirLlibre"
-        android:label="AfegirLlibre"
+        android:label="Afegir Llibre"
         tools:layout="@layout/fragment_afegir_llibre">
         <action
             android:id="@+id/action_afegirLlibre_to_meusLlibres"
@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/llistatLlibres"
         android:name="cat.copernic.bookswap.llistatllibres.LlistatLlibres"
-        android:label="LlistatLlibres"
+        android:label="Llistat Llibres"
         tools:layout="@layout/fragment_llistat_llibres">
         <action
             android:id="@+id/action_llistatLlibres_to_meusLlibres"
@@ -55,7 +55,7 @@
     <fragment
         android:id="@+id/meusLlibres"
         android:name="cat.copernic.bookswap.meusllibres.MeusLlibres"
-        android:label="MeusLlibres"
+        android:label="Meus Llibres"
         tools:layout="@layout/fragment_meus_llibres">
         <action
             android:id="@+id/action_meusLlibres_to_modificarUsuari"
@@ -73,7 +73,7 @@
     <fragment
         android:id="@+id/modificarUsuari"
         android:name="cat.copernic.bookswap.modificarusuari.ModificarUsuari"
-        android:label="ModificarUsuari"
+        android:label="Modificar Usuari"
         tools:layout="@layout/fragment_modificar_usuari">
         <action
             android:id="@+id/action_modificarUsuari_to_llistatLlibres"
@@ -100,7 +100,7 @@
     <fragment
         android:id="@+id/modificarLlibre"
         android:name="cat.copernic.bookswap.modificarllibre.ModificarLlibre"
-        android:label="ModificarLlibre"
+        android:label="Modificar Llibre"
         tools:layout="@layout/fragment_modificar_llibre">
         <action
             android:id="@+id/action_modificarLlibre_to_meusLlibres"
