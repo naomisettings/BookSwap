@@ -23,11 +23,12 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.llistatLlibres,
                 R.id.meusLlibres,
-                R.id.modificarUsuari))
+                R.id.modificarUsuari,))
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
     }
+
 
 }
