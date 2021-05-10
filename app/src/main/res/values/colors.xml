@@ -11,4 +11,5 @@
     <color name="backgroundbook">#ECEBEB</color>
     <color name="blau">#0844A4</color>
     <color name="blauTransp">#DA0844A4</color>
+    <color name="bottonsColor">#AFAFAF</color>
 </resources>
