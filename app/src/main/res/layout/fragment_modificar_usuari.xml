@@ -10,7 +10,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/backgroundbook">
 
 
             <ImageView
@@ -26,149 +27,136 @@
 
             <TextView
                 android:id="@+id/textViewLlibre"
+                style="@style/titolPrincipal"
                 android:text="Modificar dades"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
-                style="@style/titolPrincipal" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <TextView
                 android:id="@+id/textViewNom"
+                style="@style/CampsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="20dp"
                 android:text="Nom"
-                android:textColor="@color/blau"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintBaseline_toBaselineOf="@+id/editTextAssignaturaModificar"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textViewPoblació"
+                style="@style/CampsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="20dp"
                 android:text="Població"
-                android:textColor="@color/blau"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintBaseline_toBaselineOf="@+id/editTextCursModificar"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageViewTelefon"
+            <TextView
+                android:id="@+id/textViewTelefon"
+                style="@style/CampsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="36dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewPoblació"
-                app:srcCompat="@drawable/call" />
+                android:layout_marginStart="20dp"
+                android:text="Telèfon"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editTextIdiomaModificar"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageViewMail"
+            <TextView
+                android:id="@+id/textViewMail"
+                style="@style/CampsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="28dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewTelefon"
-                app:srcCompat="@drawable/email" />
+                android:layout_marginStart="20dp"
+                android:text="Adreça eletrònica"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editTextMailModificar"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textViewContrasenya"
+                style="@style/CampsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="20dp"
                 android:text="Contrasenya"
-                android:textColor="@color/blau"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintBaseline_toBaselineOf="@+id/editTextAutorModificar"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/btnActualitzar"
+                android:id="@+id/btnGuardarLLibre"
+                style="@style/buttons"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:background="@color/blau"
-                android:backgroundTint="@color/blau"
+                android:layout_height="48dp"
+                android:layout_marginStart="139dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="136dp"
+                android:layout_marginBottom="20dp"
                 android:text="Actualitzar"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextAutorModificar" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextAutorModificar"
+                app:layout_constraintVertical_bias="0.555" />
 
             <EditText
                 android:id="@+id/editTextAssignaturaModificar"
+                style="@style/EditTexts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="20dp"
                 android:ems="10"
-                android:hint="Nom"
                 android:inputType="textPersonName"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewLlibre" />
 
             <EditText
                 android:id="@+id/editTextCursModificar"
+                style="@style/EditTexts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:ems="10"
-                android:hint="Població"
                 android:inputType="text"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextAssignaturaModificar" />
 
             <EditText
                 android:id="@+id/editTextIdiomaModificar"
+                style="@style/EditTexts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:ems="10"
-                android:hint="Telèfon"
                 android:inputType="phone"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextCursModificar" />
 
             <EditText
                 android:id="@+id/editTextMailModificar"
+                style="@style/EditTexts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:ems="10"
-                android:hint="adreça electrònica"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextIdiomaModificar" />
 
             <EditText
                 android:id="@+id/editTextAutorModificar"
+                style="@style/EditTexts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:ems="10"
-                android:hint="Contrasenya"
                 android:inputType="textPassword"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextMailModificar" />
         </androidx.constraintlayout.widget.ConstraintLayout>

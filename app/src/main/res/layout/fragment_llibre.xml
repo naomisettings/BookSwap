@@ -11,227 +11,158 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/backgroundbook">
 
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/titolPrincipal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Introdueix llibre"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewFoto"
+                style="@style/CampsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="40dp"
-                android:text="Foto"
-                android:textColor="@color/blau"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:layout_marginTop="30dp"
+                android:text="@string/fotoCamp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewIdioma" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewEditorial" />
 
             <EditText
-                android:id="@+id/editTextTitol"
+                android:id="@+id/editTextTitolLlibre"
+                style="@style/EditTexts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:ems="10"
-                android:hint="titol"
                 android:inputType="textPersonName"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewLlibre" />
+                app:layout_constraintTop_toBottomOf="@+id/imageViewLlibre" />
 
             <TextView
                 android:id="@+id/textViewTitol"
+                style="@style/CampsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:text="Titol"
-                android:textColor="@color/blau"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextTitol"
+                android:text="@string/titolCamp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editTextTitolLlibre"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/editTextEditorial"
+                android:id="@+id/editTextEditorialLlibre"
+                style="@style/EditTexts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:ems="10"
-                android:hint="editorial"
                 android:inputType="phone"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextAutor" />
-
-            <TextView
-                android:id="@+id/textViewIdioma"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:text="Idioma"
-                android:textColor="@color/blau"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextIdioma"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextCursLlibre" />
 
             <TextView
                 android:id="@+id/textViewEditorial"
+                style="@style/CampsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:text="Editorial"
-                android:textColor="@color/blau"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextEditorial"
+                android:text="@string/editorialCamp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editTextEditorialLlibre"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
                 android:id="@+id/imageViewLlibre"
-                android:layout_width="108dp"
-                android:layout_height="62dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bookswaplogo" />
-
-            <TextView
-                android:id="@+id/textViewLlibre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="261dp"
+                android:layout_height="169dp"
                 android:layout_marginTop="20dp"
-                android:text="Afegir LLibre"
-                android:textColor="@color/blau"
-                android:textSize="24sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewLlibre" />
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:srcCompat="@drawable/ic_launcher_background" />
 
             <TextView
                 android:id="@+id/textViewAssignatura"
+                style="@style/CampsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:text="Assignatura"
-                android:textColor="@color/blau"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAssignatura"
+                android:text="@string/assignatura"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAssignaturaLlibre"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textViewCurs"
+                style="@style/CampsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:text="Curs"
-                android:textColor="@color/blau"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextCurs"
+                android:text="@string/campCurs"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editTextCursLlibre"
                 app:layout_constraintStart_toStartOf="parent" />
 
-
-            <TextView
-                android:id="@+id/textViewAutor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:text="Autor"
-                android:textColor="@color/blau"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAutor"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/btnGuardar"
+                android:id="@+id/btnGuardarLLibre"
+                style="@style/buttons"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@color/blau"
-                android:backgroundTint="@color/blau"
-                android:text="Guardar"
+                android:layout_height="48dp"
+                android:layout_marginStart="152dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="123dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/guardarText"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageButtonFoto" />
+                app:layout_constraintTop_toBottomOf="@+id/imageViewFoto"
+                app:layout_constraintVertical_bias="0.912" />
 
             <EditText
-                android:id="@+id/editTextAssignatura"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:ems="10"
-                android:hint="nom"
-                android:inputType="textPersonName"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTitol" />
-
-            <EditText
-                android:id="@+id/editTextCurs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:ems="10"
-                android:hint="curs"
-                android:inputType="text"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextAssignatura" />
-
-            <EditText
-                android:id="@+id/editTextIdioma"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:ems="10"
-                android:hint="idioma"
-                android:inputType="phone"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextEditorial" />
-
-            <EditText
-                android:id="@+id/editTextAutor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:ems="10"
-                android:hint="autor"
-                android:inputType="text"
-                android:textColor="@color/blau"
-                android:textColorHint="@color/blau"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCurs" />
-
-            <ImageButton
-                android:id="@+id/imageButtonFoto"
+                android:id="@+id/editTextAssignaturaLlibre"
+                style="@style/EditTexts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:ems="10"
+                android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextIdioma"
-                app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTitolLlibre" />
+
+            <EditText
+                android:id="@+id/editTextCursLlibre"
+                style="@style/EditTexts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:ems="10"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAssignaturaLlibre" />
+
+            <ImageView
+                android:id="@+id/imageViewFoto"
+                android:layout_width="111dp"
+                android:layout_height="106dp"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toEndOf="@+id/textViewFoto"
+                app:layout_constraintTop_toBottomOf="@+id/editTextEditorialLlibre"
+                app:srcCompat="@drawable/camera" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
