@@ -80,7 +80,8 @@
             app:destination="@id/llistatLlibres" />
         <action
             android:id="@+id/action_modificarUsuari_to_meusLlibres"
-            app:destination="@id/meusLlibres" />
+            app:destination="@id/meusLlibres"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/llibre"
