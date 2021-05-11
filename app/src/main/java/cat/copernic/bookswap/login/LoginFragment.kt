@@ -14,13 +14,13 @@ import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentLoginBinding
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
 
     private val AUTH_REQUEST_CODE = 2002
-    private var user: FirebaseUser? = null
 
     //instancia a firebase
     val db = FirebaseFirestore.getInstance()
@@ -34,7 +34,7 @@ class LoginFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
         binding.bttnRegistre.setOnClickListener() {
-            findNavController().navigate(R.id.action_loginFragment_to_registreFragment)
+            Firebase.auth.signOut()
         }
 
         login()
@@ -73,30 +73,35 @@ class LoginFragment : Fragment() {
     private fun comprovarUsuari() {
 
         val user = FirebaseAuth.getInstance().currentUser
-        user?.let {
-            // Nom i adreça electrònica del usuari
-            val mail = user.email
-            val nom = user.displayName
 
-            comprovarBBDD(mail, nom)
+            user?.let {
+                // Obté el nom i adreça electrònica del usuari
+                val mail = user.email
+                val nom = user.displayName
 
-            //Obra el fragment principal
-            findNavController().navigate(R.id.action_loginFragment_to_llistatLlibres)
-        }
+                //Truca a la funció que comprova si l'usuari ja està a la base de dades
+                comprovarBBDD(mail, nom)
+
+            }
     }
 
+    //Funció que comprova si l'usuari ja està a la base de dades
     private fun comprovarBBDD(mail: String, nom: String) {
 
+        //Consulta de la taula usuaris (where mail == mail)
         db.collection("usuaris").whereEqualTo("mail", mail).get()
             .addOnSuccessListener { document ->
                 val usuarisDC = document.toObjects(UsuarisDC::class.java)
 
+                //En el casa que no hi hagi cap mail guardat d'aquest usuari a la bbdd, s'afageix amb
+                //la funció guardarUsuariBBDD
                 if (usuarisDC.isNullOrEmpty()) {
                     guardarUsuariBBDD(mail, nom)
                 }
             }
     }
 
+    //Insert a la taula usuaris del mail i el nom
     private fun guardarUsuariBBDD(mail: String, nom: String) {
         val usuaris = hashMapOf(
             "mail" to mail,

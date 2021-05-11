@@ -82,6 +82,9 @@
             android:id="@+id/action_modificarUsuari_to_meusLlibres"
             app:destination="@id/meusLlibres"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_modificarUsuari_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/llibre"
