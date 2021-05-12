@@ -29,66 +29,96 @@
                 app:srcCompat="@drawable/bookswaplogo" />
 
             <TextView
-                android:id="@+id/txtLogin"
+                android:id="@+id/txtTelefon"
                 style="@style/CampsText"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:text="@string/login_adresa"
+                android:layout_marginTop="160dp"
+                android:text="@string/telefonCamp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bookLogo" />
 
+            <TextView
+                android:id="@+id/txtPoblacio"
+                style="@style/CampsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/poblaci"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edTxtTelefon" />
+
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/edTxtTelefon"
                 style="@style/EditTexts"
                 android:layout_width="349dp"
                 android:layout_height="41dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtLogin"
-                android:autofillHints="" />
-
-            <TextView
-                android:id="@+id/txtContrasenya"
-                style="@style/CampsText"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:text="@string/contrasenya"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+                app:layout_constraintTop_toBottomOf="@+id/txtTelefon" />
 
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/edTxtPoblacio"
                 style="@style/EditTexts"
-                android:layout_width="345dp"
+                android:layout_width="349dp"
                 android:layout_height="41dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
+                android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPassword"
+                android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtContrasenya"
-                android:autofillHints="" />
+                app:layout_constraintTop_toBottomOf="@+id/txtPoblacio" />
 
             <Button
-                android:id="@+id/bttnAccedir"
+                android:id="@+id/bttnGuardar"
                 style="@style/buttons"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="40dp"
-                android:text="@string/accedir"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/guardarText"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/edTxtPoblacio" />
 
-            <Button
-                android:id="@+id/bttnRegistre"
-                style="@style/buttons"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="40dp"
-                android:text="@string/registre"
-                app:layout_constraintStart_toEndOf="@+id/bttnAccedir"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+            <TextView
+                android:id="@+id/txtIntroduccio"
+                style="@style/CampsText"
+                android:layout_width="347dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/introduccio"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bookLogo" />
+
+            <TextView
+                android:id="@+id/txtObligacio"
+                android:layout_width="352dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/obligacioLogin"
+                android:textColor="#FF9800"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtIntroduccio" />
+
+            <TextView
+                android:id="@+id/txtBenvinguda"
+                android:layout_width="336dp"
+                android:layout_height="123dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/benvinguda"
+                android:textColor="#000000"
+                android:textSize="45sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtObligacio" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
