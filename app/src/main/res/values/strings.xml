@@ -19,5 +19,10 @@
     <string name="titolEditTextEspais">&#160;&#160;Titol</string>
     <string name="els_meus_llibres">Els meus llibres</string>
     <string name="imgCardView">Imatge que canvia segons el llibre</string>
-    <string name="telefonCamp">Telèfon:</string>
+    <string name="telefonCamp">Telèfon mòbil:</string>
+    <string name="despres">Després</string>
+    <string name="poblaci">Població</string>
+    <string name="introduccio">L\'aplicació Book Swap és una eina molt útil per intercanviar, vendre o donar llibres entre usuaris.</string>
+    <string name="obligacioLogin">Introdueix el telèfon i la població per continuar.</string>
+    <string name="benvinguda">BENVINGUTS A BOOK SWAP</string>
 </resources>
