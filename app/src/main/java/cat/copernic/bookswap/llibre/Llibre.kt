@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentLlibreBinding
-import cat.copernic.bookswap.databinding.FragmentRegistreBinding
 
 class Llibre : Fragment() {
 

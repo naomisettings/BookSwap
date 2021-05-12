@@ -14,18 +14,6 @@
         <action
             android:id="@+id/action_loginFragment_to_llistatLlibres"
             app:destination="@id/llistatLlibres" />
-        <action
-            android:id="@+id/action_loginFragment_to_registreFragment"
-            app:destination="@id/registreFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/registreFragment"
-        android:name="cat.copernic.bookswap.registre.RegistreFragment"
-        android:label="Registre Fragment"
-        tools:layout="@layout/fragment_registre">
-        <action
-            android:id="@+id/action_registreFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/afegirLlibre"
