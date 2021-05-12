@@ -14,8 +14,10 @@ import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
 
@@ -37,11 +39,15 @@ class LoginFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
+
+        val navBar: BottomNavigationView =
+            requireActivity().findViewById(R.id.nav_view)
+
+        navBar.visibility = View.GONE
+
         login()
 
         edTextInvisibles()
-
-        visibilitatNavigationBotton()
 
         binding.bttnGuardar.setOnClickListener {
 
@@ -53,15 +59,22 @@ class LoginFragment : Fragment() {
                 val regex = Regex(pattern = """\d{9}""")
                 if (regex.matches(input = telefon)) {
 
-                    comprovarUsuari()
+                    guardarUsuariBBDD()
+                    visibilitatNavigationBotton()
 
-                    edTextInvisibles()
-
-                    val navBar: BottomNavigationView =
-                        requireActivity().findViewById(R.id.nav_view)
-                    navBar.visibility = View.VISIBLE
-
+                } else {
+                    Snackbar.make(
+                        requireActivity().findViewById(R.id.myNavHostFragment),
+                        getString(R.string.telefonoksnack),
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
+            } else {
+                Snackbar.make(
+                    requireActivity().findViewById(R.id.myNavHostFragment),
+                    getString(R.string.dadesomplertes),
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -84,6 +97,7 @@ class LoginFragment : Fragment() {
             AUTH_REQUEST_CODE
         )
 
+
     }
 
     //Comporvació del codi per obrir la onActiviyResult del login
@@ -91,66 +105,42 @@ class LoginFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AUTH_REQUEST_CODE) {
             FirebaseAuth.getInstance().currentUser
+
+            visibilitatNavigationBotton()
         }
     }
 
-    //Obtenir el nom i el mail de l'usuari que s'ha loginat o registrat.
-    private fun comprovarUsuari() {
+
+    //Insert a la taula usuaris del mail i el nom
+    private fun guardarUsuariBBDD() {
 
         val user = FirebaseAuth.getInstance().currentUser
-
         user?.let {
-            // Obté el nom i adreça electrònica del usuari
             val mail = user.email
             val nom = user.displayName
 
-            //Truca a la funció que comprova si l'usuari ja està a la base de dades
-            comprovarBBDD(mail, nom)
+            val usuaris = hashMapOf(
+                "mail" to mail,
+                "nom" to nom,
+                "telefon" to telefon,
+                "poblacio" to poblacio
+            )
 
+            db.collection("usuaris").add(usuaris)
+                .addOnSuccessListener { documentReference ->
+                    Log.d(
+                        ContentValues.TAG,
+                        "DocumentSnapshot added with ID: ${documentReference.id}"
+                    )
+
+                }.addOnFailureListener { e ->
+                    Log.w(ContentValues.TAG, "Error adding document", e)
+                }
         }
     }
 
-    //Funció que comprova si l'usuari ja està a la base de dades
-    private fun comprovarBBDD(mail: String, nom: String) {
-
-        //Consulta de la taula usuaris (where mail == mail)
-        db.collection("usuaris").whereEqualTo("mail", mail).get()
-            .addOnSuccessListener { document ->
-                val usuarisDC = document.toObjects(UsuarisDC::class.java)
-
-                //En el casa que no hi hagi cap mail guardat d'aquest usuari a la bbdd, s'afageix amb
-                //la funció guardarUsuariBBDD
-                if (usuarisDC.isNullOrEmpty()) {
-                    guardarUsuariBBDD(mail, nom)
-                }
-            }
-    }
-
-    //Insert a la taula usuaris del mail i el nom
-    private fun guardarUsuariBBDD(mail: String, nom: String) {
-        val usuaris = hashMapOf(
-            "mail" to mail,
-            "nom" to nom,
-            "telefon" to telefon,
-            "poblacio" to poblacio
-        )
-
-        db.collection("usuaris").add(usuaris)
-            .addOnSuccessListener { documentReference ->
-                Log.d(
-                    ContentValues.TAG,
-                    "DocumentSnapshot added with ID: ${documentReference.id}"
-                )
-                val navBar: BottomNavigationView =
-                    requireActivity().findViewById(R.id.nav_view)
-                navBar.visibility = View.VISIBLE
-
-            }.addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
-            }
-    }
-
     private fun visibilitatNavigationBotton() {
+        Log.d("entraaa", "ss")
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {
             // Obté adreça electrònica del usuari
@@ -158,31 +148,25 @@ class LoginFragment : Fragment() {
 
             db.collection("usuaris").whereEqualTo("mail", mail).get()
                 .addOnSuccessListener { document ->
-                    val usuarisDC = document.toObjects(UsuarisDC::class.java)
-                    if (usuarisDC.isNullOrEmpty()) {
+                    //val usuarisDC = document.toObjects(UsuarisDC::class.java)
+                    if (document.isEmpty) {
 
-                        val navBar: BottomNavigationView =
-                            requireActivity().findViewById(R.id.nav_view)
-                        navBar.visibility = View.GONE
 
+                        Thread.sleep(500)
                         edTextVisibles()
 
-                        Snackbar.make(
-                            requireActivity().findViewById(R.id.myNavHostFragment),
-                            "getString(R.string.something_went_wrong)",
-                            Snackbar.LENGTH_LONG
-                        ).show()
-
                     } else {
-                        Log.d("entraa","entraa")
+                        edTextInvisibles()
                         val navBar: BottomNavigationView =
                             requireActivity().findViewById(R.id.nav_view)
+
                         navBar.visibility = View.VISIBLE
                     }
                 }
         }
     }
-    private fun edTextInvisibles(){
+
+    private fun edTextInvisibles() {
         binding.apply {
             edTxtTelefon.isVisible = false
             edTxtPoblacio.isVisible = false
@@ -196,7 +180,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun edTextVisibles(){
+    private fun edTextVisibles() {
         binding.apply {
             edTxtTelefon.isVisible = true
             edTxtPoblacio.isVisible = true
@@ -207,6 +191,11 @@ class LoginFragment : Fragment() {
             txtObligacio.isVisible = true
 
             txtBenvinguda.isVisible = false
+
+            val navBar: BottomNavigationView =
+                requireActivity().findViewById(R.id.nav_view)
+
+            navBar.visibility = View.GONE
         }
     }
 }
