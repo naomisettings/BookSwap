@@ -36,9 +36,6 @@
         <action
             android:id="@+id/action_llistatLlibres_to_modificarUsuari"
             app:destination="@id/modificarUsuari" />
-        <action
-            android:id="@+id/action_llistatLlibres_to_llibre"
-            app:destination="@id/llibre" />
     </fragment>
     <fragment
         android:id="@+id/meusLlibres"
@@ -73,21 +70,6 @@
         <action
             android:id="@+id/action_modificarUsuari_to_loginFragment"
             app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/llibre"
-        android:name="cat.copernic.bookswap.llibre.Llibre"
-        android:label="Llibre"
-        tools:layout="@layout/fragment_llibre">
-        <action
-            android:id="@+id/action_llibre_to_llistatLlibres"
-            app:destination="@id/llistatLlibres" />
-        <action
-            android:id="@+id/action_llibre_to_meusLlibres"
-            app:destination="@id/meusLlibres" />
-        <action
-            android:id="@+id/action_llibre_to_modificarUsuari"
-            app:destination="@id/modificarUsuari" />
     </fragment>
     <fragment
         android:id="@+id/modificarLlibre"
