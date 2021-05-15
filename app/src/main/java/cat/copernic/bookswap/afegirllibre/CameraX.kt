@@ -67,7 +67,7 @@ class CameraX : AppCompatActivity() {
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
     //Mostrar back button toolbar
-    override fun onContextItemSelected(item: MenuItem): Boolean {
+    /*override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
                 finish()
@@ -75,7 +75,7 @@ class CameraX : AppCompatActivity() {
             }
         }
         return super.onContextItemSelected(item)
-    }
+    }*/
 
     private fun takePhoto() {
         // Obtenim una referència estable del cas d'ús modificable de captura d'imatges
