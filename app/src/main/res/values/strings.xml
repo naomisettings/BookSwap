@@ -25,4 +25,6 @@
     <string name="introduccio">L\'aplicació Book Swap és una eina molt útil per intercanviar, vendre o donar llibres entre usuaris.</string>
     <string name="obligacioLogin">Introdueix el telèfon i la població per continuar.</string>
     <string name="benvinguda">BENVINGUTS A BOOK SWAP</string>
+    <string name="dadesomplertes">Introdueix totes les dades per continuar</string>
+    <string name="telefonoksnack">El telèfon ha de tenir 9 digits</string>
 </resources>
