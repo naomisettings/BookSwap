@@ -19,7 +19,7 @@
     <style name="EditTexts">
         <item name="android:layout_width">224dp</item>
         <item name="android:layout_height">34dp</item>
-        <item name="android:background">@drawable/et_style</item>
+        <item name="android:background">@drawable/ed_style_backround</item>
         <item name="android:ems">10</item>
         <item name="android:inputType">textPersonName</item>
     </style>
