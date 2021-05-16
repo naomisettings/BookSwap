@@ -28,4 +28,8 @@
     <string name="dadesomplertes">Introdueix totes les dades per continuar</string>
     <string name="telefonoksnack">El telèfon ha de tenir 9 digits</string>
     <string name="camp_estat">Estat:</string>
+    <string name="sortir">Sortir</string>
+    <string name="camp_nom">Nom:</string>
+    <string name="modificar_dades">Modificar dades</string>
+    <string name="actualitzar">Actualitzar</string>
 </resources>
