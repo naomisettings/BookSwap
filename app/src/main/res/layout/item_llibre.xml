@@ -18,16 +18,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:isScrollContainer="false"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="10dp"
+            app:cardMaxElevation="8dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
             app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="false">
+            app:cardUseCompatPadding="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/et_style">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/titol"
@@ -72,11 +73,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:text="@string/editorialCamp"
                     android:textColor="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/campCurs" />
 
@@ -109,14 +108,37 @@
 
                 <ImageView
                     android:id="@+id/imgCardView"
-                    android:layout_width="91dp"
-                    android:layout_height="95dp"
+                    android:layout_width="95dp"
+                    android:layout_height="113dp"
                     android:layout_marginStart="20dp"
                     android:contentDescription="@string/imgCardView"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/titol"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_launcher_background" />
+
+                <TextView
+                    android:id="@+id/campEstat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/camp_estat"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/campEditorial"
+                    />
+
+                <TextView
+                    android:id="@+id/edEstat"
+                    android:layout_width="150dp"
+                    android:layout_height="19dp"
+                    android:layout_marginStart="54dp"
+                    android:text="TextView"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/campEstat"
+                    app:layout_constraintStart_toEndOf="@+id/campEstat" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
