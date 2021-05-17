@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -76,4 +77,8 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     // CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha14"
+    //RecyclerView
+    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    // Per controlar la selecció d’elements tant de la selecció tàctil com del ratolí
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
 }

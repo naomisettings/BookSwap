@@ -54,6 +54,21 @@
         <action
             android:id="@+id/action_meusLlibres_to_modificarLlibre"
             app:destination="@id/modificarLlibre" />
+        <argument
+            android:name="titol"
+            app:argType="string" />
+        <argument
+            android:name="assignatura"
+            app:argType="string" />
+        <argument
+            android:name="curs"
+            app:argType="string" />
+        <argument
+            android:name="estat"
+            app:argType="string" />
+        <argument
+            android:name="editorial"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/modificarUsuari"
@@ -79,5 +94,20 @@
         <action
             android:id="@+id/action_modificarLlibre_to_meusLlibres"
             app:destination="@id/meusLlibres" />
+        <argument
+            android:name="titol"
+            app:argType="string" />
+        <argument
+            android:name="assignatura"
+            app:argType="string" />
+        <argument
+            android:name="curs"
+            app:argType="string" />
+        <argument
+            android:name="estat"
+            app:argType="string" />
+        <argument
+            android:name="editorial"
+            app:argType="string" />
     </fragment>
 </navigation>
