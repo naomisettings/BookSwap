@@ -13,17 +13,6 @@
         android:background="@color/backgroundbook">
 
 
-        <TextView
-            android:id="@+id/textViewFotoModificar"
-            style="@style/CampsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/fotoCamp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDisponible" />
-
         <EditText
             android:id="@+id/editTextTitolModificar"
             style="@style/EditTexts"
@@ -32,7 +21,8 @@
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewLlibre" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewLlibre"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/textViewTitol"
@@ -55,13 +45,13 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextCursModificar" />
 
         <TextView
-            android:id="@+id/textViewDisponible"
+            android:id="@+id/textViewEstatModificar"
             style="@style/CampsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            android:text="Disponible"
+            android:text="Estat"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewEditorial" />
 
@@ -156,10 +146,11 @@
             android:id="@+id/imageViewFotoModificar"
             android:layout_width="111dp"
             android:layout_height="106dp"
-            android:layout_marginStart="90dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
             android:clickable="true"
-            app:layout_constraintStart_toEndOf="@+id/textViewFotoModificar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner"
             app:srcCompat="@drawable/camera" />
 
