@@ -3,7 +3,6 @@ package cat.copernic.bookswap.modificarusuari
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
-import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -188,7 +187,7 @@ class ModificarUsuari : Fragment() {
     }
     private fun alertaBaixaUsuari(usuariId: String) {
         val dialog = context?.let {
-            AlertDialog.Builder(ContextThemeWrapper(it, R.style.AlertDialogCustom))
+            AlertDialog.Builder(it)
                 .setIcon(R.drawable.bookswaplogo)
                 .setTitle(user!!.email)
                 .setMessage(R.string.alert_baixa_dades)
