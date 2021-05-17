@@ -200,7 +200,6 @@ class AfegirLlibre : Fragment() {
                         val sfDocRef = db.collection("llibres").document(usuariId)
                         //afegim un nou registre al document del usuari identificat
                         db.runTransaction { transaction ->
-                            //val snapshot = transaction.get(sfDocRef)
                             transaction.set(sfDocRef, llibresTotals, SetOptions.merge())
                         }
 
