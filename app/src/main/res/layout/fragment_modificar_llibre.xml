@@ -108,7 +108,7 @@
 
 
         <Button
-            android:id="@+id/btnGuardarLLibre"
+            android:id="@+id/bttnSingOut"
             style="@style/buttons"
             android:layout_width="wrap_content"
             android:layout_height="48dp"

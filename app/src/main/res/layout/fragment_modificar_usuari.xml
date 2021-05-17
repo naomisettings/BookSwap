@@ -19,6 +19,7 @@
                 android:layout_width="161dp"
                 android:layout_height="134dp"
                 android:layout_marginTop="16dp"
+                android:contentDescription="@string/logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -26,9 +27,9 @@
                 app:srcCompat="@drawable/bookswaplogo" />
 
             <TextView
-                android:id="@+id/textViewLlibre"
+                android:id="@+id/txtModificarDades"
                 style="@style/titolPrincipal"
-                android:text="Modificar dades"
+                android:text="@string/modificar_dades"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Nom"
+                android:text="@string/camp_nom"
                 app:layout_constraintBaseline_toBaselineOf="@+id/editTextNomModificar"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -50,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Població"
+                android:text="@string/poblaci"
                 app:layout_constraintBaseline_toBaselineOf="@+id/editTextPoblacioModificar"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -75,59 +76,94 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/btnGuardarLLibre"
+                android:id="@+id/bttnSingOut"
                 style="@style/buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_marginStart="139dp"
-                android:layout_marginEnd="136dp"
-                android:layout_marginBottom="20dp"
-                android:text="Actualitzar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextContrasenyaModificar" />
+                android:layout_marginStart="40dp"
+                android:text="@string/sortir"
+                app:layout_constraintBaseline_toBaselineOf="@+id/bttnActualitzar"
+                app:layout_constraintStart_toEndOf="@+id/bttnActualitzar" />
 
             <EditText
                 android:id="@+id/editTextNomModificar"
                 style="@style/EditTexts"
-
+                android:layout_width="227dp"
+                android:layout_height="37dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="20dp"
-
+                android:autofillHints=""
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewLlibre" />
+                app:layout_constraintTop_toBottomOf="@+id/txtModificarDades"
+                tools:ignore="LabelFor" />
 
             <EditText
                 android:id="@+id/editTextPoblacioModificar"
                 style="@style/EditTexts"
+                android:layout_width="226dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNomModificar" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextNomModificar"
+                tools:ignore="LabelFor" />
 
             <EditText
                 android:id="@+id/editTextTelefonModificar"
                 style="@style/EditTexts"
+                android:layout_width="226dp"
+                android:layout_height="37dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
+                android:autofillHints=""
                 android:ems="10"
-                android:inputType="phone"
+                android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextPoblacioModificar" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextPoblacioModificar"
+                tools:ignore="LabelFor" />
 
             <EditText
                 android:id="@+id/editTextContrasenyaModificar"
                 style="@style/EditTexts"
+                android:layout_width="225dp"
+                android:layout_height="38dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTelefonModificar" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTelefonModificar"
+                tools:ignore="LabelFor" />
+
+            <Button
+                android:id="@+id/bttnActualitzar"
+                style="@style/buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="60dp"
+                android:text="@string/actualitzar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bttnSingOut"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewContrasenya" />
+
+            <Button
+                android:id="@+id/bttnBaixaUsuari"
+                style="@style/buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/elminar_compte"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bttnSingOut" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>

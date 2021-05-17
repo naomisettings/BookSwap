@@ -14,32 +14,32 @@ import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
-import com.google.firebase.ktx.Firebase
+
+//Codi per l'activity auxiliar del login
+
+private const val AUTH_REQUEST_CODE = 2002
 
 class LoginFragment : Fragment() {
 
-    private val AUTH_REQUEST_CODE = 2002
-
     lateinit var binding: FragmentLoginBinding
 
+    //Telèfon i població extrets de l'usuari loginat
     private var telefon = ""
     private var poblacio = ""
 
     //instancia a firebase
-    val db = FirebaseFirestore.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
-
+        //Visibilitat del menú inferior
         val navBar: BottomNavigationView =
             requireActivity().findViewById(R.id.nav_view)
 
@@ -54,12 +54,16 @@ class LoginFragment : Fragment() {
             telefon = binding.edTxtTelefon.text.toString()
             poblacio = binding.edTxtPoblacio.text.toString()
 
+            //Comprova els edit text tenen valors
             if (!(telefon.isEmpty() || poblacio.isBlank())) {
 
+                //Comprova que el telèfon sigui un número (Es guarda com a String)
                 val regex = Regex(pattern = """\d{9}""")
                 if (regex.matches(input = telefon)) {
 
                     guardarUsuariBBDD()
+
+                    //Fa una consulta per saber si l'usuari està ja registrat
                     visibilitatNavigationBotton()
 
                 } else {
@@ -96,8 +100,6 @@ class LoginFragment : Fragment() {
                 .build(),
             AUTH_REQUEST_CODE
         )
-
-
     }
 
     //Comporvació del codi per obrir la onActiviyResult del login
@@ -106,12 +108,13 @@ class LoginFragment : Fragment() {
         if (requestCode == AUTH_REQUEST_CODE) {
             FirebaseAuth.getInstance().currentUser
 
+            //Fa una consulta per saber si l'usuari està ja registrat
             visibilitatNavigationBotton()
         }
     }
 
 
-    //Insert a la taula usuaris del mail i el nom
+    //Insert a la taula usuaris el mail, nom, telefon i població
     private fun guardarUsuariBBDD() {
 
         val user = FirebaseAuth.getInstance().currentUser
@@ -119,13 +122,17 @@ class LoginFragment : Fragment() {
             val mail = user.email
             val nom = user.displayName
 
+            //El telèfon i la població s'extreu dels edit text declarats com a variables
+            //a la classe
             val usuaris = hashMapOf(
                 "mail" to mail,
                 "nom" to nom,
                 "telefon" to telefon,
-                "poblacio" to poblacio
+                "poblacio" to poblacio,
+                "valoracio" to 6
             )
 
+            //Insert
             db.collection("usuaris").add(usuaris)
                 .addOnSuccessListener { documentReference ->
                     Log.d(
@@ -139,8 +146,11 @@ class LoginFragment : Fragment() {
         }
     }
 
+    //Segons si l'uauari ja ha introduït el telèfon i la població, mostrarà un missatge de
+    //benvinguda o els editText per introduir aquestes dades.
     private fun visibilitatNavigationBotton() {
-        Log.d("entraaa", "ss")
+
+        //Saber quin usuari està loginat
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {
             // Obté adreça electrònica del usuari
@@ -148,14 +158,16 @@ class LoginFragment : Fragment() {
 
             db.collection("usuaris").whereEqualTo("mail", mail).get()
                 .addOnSuccessListener { document ->
-                    //val usuarisDC = document.toObjects(UsuarisDC::class.java)
+
+                    //Comprova si el document està buit o hi ha dades
                     if (document.isEmpty) {
 
-
-                        Thread.sleep(500)
+                        //Fa els editTextVisibles (estaven invisibles)
                         edTextVisibles()
 
                     } else {
+
+                        //Fa el navBar visible
                         edTextInvisibles()
                         val navBar: BottomNavigationView =
                             requireActivity().findViewById(R.id.nav_view)
@@ -200,9 +212,3 @@ class LoginFragment : Fragment() {
     }
 }
 
-data class UsuarisDC(
-    var mail: String = "",
-    var nom: String = "",
-    var telefon: String = "",
-    var poblacio: String = ""
-)
