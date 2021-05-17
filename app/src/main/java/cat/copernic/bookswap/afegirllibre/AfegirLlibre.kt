@@ -51,7 +51,8 @@ class AfegirLlibre : Fragment() {
     ).format(System.currentTimeMillis()) + ".jpg"
     //instancia que referencia al storage
     var refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
-
+    //variable per guardar el identificador del llibre
+    var identificador: String = ""
 
     companion object{
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
@@ -62,7 +63,7 @@ class AfegirLlibre : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_afegir_llibre, container, false)
@@ -103,7 +104,7 @@ class AfegirLlibre : Fragment() {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val data = baos.toByteArray()
                 //pugem la foto al Storage
-                var uploadTask =  refStorage.putBytes(data)
+                val uploadTask =  refStorage.putBytes(data)
                 uploadTask.addOnFailureListener{
                     Snackbar.make(view, "Error al guardar la foto", Snackbar.LENGTH_LONG).show()
 
@@ -142,9 +143,9 @@ class AfegirLlibre : Fragment() {
                     curs = binding.editTextCurs.text.toString()
                     assignatura = binding.editTextAssignatura.text.toString()
                     editorial = binding.editTextEditorial.text.toString()
-                    var foto = binding.imageViewFoto
+
                     //identificador unic amb data i hora per cada llibre introduït
-                    var identificador: String = "llibre - " + SimpleDateFormat(
+                    identificador = "llibre - " + SimpleDateFormat(
                         FILENAME_FORMAT, Locale.US
                     ).format(System.currentTimeMillis())
                     //guardame les dades al map
@@ -172,13 +173,13 @@ class AfegirLlibre : Fragment() {
                         }
                 }else{
                     //si l'usuari no te registrat cap llibre
-                    var llibresGuardats = doc.toObjects(LlibresTotals::class.java)
+                    //var llibresGuardats = doc.toObjects(LlibresTotals::class.java)
                     titol = binding.editTextTitolAfegir.text.toString()
                     curs = binding.editTextCurs.text.toString()
                     assignatura = binding.editTextAssignatura.text.toString()
                     editorial = binding.editTextEditorial.text.toString()
-                    var foto = binding.imageViewFoto
-                    var identificador: String = "llibre - " + SimpleDateFormat(
+
+                     identificador = "llibre - " + SimpleDateFormat(
                         FILENAME_FORMAT, Locale.US
                     ).format(System.currentTimeMillis())
                     //guardem les dades al map
@@ -199,7 +200,7 @@ class AfegirLlibre : Fragment() {
                         val sfDocRef = db.collection("llibres").document(usuariId)
                         //afegim un nou registre al document del usuari identificat
                         db.runTransaction { transaction ->
-                            val snapshot = transaction.get(sfDocRef)
+                            //val snapshot = transaction.get(sfDocRef)
                             transaction.set(sfDocRef, llibresTotals, SetOptions.merge())
                         }
 
