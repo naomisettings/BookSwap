@@ -1,4 +1,4 @@
-package cat.copernic.bookswap.valoracions
+package cat.copernic.bookswap.veurellibre
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentVeureLlibreBinding
 
-class ValoracionsFragment : Fragment() {
+class VeureLlibre : Fragment() {
 
     private lateinit var binding: FragmentVeureLlibreBinding
 
@@ -20,6 +20,7 @@ class ValoracionsFragment : Fragment() {
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_veure_llibre, container, false)
+
 
         return binding.root
     }

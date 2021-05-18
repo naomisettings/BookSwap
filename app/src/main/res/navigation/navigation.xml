@@ -10,10 +10,15 @@
         android:name="cat.copernic.bookswap.login.LoginFragment"
         android:label="Login Fragment"
         tools:layout="@layout/fragment_login">
-
         <action
             android:id="@+id/action_loginFragment_to_llistatLlibres"
             app:destination="@id/llistatLlibres" />
+        <action
+            android:id="@+id/action_loginFragment_to_modificarUsuari"
+            app:destination="@id/modificarUsuari" />
+        <action
+            android:id="@+id/action_loginFragment_to_meusLlibres"
+            app:destination="@id/meusLlibres" />
     </fragment>
     <fragment
         android:id="@+id/afegirLlibre"
@@ -36,6 +41,24 @@
         <action
             android:id="@+id/action_llistatLlibres_to_modificarUsuari"
             app:destination="@id/modificarUsuari" />
+        <action
+            android:id="@+id/action_llistatLlibres_to_veureLlibre"
+            app:destination="@id/veureLlibre" />
+        <argument
+            android:name="assignatura"
+            app:argType="string" />
+        <argument
+            android:name="titol"
+            app:argType="string" />
+        <argument
+            android:name="curs"
+            app:argType="string" />
+        <argument
+            android:name="editorial"
+            app:argType="string" />
+        <argument
+            android:name="estat"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/meusLlibres"
@@ -105,6 +128,30 @@
             app:argType="string" />
         <argument
             android:name="estat"
+            app:argType="string" />
+        <argument
+            android:name="editorial"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/veureLlibre"
+        android:name="cat.copernic.bookswap.veurellibre.VeureLlibre"
+        android:label="VeureLlibre"
+        tools:layout="@layout/fragment_veure_llibre">
+        <action
+            android:id="@+id/action_veureLlibre_to_llistatLlibres"
+            app:destination="@id/llistatLlibres" />
+        <argument
+            android:name="assignatura"
+            app:argType="string" />
+        <argument
+            android:name="titol"
+            app:argType="string" />
+        <argument
+            android:name="estat"
+            app:argType="string" />
+        <argument
+            android:name="curs"
             app:argType="string" />
         <argument
             android:name="editorial"
