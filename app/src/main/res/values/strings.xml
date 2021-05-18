@@ -36,5 +36,5 @@
     <string name="alert_modificar_dades">Vols modificar les teves dades?</string>
     <string name="acceptar">acceptar</string>
     <string name="cancelar">cancelar</string>
-    <string name="alert_baixa_dades">Vols donar-te eliminar el compte de Book Swap?</string>
+    <string name="alert_baixa_dades">Vols eliminar el teu compte de Book Swap?</string>
 </resources>
