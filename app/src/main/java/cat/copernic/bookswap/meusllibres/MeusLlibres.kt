@@ -26,7 +26,7 @@ class MeusLlibres : Fragment() {
     var llibres = arrayListOf<Llibre>()
 
     //recylerView
-    var rvLlibres = binding.meusLlibresList
+//    var rvLlibres = binding.meusLlibresList
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +45,7 @@ class MeusLlibres : Fragment() {
 
 
 
-        veureLlibres(rvLlibres)
+       // veureLlibres(rvLlibres)
 
         //acció floatinButton cap a la pantalla afegirLlibre
         binding.floatingActionButton2.setOnClickListener { view: View ->
