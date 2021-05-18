@@ -3,10 +3,8 @@ package cat.copernic.bookswap.modificarusuari
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
@@ -183,9 +181,11 @@ class ModificarUsuari : Fragment() {
                 .setCancelable(false)
                 .create()
         }
+
         dialog!!.show()
     }
     private fun alertaBaixaUsuari(usuariId: String) {
+
         val dialog = context?.let {
             AlertDialog.Builder(it)
                 .setIcon(R.drawable.bookswaplogo)
