@@ -7,18 +7,35 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.bookswap.databinding.ItemLlibreBinding
+import com.bumptech.glide.Glide
+
 class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListener) :  RecyclerView.Adapter<Adapter.ViewHolder>(){
 
     // creem una classe interna amb el nom ViewHolder
     // Pren un argument del view, en què passa la classe generada de item_llibre.xml
     // És a dir, ItemLlibreBinding i al RecyclerView.ViewHolder (binding.root) ho passen així
-    inner class ViewHolder(val binding: ItemLlibreBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ItemLlibreBinding) : RecyclerView.ViewHolder(binding.root){
+        var foto = binding.imgCardView
+        fun bind(llibre: Llibre){
+            //establim les mides de la foto
+            val imageHeightPixels = 200
+            val imageWidthPixels = 200
+            val media: String = llibre.imatge
+            Glide.with(itemView)
+                .load(media)
+                .override(imageWidthPixels, imageHeightPixels)
+                .into(foto)
+
+            binding.executePendingBindings()
+        }
+    }
+
 
     // dins de onCreateViewHolder infla la vista de ItemLlibreBinding
     // i torna el nou objecte ViewHolder que conté aquest disseny
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-       // val binding = ItemLlibreBinding
-        //    .inflate(LayoutInflater.from(parent.context), parent, false)
+
+
 
         //return ViewHolder(binding)
         return ViewHolder(ItemLlibreBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -36,6 +53,8 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
                 binding.edEditorial.text = this.editorial
                 binding.edEstat.text=this.estat
 
+
+
                 holder.itemView.setOnClickListener {
                     cellClickListener.onCellClickListener(mLlibres[position])
                 }
@@ -50,9 +69,10 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
     }
 }
 //Listener que gestiona els clics al elements del RecyclerView
-open class CellClickListener(val clickListener: (titol: String, assignatura: String, editorial: String, curs: String, estat:String) -> Unit) {
+open class CellClickListener(val clickListener: (titol: String, assignatura: String,
+                                                 editorial: String, curs: String, estat:String, imatge:String) -> Unit) {
     fun onCellClickListener(data: Llibre) {
-        clickListener(data.titol, data.assignatura, data.curs, data.editorial,data.estat)
+        clickListener(data.titol, data.assignatura, data.curs, data.editorial,data.estat,data.imatge)
 
     }
 }

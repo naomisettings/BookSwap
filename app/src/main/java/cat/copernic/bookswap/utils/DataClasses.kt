@@ -8,7 +8,13 @@ data class UsuariDC(
     var valoracio: Int = 6
 )
 data class Llibres(
-    var llibresUsuari: ArrayList<HashMap<String, String>> = arrayListOf(),
+    var titol: String ="",
+    var curs: String ="",
+    var assignatura: String ="",
+    var editorial: String ="",
+    var estat: String ="",
+    var foto: String ="",
+    var id: String ="",
     var mail: String = ""
 
 )

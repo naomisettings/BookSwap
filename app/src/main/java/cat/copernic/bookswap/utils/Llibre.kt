@@ -5,6 +5,6 @@ class Llibre(
     var assignatura: String,
     var curs: String,
     var editorial: String,
-    var estat: String
-    /*var imatge: String*/
+    var estat: String,
+    var imatge: String
 )
