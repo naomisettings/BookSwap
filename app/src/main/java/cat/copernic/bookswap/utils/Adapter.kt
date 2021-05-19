@@ -15,16 +15,16 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
     // Pren un argument del view, en què passa la classe generada de item_llibre.xml
     // És a dir, ItemLlibreBinding i al RecyclerView.ViewHolder (binding.root) ho passen així
     inner class ViewHolder(val binding: ItemLlibreBinding) : RecyclerView.ViewHolder(binding.root){
-        var foto = binding.imgCardView
+        var fotoimg = binding.imgCardView
         fun bind(llibre: Llibre){
             //establim les mides de la foto
             val imageHeightPixels = 200
             val imageWidthPixels = 200
-            val media: String = llibre.imatge
+            val media: String = llibre.foto
             Glide.with(itemView)
                 .load(media)
                 .override(imageWidthPixels, imageHeightPixels)
-                .into(foto)
+                .into(fotoimg)
 
             binding.executePendingBindings()
         }
@@ -72,7 +72,7 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
 open class CellClickListener(val clickListener: (titol: String, assignatura: String,
                                                  editorial: String, curs: String, estat:String, imatge:String) -> Unit) {
     fun onCellClickListener(data: Llibre) {
-        clickListener(data.titol, data.assignatura, data.curs, data.editorial,data.estat,data.imatge)
+        clickListener(data.titol, data.assignatura, data.curs, data.editorial,data.estat,data.foto)
 
     }
 }
