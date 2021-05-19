@@ -8,7 +8,7 @@ data class UsuariDC(
     var valoracio: Int = 6
 )
 data class Llibres(
-    var llibre: HashMap<String, String> = hashMapOf(),
+    var llibresUsuari: ArrayList<HashMap<String, String>> = arrayListOf(),
     var mail: String = ""
 
 )

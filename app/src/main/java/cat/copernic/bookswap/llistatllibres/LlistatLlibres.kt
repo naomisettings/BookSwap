@@ -72,6 +72,7 @@ class LlistatLlibres : Fragment() {
                     Log.d("sizellibres", llibresDC.size.toString())
 
                     for (i in 0 until llibresDC.size) {
+                        /*
                         val titol = llibresDC[i].llibre["titol"]
                         val assignatura = llibresDC[i].llibre["assignatura"]
                         val curs = llibresDC[i].llibre["curs"]
@@ -87,6 +88,8 @@ class LlistatLlibres : Fragment() {
                         )
 
                         llibres.add(llib)
+
+                         */
                     }
                 }
                 adapter = Adapter(llibres,
