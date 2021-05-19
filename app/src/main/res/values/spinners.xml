@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="poblacions">
+        <item>Badia del Vallès</item>
+        <item>Barberà del Vallès</item>
+        <item>Castellar del Vallès</item>
+        <item>Castellbisbal</item>
+        <item>Cerdanyola del Vallès</item>
+        <item>Gallifa</item>
+        <item>Matadepera</item>
+        <item>Montcada i Reixac</item>
+        <item>Palau-solità i Plegamans</item>
+        <item>Polinyà</item>
+        <item>Rellinars</item>
+        <item>Ripollet</item>
+        <item>Rubí</item>
+        <item>Sabadell</item>
+        <item>Sant Cugat de Vallès</item>
+        <item>Sant Llorenç Savall</item>
+        <item>Sant Quirze del Vallès</item>
+        <item>Santa Perpètua de Mogoda</item>
+        <item>Sentmenat</item>
+        <item>Terrassa</item>
+        <item>Ullastrell</item>
+        <item>Vacarisses</item>
+        <item>Viladecavalls</item>
+    </string-array>
+</resources>

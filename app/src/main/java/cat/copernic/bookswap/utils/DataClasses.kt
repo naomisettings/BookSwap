@@ -16,5 +16,33 @@ data class Llibres(
     var foto: String ="",
     var id: String ="",
     var mail: String = ""
+)
 
+data class poblacio(
+    val poblacionsList: ArrayList<String> = arrayListOf(
+        "Badia del Vallès",
+        "Badia del Vallès",
+        "Barberà del Vallès",
+        "Castellar del Vallès",
+        "Castellbisbal",
+        "Cerdanyola del Vallès",
+        "Gallifa",
+        "Matadepera",
+        "Montcada i Reixac",
+        "Palau-solità i Plegamans",
+        "Polinyà",
+        "Rellinars",
+        "Ripollet",
+        "Rubí",
+        "Sabadell",
+        "Sant Cugat de Vallès",
+        "Sant Llorenç Savall",
+        "Sant Quirze del Vallès",
+        "Santa Perpètua de Mogoda",
+        "Sentmenat",
+        "Terrassa",
+        "Ullastrell",
+        "Vacarisses",
+        "Viladecavalls"
+    )
 )

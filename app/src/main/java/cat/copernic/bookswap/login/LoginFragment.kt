@@ -5,32 +5,40 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentLoginBinding
+import cat.copernic.bookswap.utils.poblacio
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import okio.utf8Size
+
 
 //Codi per l'activity auxiliar del login
 
 private const val AUTH_REQUEST_CODE = 2002
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     lateinit var binding: FragmentLoginBinding
 
     //Telèfon i població extrets de l'usuari loginat
     private var telefon = ""
-    private var poblacio = ""
+    private var poblacioSeleccionada = 0
 
     //instancia a firebase
     private val db = FirebaseFirestore.getInstance()
 
+    var pob: String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,13 +57,27 @@ class LoginFragment : Fragment() {
 
         edTextInvisibles()
 
+        val spinner: Spinner = binding.spnPoblacio
+
+        val adaptador = context?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.poblacions,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                spinner.adapter = adapter
+            }
+        }
+
+        spinner.onItemSelectedListener = this
+
         binding.bttnGuardar.setOnClickListener {
 
             telefon = binding.edTxtTelefon.text.toString()
-            poblacio = binding.edTxtPoblacio.text.toString()
 
             //Comprova els edit text tenen valors
-            if (!(telefon.isEmpty() || poblacio.isBlank())) {
+            if (telefon.isNotEmpty()) {
 
                 //Comprova que el telèfon sigui un número (Es guarda com a String)
                 val regex = Regex(pattern = """\d{9}""")
@@ -128,7 +150,7 @@ class LoginFragment : Fragment() {
                 "mail" to mail,
                 "nom" to nom,
                 "telefon" to telefon,
-                "poblacio" to poblacio,
+                "poblacio" to pob,
                 "valoracio" to 6
             )
 
@@ -181,7 +203,7 @@ class LoginFragment : Fragment() {
     private fun edTextInvisibles() {
         binding.apply {
             edTxtTelefon.isVisible = false
-            edTxtPoblacio.isVisible = false
+            spnPoblacio.isVisible = false
             txtTelefon.isVisible = false
             txtPoblacio.isVisible = false
             bttnGuardar.isVisible = false
@@ -195,7 +217,7 @@ class LoginFragment : Fragment() {
     private fun edTextVisibles() {
         binding.apply {
             edTxtTelefon.isVisible = true
-            edTxtPoblacio.isVisible = true
+            spnPoblacio.isVisible = true
             txtTelefon.isVisible = true
             txtPoblacio.isVisible = true
             bttnGuardar.isVisible = true
@@ -210,5 +232,15 @@ class LoginFragment : Fragment() {
             navBar.visibility = View.GONE
         }
     }
-}
 
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        //Acabar
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
+    }
+
+
+
+}

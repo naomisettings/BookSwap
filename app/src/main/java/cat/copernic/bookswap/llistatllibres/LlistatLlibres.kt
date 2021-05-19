@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Spinner
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.SpinnerBindingAdapter
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,11 +33,15 @@ class LlistatLlibres : Fragment() {
     private val db = FirebaseFirestore.getInstance()
     private var llibres: ArrayList<Llibre> = arrayListOf()
 
+    private lateinit var spinner: Spinner
+
     //recylerView
     private lateinit var adapter: Adapter
 
     //guardem les dades del usuari identificat
     private val user = Firebase.auth.currentUser
+
+    private lateinit var rvLlibres: RecyclerView
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -46,9 +53,11 @@ class LlistatLlibres : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_llistat_llibres, container, false)
 
 
-        val rvLlibres = binding.rcyViewLlibres
+        rvLlibres = binding.rcyViewLlibres
 
-        veureLlibres(rvLlibres)
+        spinner = binding.spnPoblacio
+
+        veureLlibres()
 
 
 
@@ -56,14 +65,14 @@ class LlistatLlibres : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun veureLlibres(rvLlibres: RecyclerView) {
+    private fun veureLlibres() {
 
         //agafem el mail com a identificador unic de l'usuari
         val mail = user?.email.toString()
 
         llibres.clear()
 
-        db.collection("llibres").whereEqualTo("mail", mail).get()
+        db.collection("llibres").get()
             .addOnSuccessListener { document ->
                 if (document != null) {
 
@@ -71,34 +80,42 @@ class LlistatLlibres : Fragment() {
 
                     for (i in 0 until llibresDC.size) {
                         val llib = Llibre(
-                        assignatura = llibresDC[i].assignatura,
+                            assignatura = llibresDC[i].assignatura,
                             curs = llibresDC[i].curs,
                             editorial = llibresDC[i].editorial,
                             titol = llibresDC[i].titol,
                             estat = llibresDC[i].estat,
                             foto = llibresDC[i].foto
                         )
-                      llibres.add(llib)
+                        llibres.add(llib)
                     }
+
+                    carregarLlibresRyclrView()
                 }
-                adapter = Adapter(llibres,
-                    CellClickListener { titol, assignatura, editorial, curs, estat, foto ->
-                        findNavController().navigate(
-                            LlistatLlibresDirections.actionLlistatLlibresToVeureLlibre(
-                                titol,
-                                assignatura,
-                                curs,
-                                editorial,
-                                estat,
-                            )
-                        )
-                    })
-                rvLlibres.adapter = adapter
-                rvLlibres.layoutManager = LinearLayoutManager(this.context)
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents: ", exception)
             }
+
+    }
+
+    private fun carregarLlibresRyclrView() {
+
+        adapter = Adapter(llibres,
+            CellClickListener { titol, assignatura, editorial, curs, estat, foto ->
+                findNavController().navigate(
+                    LlistatLlibresDirections.actionLlistatLlibresToVeureLlibre(
+                        titol,
+                        assignatura,
+                        curs,
+                        editorial,
+                        estat,
+                    )
+                )
+            })
+        rvLlibres.adapter = adapter
+        rvLlibres.layoutManager = LinearLayoutManager(this.context)
+
     }
 
 }
