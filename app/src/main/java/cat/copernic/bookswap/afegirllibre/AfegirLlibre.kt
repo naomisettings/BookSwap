@@ -204,7 +204,7 @@ class AfegirLlibre : Fragment() {
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+
+
     }
-
-
 }
