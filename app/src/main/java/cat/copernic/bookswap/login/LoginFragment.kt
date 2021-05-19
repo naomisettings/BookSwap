@@ -8,23 +8,18 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentLoginBinding
-import cat.copernic.bookswap.utils.poblacio
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import okio.utf8Size
-
 
 //Codi per l'activity auxiliar del login
-
 private const val AUTH_REQUEST_CODE = 2002
 
 class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
@@ -33,12 +28,11 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     //Telèfon i població extrets de l'usuari loginat
     private var telefon = ""
-    private var poblacioSeleccionada = 0
+    private var poblacioStr: String = ""
 
     //instancia a firebase
     private val db = FirebaseFirestore.getInstance()
 
-    var pob: String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,15 +45,19 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val navBar: BottomNavigationView =
             requireActivity().findViewById(R.id.nav_view)
 
+        //Visibilitat del menú inferiro
         navBar.visibility = View.GONE
 
         login()
 
+        //Fer editTextInvisibles
         edTextInvisibles()
 
+        //Inicialitzar spinner
         val spinner: Spinner = binding.spnPoblacio
 
-        val adaptador = context?.let {
+        //Crear l'adapter per el spinner
+        context?.let {
             ArrayAdapter.createFromResource(
                 it,
                 R.array.poblacions,
@@ -70,6 +68,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
         }
 
+        //Permet seleccionar un camp del spinner
         spinner.onItemSelectedListener = this
 
         binding.bttnGuardar.setOnClickListener {
@@ -78,6 +77,9 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             //Comprova els edit text tenen valors
             if (telefon.isNotEmpty()) {
+
+                //Obté el camp seleccionat del spinner
+                poblacioStr = spinner.selectedItem.toString()
 
                 //Comprova que el telèfon sigui un número (Es guarda com a String)
                 val regex = Regex(pattern = """\d{9}""")
@@ -146,11 +148,14 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             //El telèfon i la població s'extreu dels edit text declarats com a variables
             //a la classe
+
+
+
             val usuaris = hashMapOf(
                 "mail" to mail,
                 "nom" to nom,
-                "telefon" to telefon,
-                "poblacio" to pob,
+                "telefon" to  telefon,
+                "poblacio" to poblacioStr,
                 "valoracio" to 6
             )
 
@@ -234,7 +239,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        //Acabar
+
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

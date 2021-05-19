@@ -112,6 +112,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextNomModificar"
                 tools:ignore="LabelFor" />
 
+            <Spinner
+                android:id="@+id/spnPoblacio"
+                style="@style/EditTexts"
+                android:layout_width="226dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNomModificar"/>
+
             <EditText
                 android:id="@+id/editTextTelefonModificar"
                 style="@style/EditTexts"

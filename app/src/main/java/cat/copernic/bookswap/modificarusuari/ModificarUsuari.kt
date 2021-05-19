@@ -4,6 +4,9 @@ import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -17,13 +20,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 
-class ModificarUsuari : Fragment() {
+class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentModificarUsuariBinding
 
     private val db = FirebaseFirestore.getInstance()
+
     //Guarda les dades del usuari connectat a la constant user
     private val user = Firebase.auth.currentUser
+
+    private lateinit var spinner: Spinner
+    private var poblacio = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +39,7 @@ class ModificarUsuari : Fragment() {
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_modificar_usuari, container, false)
+
 
         // Mostra les dades del usuari als editText perque l'usuari les modifiqui
         mostrarDades()
@@ -46,13 +54,13 @@ class ModificarUsuari : Fragment() {
         return binding.root
     }
 
-    private fun mostrarDades() {
+    private fun mostrarDades(){
 
         //Guarda el mail del usuari que ha fet login
         val mail = user?.email.toString()
 
         //Consulta per extreure el les dades del usuari segons el mail
-            db.collection("usuaris").whereEqualTo("mail", mail).get()
+        db.collection("usuaris").whereEqualTo("mail", mail).get()
             .addOnSuccessListener { document ->
                 document?.forEach {
                     val usuari = document.toObjects(UsuariDC::class.java)
@@ -60,10 +68,35 @@ class ModificarUsuari : Fragment() {
                     //Mostra les dades del usuari als editText
                     binding.apply {
                         editTextNomModificar.setText(usuari[0].nom)
-                        editTextPoblacioModificar.setText(usuari[0].poblacio)
                         editTextTelefonModificar.setText(usuari[0].telefon)
                         editTextContrasenyaModificar.setText("******")
                     }
+
+                    //Inicialitzar spinner
+                    spinner = binding.spnPoblacio
+
+                    //Crear l'adapter per el spinner
+                    context?.let {
+                        ArrayAdapter.createFromResource(
+                            it,
+                            R.array.poblacions,
+                            android.R.layout.simple_spinner_item
+                        ).also { adapter ->
+                            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+
+                            //Obtenir la poblacio preestablerta per l'usuari
+                            val posicioSpinner = adapter.getPosition(usuari[0].poblacio)
+
+                            //Assignar l'adapter al spinner
+                            spinner.adapter = adapter
+
+                            //Assignar la posició de la població preestagblerta al spinner
+                            spinner.setSelection(posicioSpinner)
+                        }
+                    }
+
+                    //Permet seleccionar un camp del spinner
+                    spinner.onItemSelectedListener = this
 
                     //Extreu la id del document
                     val usuariId = it.id
@@ -72,12 +105,11 @@ class ModificarUsuari : Fragment() {
 
                         alertaModificarDades(usuariId)
 
-
                         //Actualitza la contrasenya de l'usuari
                         modificarContrasenya()
                     }
 
-                    binding.bttnBaixaUsuari.setOnClickListener{
+                    binding.bttnBaixaUsuari.setOnClickListener {
                         alertaBaixaUsuari(usuariId)
                     }
 
@@ -93,6 +125,8 @@ class ModificarUsuari : Fragment() {
         //agafem l'usuari de la collecio amb el seu ID a aquesta variable
         val sfDocRef = db.collection("usuaris").document(usuariId)
 
+        //Obté la població del spinner
+        poblacio = spinner.selectedItem.toString()
 
         db.runTransaction { transaction ->
 
@@ -104,7 +138,7 @@ class ModificarUsuari : Fragment() {
             transaction.update(
                 sfDocRef,
                 "poblacio",
-                binding.editTextPoblacioModificar.text.toString()
+                poblacio
             )
             transaction.update(
                 sfDocRef,
@@ -131,7 +165,7 @@ class ModificarUsuari : Fragment() {
             }
     }
 
-    private fun modificarContrasenya(){
+    private fun modificarContrasenya() {
         val contrasenya = binding.editTextContrasenyaModificar.text.toString()
 
         user?.let {
@@ -184,6 +218,7 @@ class ModificarUsuari : Fragment() {
 
         dialog!!.show()
     }
+
     private fun alertaBaixaUsuari(usuariId: String) {
 
         val dialog = context?.let {
@@ -204,5 +239,13 @@ class ModificarUsuari : Fragment() {
                 .create()
         }
         dialog!!.show()
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
     }
 }
