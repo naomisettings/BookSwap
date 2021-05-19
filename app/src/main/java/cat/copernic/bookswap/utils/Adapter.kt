@@ -2,12 +2,11 @@ package cat.copernic.bookswap.utils
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.bookswap.databinding.ItemLlibreBinding
+import coil.api.load
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
 
 class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListener) :  RecyclerView.Adapter<Adapter.ViewHolder>(){
 
@@ -15,18 +14,9 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
     // Pren un argument del view, en què passa la classe generada de item_llibre.xml
     // És a dir, ItemLlibreBinding i al RecyclerView.ViewHolder (binding.root) ho passen així
     inner class ViewHolder(val binding: ItemLlibreBinding) : RecyclerView.ViewHolder(binding.root){
-        var fotoimg = binding.imgCardView
         fun bind(llibre: Llibre){
-            //establim les mides de la foto
-            val imageHeightPixels = 200
-            val imageWidthPixels = 200
-            val media: String = llibre.foto
-            Glide.with(itemView)
-                .load(media)
-                .override(imageWidthPixels, imageHeightPixels)
-                .into(fotoimg)
 
-            binding.executePendingBindings()
+
         }
     }
 
@@ -52,9 +42,20 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
                 binding.edCurs.text = this.curs
                 binding.edEditorial.text = this.editorial
                 binding.edEstat.text=this.estat
+                val media: String = mLlibres[position].foto
 
+                //Descarregar la imatge amb picasso
+                val storageRef = FirebaseStorage.getInstance().reference
+                val imageRef = storageRef.child("images/${mLlibres[position].foto}")
 
+                //Monstrar la imatge
+                imageRef.downloadUrl.addOnSuccessListener { url ->
+                    binding.imgCardView.load(url)
+                }.addOnFailureListener {
 
+                }
+
+                holder.bind(mLlibres[position])
                 holder.itemView.setOnClickListener {
                     cellClickListener.onCellClickListener(mLlibres[position])
                 }
@@ -70,7 +71,7 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
 }
 //Listener que gestiona els clics al elements del RecyclerView
 open class CellClickListener(val clickListener: (titol: String, assignatura: String,
-                                                 editorial: String, curs: String, estat:String, imatge:String) -> Unit) {
+                                                 editorial: String, curs: String, estat:String, foto:String) -> Unit) {
     fun onCellClickListener(data: Llibre) {
         clickListener(data.titol, data.assignatura, data.curs, data.editorial,data.estat,data.foto)
 

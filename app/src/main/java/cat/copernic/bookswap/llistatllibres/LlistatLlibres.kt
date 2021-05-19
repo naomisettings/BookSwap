@@ -28,7 +28,7 @@ class LlistatLlibres : Fragment() {
     private lateinit var binding: FragmentLlistatLlibresBinding
 
     private val db = FirebaseFirestore.getInstance()
-    private var llibres = arrayListOf<Llibre>()
+    private var llibres: ArrayList<Llibre> = arrayListOf()
 
     //recylerView
     private lateinit var adapter: Adapter
@@ -69,38 +69,27 @@ class LlistatLlibres : Fragment() {
 
                     val llibresDC = document.toObjects(Llibres::class.java)
 
-                    Log.d("sizellibres", llibresDC.size.toString())
-
                     for (i in 0 until llibresDC.size) {
-                        /*
-                        val titol = llibresDC[i].llibre["titol"]
-                        val assignatura = llibresDC[i].llibre["assignatura"]
-                        val curs = llibresDC[i].llibre["curs"]
-                        val editorial = llibresDC[i].llibre["editorial"]
-                        val estat = llibresDC[i].llibre["estat"]
-
                         val llib = Llibre(
-                            titol.toString(),
-                            assignatura.toString(),
-                            curs.toString(),
-                            editorial.toString(),
-                            estat.toString()
+                        assignatura = llibresDC[i].assignatura,
+                            curs = llibresDC[i].curs,
+                            editorial = llibresDC[i].editorial,
+                            titol = llibresDC[i].titol,
+                            estat = llibresDC[i].estat,
+                            foto = llibresDC[i].foto
                         )
-
-                        llibres.add(llib)
-
-                         */
+                      llibres.add(llib)
                     }
                 }
                 adapter = Adapter(llibres,
-                    CellClickListener { titol, assignatura, editorial, curs, estat ->
+                    CellClickListener { titol, assignatura, editorial, curs, estat, foto ->
                         findNavController().navigate(
                             LlistatLlibresDirections.actionLlistatLlibresToVeureLlibre(
                                 titol,
                                 assignatura,
-                                editorial,
                                 curs,
-                                estat
+                                editorial,
+                                estat,
                             )
                         )
                     })
@@ -111,4 +100,5 @@ class LlistatLlibres : Fragment() {
                 Log.w(ContentValues.TAG, "Error getting documents: ", exception)
             }
     }
+
 }
