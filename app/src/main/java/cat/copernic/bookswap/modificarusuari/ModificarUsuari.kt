@@ -54,7 +54,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
         return binding.root
     }
 
-    private fun mostrarDades(){
+    private fun mostrarDades() {
 
         //Guarda el mail del usuari que ha fet login
         val mail = user?.email.toString()
@@ -103,10 +103,10 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
 
                     binding.bttnActualitzar.setOnClickListener {
 
+                        //Dins aquesta funció es truca a modificarDadesBBDD i a modificar contrasenya
                         alertaModificarDades(usuariId)
 
-                        //Actualitza la contrasenya de l'usuari
-                        modificarContrasenya()
+
                     }
 
                     binding.bttnBaixaUsuari.setOnClickListener {
@@ -160,9 +160,11 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
             .addOnFailureListener { e ->
                 Log.w("TAG2", "Transaction failure.", e)
                 view?.let {
-                    Snackbar.make(it, "Error al modificar les dades", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(it, "Error al modificar les dades", Snackbar.LENGTH_LONG)
+                        .show()
                 }
             }
+
     }
 
     private fun modificarContrasenya() {
@@ -198,25 +200,72 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun alertaModificarDades(usuariId: String) {
 
-        val dialog = context?.let {
-            AlertDialog.Builder(it)
-                .setIcon(R.drawable.bookswaplogo)
-                .setTitle(user!!.email)
-                .setMessage(R.string.alert_modificar_dades)
-                .setNegativeButton(R.string.acceptar) { view, _ ->
+        if (binding.editTextNomModificar.text.toString().isNotEmpty()) {
+            //Comprova els edit text tenen valors
+            val telefon = binding.editTextTelefonModificar.text.toString()
+            if (telefon.isNotEmpty()) {
 
-                    //Truca a la funció modificar dades
-                    modificarDades(usuariId)
-                    view.dismiss()
+                //Comprova que el telèfon sigui un número (Es guarda com a String)
+                val regex = Regex(pattern = """\d{9}""")
+                if (regex.matches(input = telefon)) {
+
+                    val positionSpinner = spinner.selectedItemPosition
+
+                    //Comprovar que la posició del spinner no és zero perque la posició 0 és
+                    //"seleccionar Població"
+                    if (positionSpinner != 0) {
+
+
+                        val dialog = context?.let {
+                            AlertDialog.Builder(it)
+                                .setIcon(R.drawable.bookswaplogo)
+                                .setTitle(user!!.email)
+                                .setMessage(R.string.alert_modificar_dades)
+                                .setNegativeButton(R.string.acceptar) { view, _ ->
+
+                                    //Truca a la funció modificar dades
+                                    modificarDades(usuariId)
+                                    //Actualitza la contrasenya de l'usuari
+                                    modificarContrasenya()
+                                    view.dismiss()
+                                }
+                                .setPositiveButton(R.string.cancelar) { view, _ ->
+                                    view.cancel()
+                                }
+                                .setCancelable(false)
+                                .create()
+                        }
+
+                        dialog!!.show()
+
+                    } else {
+                        Snackbar.make(
+                            requireActivity().findViewById(R.id.myNavHostFragment),
+                            getString(R.string.poblacioIncompleta),
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                } else {
+                    Snackbar.make(
+                        requireActivity().findViewById(R.id.myNavHostFragment),
+                        getString(R.string.telefonoksnack),
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
-                .setPositiveButton(R.string.cancelar) { view, _ ->
-                    view.cancel()
-                }
-                .setCancelable(false)
-                .create()
+            } else {
+                Snackbar.make(
+                    requireActivity().findViewById(R.id.myNavHostFragment),
+                    getString(R.string.dadesomplertes),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        } else {
+            Snackbar.make(
+                requireActivity().findViewById(R.id.myNavHostFragment),
+                getString(R.string.canvi_nom),
+                Snackbar.LENGTH_LONG
+            ).show()
         }
-
-        dialog!!.show()
     }
 
     private fun alertaBaixaUsuari(usuariId: String) {

@@ -15,7 +15,7 @@
     <string name="contrasenya">Clau:</string>
     <string name="titolCamp">Titol:</string>
     <string name="imatgeCamera">Camera Foto</string>
-    <string name="buscar">Buscar</string>
+    <string name="buscar">Filtrar</string>
     <string name="titolEditTextEspais">&#160;&#160;Titol</string>
     <string name="els_meus_llibres">Els meus llibres</string>
     <string name="imgCardView">Imatge que canvia segons el llibre</string>
@@ -23,9 +23,9 @@
     <string name="despres">Després</string>
     <string name="poblaci">Població</string>
     <string name="introduccio">L\'aplicació Book Swap és una eina molt útil per intercanviar, vendre o donar llibres entre usuaris.</string>
-    <string name="obligacioLogin">Introdueixi el telèfon i la població per continuar.</string>
+    <string name="obligacioLogin">Introdueixi el telèfon per continuar.</string>
     <string name="benvinguda">BENVINGUTS A BOOK SWAP</string>
-    <string name="dadesomplertes">Introdueix totes les dades per continuar</string>
+    <string name="dadesomplertes">Introdueix el telèfon per continuar</string>
     <string name="telefonoksnack">El telèfon ha de tenir 9 digits</string>
     <string name="camp_estat">Estat:</string>
     <string name="sortir">Sortir</string>
@@ -37,4 +37,32 @@
     <string name="acceptar">acceptar</string>
     <string name="cancelar">cancelar</string>
     <string name="alert_baixa_dades">Vols eliminar el teu compte de Book Swap?</string>
+    <string name="seleccionarPoblacio">Seleccionar Població</string>
+    <string name="poblacioIncompleta">Per continuar introdueix la població</string>
+    <string name="canvi_nom">Introdueix el nom per continuar</string>
+    <string name="primerprimaria">1er Primaria</string>
+    <string name="segonprimaria">2n Primaria</string>
+    <string name="tercerprimaria">3er Primaria</string>
+    <string name="quartprimaria">4t Primaria</string>
+    <string name="cinqueprimaria">5é Primaria</string>
+    <string name="siseprimaria">6é Primaria</string>
+    <string name="primereso">1er ESO</string>
+    <string name="segoneso">2n ESO</string>
+    <string name="tercereso">3er ESO</string>
+    <string name="quarteso">4t ESO</string>
+    <string name="seleccionarAssignatura">Assignatura</string>
+    <string name="mates">Matemàtiques</string>
+    <string name="catala">Català</string>
+    <string name="castella">Castellà</string>
+    <string name="angles">Anglès</string>
+    <string name="naturals">Naturals</string>
+    <string name="socials">Socials</string>
+    <string name="tecnologia">Tecnologia</string>
+    <string name="fisica">Física</string>
+    <string name="informatica">Informàtica</string>
+    <string name="musica">Música</string>
+    <string name="seleccionarCurs">Curs</string>
+    <string name="totesPoblacions">Totes les Poblacions</string>
+    <string name="filtrarLlibres">Prem el botó filtrar per obtenir els llibres de la teva població.</string>
+
 </resources>

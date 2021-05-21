@@ -33,6 +33,8 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
     //instancia a firebase
     private val db = FirebaseFirestore.getInstance()
 
+    private lateinit var spinner: Spinner
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +56,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
         edTextInvisibles()
 
         //Inicialitzar spinner
-        val spinner: Spinner = binding.spnPoblacio
+        spinner = binding.spnPoblacio
 
         //Crear l'adapter per el spinner
         context?.let {
@@ -71,40 +73,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
         //Permet seleccionar un camp del spinner
         spinner.onItemSelectedListener = this
 
-        binding.bttnGuardar.setOnClickListener {
-
-            telefon = binding.edTxtTelefon.text.toString()
-
-            //Comprova els edit text tenen valors
-            if (telefon.isNotEmpty()) {
-
-                //Obté el camp seleccionat del spinner
-                poblacioStr = spinner.selectedItem.toString()
-
-                //Comprova que el telèfon sigui un número (Es guarda com a String)
-                val regex = Regex(pattern = """\d{9}""")
-                if (regex.matches(input = telefon)) {
-
-                    guardarUsuariBBDD()
-
-                    //Fa una consulta per saber si l'usuari està ja registrat
-                    visibilitatNavigationBotton()
-
-                } else {
-                    Snackbar.make(
-                        requireActivity().findViewById(R.id.myNavHostFragment),
-                        getString(R.string.telefonoksnack),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-            } else {
-                Snackbar.make(
-                    requireActivity().findViewById(R.id.myNavHostFragment),
-                    getString(R.string.dadesomplertes),
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
-        }
+        botoGuardarDades()
 
         return binding.root
     }
@@ -137,6 +106,56 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
+    private fun botoGuardarDades() {
+
+        binding.bttnGuardar.setOnClickListener {
+
+            telefon = binding.edTxtTelefon.text.toString()
+
+            //Comprova els edit text tenen valors
+            if (telefon.isNotEmpty()) {
+
+                //Comprova que el telèfon sigui un número (Es guarda com a String)
+                val regex = Regex(pattern = """\d{9}""")
+                if (regex.matches(input = telefon)) {
+
+
+                    //Obté el camp seleccionat del spinner
+                    poblacioStr = spinner.selectedItem.toString()
+
+                    val positionSpinner = spinner.selectedItemPosition
+
+                    //Comprovar que la posició del spinner no és zero perque la posició 0 és
+                    //"seleccionar Població"
+                    if (positionSpinner != 0) {
+                        guardarUsuariBBDD()
+
+                        //Fa una consulta per saber si l'usuari està ja registrat
+                        visibilitatNavigationBotton()
+
+                    } else {
+                        Snackbar.make(
+                            requireActivity().findViewById(R.id.myNavHostFragment),
+                            getString(R.string.poblacioIncompleta),
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                } else {
+                    Snackbar.make(
+                        requireActivity().findViewById(R.id.myNavHostFragment),
+                        getString(R.string.telefonoksnack),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            } else {
+                Snackbar.make(
+                    requireActivity().findViewById(R.id.myNavHostFragment),
+                    getString(R.string.dadesomplertes),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
 
     //Insert a la taula usuaris el mail, nom, telefon i població
     private fun guardarUsuariBBDD() {
@@ -148,13 +167,10 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             //El telèfon i la població s'extreu dels edit text declarats com a variables
             //a la classe
-
-
-
             val usuaris = hashMapOf(
                 "mail" to mail,
                 "nom" to nom,
-                "telefon" to  telefon,
+                "telefon" to telefon,
                 "poblacio" to poblacioStr,
                 "valoracio" to 6
             )
@@ -174,7 +190,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     //Segons si l'uauari ja ha introduït el telèfon i la població, mostrarà un missatge de
-    //benvinguda o els editText per introduir aquestes dades.
+//benvinguda o els editText per introduir aquestes dades.
     private fun visibilitatNavigationBotton() {
 
         //Saber quin usuari està loginat
@@ -245,7 +261,6 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
-
 
 
 }

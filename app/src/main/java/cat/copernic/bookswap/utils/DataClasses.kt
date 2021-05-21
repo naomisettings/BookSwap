@@ -15,7 +15,8 @@ data class Llibres(
     var estat: String ="",
     var foto: String ="",
     var id: String ="",
-    var mail: String = ""
+    var mail: String = "",
+    var poblacio: String = ""
 )
 
 data class poblacio(
