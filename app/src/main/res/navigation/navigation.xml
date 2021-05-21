@@ -62,6 +62,9 @@
         <argument
             android:name="foto"
             app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/meusLlibres"
@@ -97,6 +100,9 @@
             app:argType="string" />
         <argument
             android:name="foto"
+            app:argType="string" />
+        <argument
+            android:name="id"
             app:argType="string" />
     </fragment>
     <fragment
@@ -141,6 +147,9 @@
         <argument
             android:name="foto"
             app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/veureLlibre"
@@ -167,6 +176,9 @@
             app:argType="string" />
         <argument
             android:name="foto"
+            app:argType="string" />
+        <argument
+            android:name="id"
             app:argType="string" />
     </fragment>
 </navigation>

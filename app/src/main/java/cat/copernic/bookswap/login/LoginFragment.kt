@@ -226,7 +226,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
             edTxtTelefon.isVisible = false
             spnPoblacio.isVisible = false
             txtTelefon.isVisible = false
-            txtPoblacio.isVisible = false
+            txtPoblacioVeureLl.isVisible = false
             bttnGuardar.isVisible = false
 
             txtObligacio.isVisible = false
@@ -240,7 +240,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
             edTxtTelefon.isVisible = true
             spnPoblacio.isVisible = true
             txtTelefon.isVisible = true
-            txtPoblacio.isVisible = true
+            txtPoblacioVeureLl.isVisible = true
             bttnGuardar.isVisible = true
 
             txtObligacio.isVisible = true

@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtObligacio" />
 
             <TextView
-                android:id="@+id/txtPoblacio"
+                android:id="@+id/txtPoblacioVeureLl"
                 style="@style/CampsText"
                 android:layout_width="298dp"
                 android:layout_height="26dp"
@@ -135,7 +135,7 @@
                 android:layout_marginEnd="60dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPoblacio" />
+                app:layout_constraintTop_toBottomOf="@+id/txtPoblacioVeureLl" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

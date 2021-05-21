@@ -38,8 +38,8 @@ class MeusLlibres : Fragment() {
 
 
 
-        val adapterMeus = Adapter(llibres,CellClickListener{titol, assignatura, editorial, curs, estat, foto ->
-            findNavController().navigate(MeusLlibresDirections.actionMeusLlibresToModificarLlibre(titol, assignatura, editorial, curs, estat, foto))
+        val adapterMeus = Adapter(llibres,CellClickListener{titol, assignatura, editorial, curs, estat, foto, id ->
+            findNavController().navigate(MeusLlibresDirections.actionMeusLlibresToModificarLlibre(titol, assignatura, editorial, curs, estat, foto, id))
         })
 
 

@@ -290,7 +290,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         //En el cas que de premer un llibre s'obra el fragment veure llibre
         adapter = Adapter(
             llib,
-            CellClickListener { titol, assignatura, editorial, curs, estat, foto ->
+            CellClickListener { titol, assignatura, editorial, curs, estat, foto, id ->
                 findNavController().navigate(
                     LlistatLlibresDirections.actionLlistatLlibresToVeureLlibre(
                         titol,
@@ -299,6 +299,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                         editorial,
                         estat,
                         foto,
+                        id,
                     )
                 )
             })

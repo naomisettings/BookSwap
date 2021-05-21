@@ -50,7 +50,7 @@
     <string name="segoneso">2n ESO</string>
     <string name="tercereso">3er ESO</string>
     <string name="quarteso">4t ESO</string>
-    <string name="seleccionarAssignatura">Assignatura</string>
+    <string name="seleccionarAssignatura">Totes les Assignatures</string>
     <string name="mates">Matemàtiques</string>
     <string name="catala">Català</string>
     <string name="castella">Castellà</string>
@@ -61,8 +61,12 @@
     <string name="fisica">Física</string>
     <string name="informatica">Informàtica</string>
     <string name="musica">Música</string>
-    <string name="seleccionarCurs">Curs</string>
+    <string name="seleccionarCurs">Tots els Cursos</string>
     <string name="totesPoblacions">Totes les Poblacions</string>
     <string name="filtrarLlibres">Prem el botó filtrar per obtenir els llibres de la teva població.</string>
+    <string name="poblacioDosPunts">Població:</string>
+    <string name="compartir">Compartir:</string>
+    <string name="valorar_usuari">Valorar Usuari</string>
+    <string name="whatssapp">WhatssApp</string>
 
 </resources>
