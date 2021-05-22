@@ -99,7 +99,6 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
                     val llibresDC = document.toObjects(Llibres::class.java)
 
-
                     //Recorecut de tots els llibres de la colecció per afegir-los al array
                     for (x in 0 until llibresDC.size) {
 
@@ -132,23 +131,25 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             }
     }
 
-    //ATENCIÓ
-    //Només entra la primera vegada que s'executa el fragment
+    // Igual que la consulta, només s'executa la primera vegada que s'obre el fragment
     private fun arrayLlibresNoCaracters() {
 
+        //Després de realitzar la consulta reasignem el llistat de llibres per treure els caràcters
+        //no ASCII dels camps que volem filtrar
         val llibresIterator = llibres.iterator()
         while (llibresIterator.hasNext()) {
             val llib = llibresIterator.next()
 
-            val extreureCaracters = noCaractersEspecials(
-                llib.poblacio,
-                llib.assignatura,
-                llib.curs
-            )
+            //S'executa la funció que modifica els caràcters especias a ASCII i retorna un tres
+            //variables amb els tres caràcters que permetran filtrar.
+                val poblacioNoAscii = noCaractersEspecials(llib.poblacio)
+                val assignaturaNoAscii = noCaractersEspecials(llib.assignatura)
+                val cursNoAscii = noCaractersEspecials(llib.curs)
+
             val llibrLliure = Llibre(
-                poblacio = extreureCaracters[0],
-                assignatura = extreureCaracters[1],
-                curs = extreureCaracters[2],
+                poblacio = poblacioNoAscii,
+                assignatura = assignaturaNoAscii,
+                curs = cursNoAscii,
                 editorial = llib.editorial,
                 titol = llib.titol,
                 estat = llib.estat,
@@ -156,87 +157,77 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                 id = llib.id
 
             )
+            //Afegeix el llibre al llistat sense caràcters ASCII
             llibresNoCaracters.add(llibrLliure)
         }
-
     }
 
-    //ATENCIÓ
-    //Només entra la primera vegada que s'executa el fragment
+    //Funció per canviar els caracters especials per ASCII
     private fun noCaractersEspecials(
-        pobla: String,
-        assignat: String,
-        curss: String
-    ): ArrayList<String> {
+        valor: String
+    ): String {
 
         val accents = "àèéíòóúïüç"
         val correct = "aeeioouiuc"
 
-        var poblacio = pobla.toLowerCase(Locale.ROOT)
-        var assignatura = assignat.toLowerCase(Locale.ROOT)
-        val curs = curss.toLowerCase(Locale.ROOT)
+        //Passa el sting a minuscula
+        var valorNoAscii = valor.toLowerCase(Locale.ROOT)
 
+        //Intercanvia els accens i les ç a caràcters ASCII
         for (i in accents.indices) {
-            val posLletrPoblacio = poblacio.indexOf(accents[i])
-            if (posLletrPoblacio != -1) {
-                poblacio =
-                    poblacio.replace(
-                        poblacio[posLletrPoblacio],
-                        correct[i]
-                    )
-            }
-            val posLletrAssignatura = assignatura.indexOf(accents[i])
-            if (posLletrAssignatura != -1) {
-                assignatura =
-                    assignatura.replace(
-                        assignatura[posLletrAssignatura],
+            val posLletra = valorNoAscii.indexOf(accents[i])
+            if (posLletra != -1) {
+                valorNoAscii =
+                    valorNoAscii.replace(
+                        valorNoAscii[posLletra],
                         correct[i]
                     )
             }
         }
 
-        if (poblacio.contains("-")) {
-            poblacio = poblacio.replace("-", "")
+        //Remplaça el caràcter - per un esapi en blanc
+        if (valorNoAscii.contains("-")) {
+            valorNoAscii = valorNoAscii.replace("-", "")
         }
-        return arrayListOf(poblacio, assignatura, curs)
+        //Retorna el string en ASCII
+        return valorNoAscii
     }
 
 
     private fun filtrarPerCamp() {
 
+        //Neteja la llista dels llibres filtrats
         llibresNoCaractersFiltrar.clear()
 
+        //Afegeix el llistat tipus "Llibre" a un nou array per filtrar i no haver de repetir
+        //la consulta cada vegada que l'usuari filtra
         llibresNoCaractersFiltrar.addAll(llibresNoCaracters)
 
+        //Extreu les dades dels spinners
         val poblacioSeleccionada = spinner.selectedItem.toString()
         val cursSeleccionada = spinnercurs.selectedItem.toString()
         val assignaturaSeleccionada =
             spinnerassignatura.selectedItem.toString()
 
-        val campsAComparar =
-            noCaractersEspecials(poblacioSeleccionada, assignaturaSeleccionada, cursSeleccionada)
+        //Els valors extrets dels spinners es canvien a caràcters no ASCII
+        val poblaico = noCaractersEspecials(poblacioSeleccionada)
+        val assignatura = noCaractersEspecials(assignaturaSeleccionada)
+        val curs = noCaractersEspecials(cursSeleccionada)
 
-        val poblaico = campsAComparar[0]
-        val assignatura = campsAComparar[1]
-        val curs = campsAComparar[2]
-
-        //Filtrar en el cas que la població seleccionada sigui diferent a la del llitat de llibres
-        //i en el cas que no estigui seleccionada la posició 0 (cap població seleccionada)
+        //Filtra les poblacións en el cas de seleccionar-ne una (el primer camp del spinner
+        // és totes les poblacions)
         val noTotesPoblacions = llibresNoCaractersFiltrar.filter {
             it.poblacio != poblaico &&
                     spinner.selectedItemPosition != 0
-
         }
-
-        //Del llitat de tots els llibres s'esborren els camps extrets del filtre per mostar aquest
-        //llistat al recycler view
+        //Del llitat de tots els llibres sense caràcters ASCII, s'esborren els camps extrets del filtre
+        //per mostar aquest llistat al recycler view
         llibresNoCaractersFiltrar.removeAll(noTotesPoblacions)
 
         //Mateix filtre pels cursos
         val noTotsCursos = llibresNoCaractersFiltrar.filter {
             it.curs != curs &&
                     spinnercurs.selectedItemPosition != 0
-
         }
         //Mateix mètode d'esborrar pels cursos
         llibresNoCaractersFiltrar.removeAll(noTotsCursos)
@@ -254,6 +245,8 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
         val llibresFiltratsBenEscrits: ArrayList<Llibre> = arrayListOf()
 
+        //Compara el llistat de llibres filtrats amb els del llistat amb la ortografia correcta
+        //per mostar aquests al recycler view
         llibresNoCaractersFiltrar.forEach { filtrar ->
             llibres.forEach { llibreEscrit ->
                 if (filtrar.id == llibreEscrit.id) {
@@ -262,7 +255,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             }
         }
 
-        //Carregem el recyclerView
+        //Carregem el recyclerView amb els llibres amb la ortografia correcte
         carregarLlibresRyclrView(llibresFiltratsBenEscrits)
     }
 
