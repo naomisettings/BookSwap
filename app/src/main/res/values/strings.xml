@@ -68,5 +68,8 @@
     <string name="compartir">Compartir:</string>
     <string name="valorar_usuari">Valorar Usuari</string>
     <string name="whatssapp">WhatssApp</string>
-
+    <string name="seleccionaEstat">Selecciona Estat</string>
+    <string name="disponible">Disponible</string>
+    <string name="noDisponible">No disponible</string>
+    <string name="modifica_llibre">Modifica el teu llibre</string>
 </resources>

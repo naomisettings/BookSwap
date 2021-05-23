@@ -37,10 +37,10 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder){
             with(mLlibres[position]){
-                binding.edAssignatura.text = this.assignatura
                 binding.titol.text = this.titol
-                binding.edCurs.text = this.curs
+                binding.edAssignatura.text = this.assignatura
                 binding.edEditorial.text = this.editorial
+                binding.edCurs.text = this.curs
                 binding.edEstat.text=this.estat
                 val media: String = mLlibres[position].foto
 
@@ -73,7 +73,7 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
 open class CellClickListener(val clickListener: (titol: String, assignatura: String,
                                                  editorial: String, curs: String, estat:String, foto:String, id: String) -> Unit) {
     fun onCellClickListener(data: Llibre) {
-        clickListener(data.titol, data.assignatura, data.curs, data.editorial,data.estat,data.foto, data.id)
+        clickListener(data.titol, data.assignatura, data.editorial, data.curs, data.estat, data.foto, data.id)
 
     }
 }

@@ -90,13 +90,13 @@
             android:name="assignatura"
             app:argType="string" />
         <argument
+            android:name="editorial"
+            app:argType="string" />
+        <argument
             android:name="curs"
             app:argType="string" />
         <argument
             android:name="estat"
-            app:argType="string" />
-        <argument
-            android:name="editorial"
             app:argType="string" />
         <argument
             android:name="foto"
@@ -136,13 +136,13 @@
             android:name="assignatura"
             app:argType="string" />
         <argument
+            android:name="editorial"
+            app:argType="string" />
+        <argument
             android:name="curs"
             app:argType="string" />
         <argument
             android:name="estat"
-            app:argType="string" />
-        <argument
-            android:name="editorial"
             app:argType="string" />
         <argument
             android:name="foto"

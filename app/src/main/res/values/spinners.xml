@@ -82,5 +82,10 @@
         <item>@string/musica</item>
 
     </string-array>
+    <string-array name="estat">
+        <item>@string/seleccionaEstat</item>
+        <item>@string/disponible</item>
+        <item>@string/noDisponible</item>
+    </string-array>
 
 </resources>
