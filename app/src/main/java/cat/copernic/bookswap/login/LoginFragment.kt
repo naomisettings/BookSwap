@@ -172,7 +172,8 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 "nom" to nom,
                 "telefon" to telefon,
                 "poblacio" to poblacioStr,
-                "valoracio" to 6
+                "valoracio" to 0,
+                "comptador_valoracions" to 0
             )
 
             //Insert

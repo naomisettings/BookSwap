@@ -1,12 +1,17 @@
 package cat.copernic.bookswap.utils
 
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.bookswap.databinding.ItemLlibreBinding
 import coil.api.load
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
+import kotlin.coroutines.coroutineContext
 
 class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListener) :  RecyclerView.Adapter<Adapter.ViewHolder>(){
 
@@ -42,6 +47,11 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
                 binding.edEditorial.text = this.editorial
                 binding.edCurs.text = this.curs
                 binding.edEstat.text=this.estat
+                binding.edPoblacio.text = this.poblacio
+
+                if (this.poblacio_login != this.poblacio) {
+                    binding.edPoblacio.setTextColor(Color.parseColor("#FF9800"))
+                }
                 val media: String = mLlibres[position].foto
 
                 //Descarregar la imatge amb picasso
