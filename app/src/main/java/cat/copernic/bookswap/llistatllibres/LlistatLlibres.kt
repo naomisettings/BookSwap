@@ -111,7 +111,8 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                             estat = llibresDC[x].estat,
                             foto = llibresDC[x].foto,
                             poblacio = llibresDC[x].poblacio,
-                            id = llibresDC[x].id
+                            id = llibresDC[x].id,
+                            mail = llibresDC[x].mail
                         )
                         //Afegeix el llibre al llistat llibres por mostrar-los al recycler view
                         llibres.add(llib)
@@ -154,7 +155,8 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                 titol = llib.titol,
                 estat = llib.estat,
                 foto = llib.foto,
-                id = llib.id
+                id = llib.id,
+                mail = llib.mail
 
             )
             //Afegeix el llibre al llistat sense caràcters ASCII

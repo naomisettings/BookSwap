@@ -12,12 +12,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/backgroundbook">
+            android:background="@color/backgroundbook"
+            tools:ignore="ExtraText">
 
             <ImageView
                 android:id="@+id/imageViewLlibre"
-                android:layout_width="170dp"
-                android:layout_height="146dp"
+                android:layout_width="198dp"
+                android:layout_height="194dp"
                 android:layout_marginTop="20dp"
                 android:contentDescription="@string/imatgeCamera"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +43,7 @@
                 android:id="@+id/txtLogin"
                 style="@style/CampsText"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/assignatura"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewLlibre" />
@@ -83,7 +84,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="Puntuació:"
+                android:text="@string/puntuaciDosPunts"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
 
@@ -93,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="75dp"
                 android:layout_marginEnd="20dp"
+                android:textSize="18sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtCurs"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txtCurs" />
@@ -103,6 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="47dp"
                 android:layout_marginEnd="20dp"
+                android:textSize="18sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtEditorial"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txtEditorial" />
@@ -137,13 +140,15 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/valorar_usuari"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bttnWhatsapp" />
+                app:layout_constraintTop_toBottomOf="@+id/bttnWhatsapp"/>
+                <!-- android:visibility="invisible"-->
 
             <TextView
                 android:id="@+id/edAssignatura"
                 android:layout_width="255dp"
                 android:layout_height="19dp"
                 android:layout_marginStart="17dp"
+                android:textSize="18sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtLogin"
                 app:layout_constraintStart_toEndOf="@+id/txtLogin" />
 

@@ -10,36 +10,33 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentVeureLlibreBinding
-import cat.copernic.bookswap.llistatllibres.LlistatLlibres
 import cat.copernic.bookswap.llistatllibres.LlistatLlibresArgs
-import cat.copernic.bookswap.modificarllibre.ModificarLlibreArgs
-import cat.copernic.bookswap.utils.Llibre
-import cat.copernic.bookswap.utils.Llibres
-import com.google.firebase.auth.ktx.auth
+import cat.copernic.bookswap.utils.UsuariDC
+import coil.api.load
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 
 class VeureLlibre : Fragment() {
 
     private val db = FirebaseFirestore.getInstance()
 
     private lateinit var args: LlistatLlibresArgs
-
-    //guardem les dades del usuari identificat
-    private val user = Firebase.auth.currentUser
-
     private lateinit var binding: FragmentVeureLlibreBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_veure_llibre, container, false)
 
         mostrarDadesLlibre()
+
+        mostrarImatgePicasso()
+
+        consultaPuntuacioUsuariLlibre()
 
 
         return binding.root
@@ -55,9 +52,38 @@ class VeureLlibre : Fragment() {
             editEditorial.text = args.editorial
             txtTitolAfegirLlibre.text = args.titol
 
+
         }
+    }
 
+    private fun mostrarImatgePicasso(){
 
+        //Descarregar la imatge amb picasso
+        val storageRef = FirebaseStorage.getInstance().reference
+        val imageRef = storageRef.child("images/${args.foto}")
+
+        //Monstrar la imatge
+        imageRef.downloadUrl.addOnSuccessListener { url ->
+            binding.imageViewLlibre.load(url)
+        }.addOnFailureListener {
+
+        }
+    }
+
+    private fun consultaPuntuacioUsuariLlibre(){
+
+        Log.d("valoraciousuari",args.mail)
+
+        //Consulta per extreure el les dades del usuari que ven el llibre segons el mail
+        db.collection("usuaris").whereEqualTo("mail", args.mail).get()
+            .addOnSuccessListener { document ->
+                    val usuari = document.toObjects(UsuariDC::class.java)
+
+                    Log.d("valoraciousuari",usuari[0].valoracio.toString())
+            }
+            .addOnFailureListener { exception ->
+                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+            }
     }
 
 }
