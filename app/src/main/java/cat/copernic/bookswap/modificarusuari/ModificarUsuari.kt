@@ -1,12 +1,16 @@
 package cat.copernic.bookswap.modificarusuari
 
+import android.app.ActionBar
 import android.content.ContentValues
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -32,6 +36,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var spinner: Spinner
     private var poblacio = ""
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +59,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun mostrarDades() {
 
         //Guarda el mail del usuari que ha fet login
@@ -62,7 +68,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
         //Consulta per extreure el les dades del usuari segons el mail
         db.collection("usuaris").whereEqualTo("mail", mail).get()
             .addOnSuccessListener { document ->
-                document?.forEach {
+                document?.forEach { doc ->
                     val usuari = document.toObjects(UsuariDC::class.java)
 
                     //Mostra les dades del usuari als editText
@@ -99,7 +105,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
                     spinner.onItemSelectedListener = this
 
                     //Extreu la id del document
-                    val usuariId = it.id
+                    val usuariId = doc.id
 
                     binding.bttnActualitzar.setOnClickListener {
 
@@ -120,6 +126,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun modificarDades(usuariId: String) {
 
         //agafem l'usuari de la collecio amb el seu ID a aquesta variable
@@ -150,21 +157,42 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
         }.addOnSuccessListener {
             Log.d("TAG", "Transaction success!")
             view?.let {
-                Snackbar.make(
-                    it,
-                    "Dades modificades correctament",
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
-        }
-            .addOnFailureListener { e ->
-                Log.w("TAG2", "Transaction failure.", e)
-                view?.let {
-                    Snackbar.make(it, "Error al modificar les dades", Snackbar.LENGTH_LONG)
-                        .show()
+                val snackbar = Snackbar.make(it, R.string.dadesCorrectes, Snackbar.LENGTH_LONG).apply {
+                    val layoutParams = ActionBar.LayoutParams(this.view.layoutParams)
+                    layoutParams.gravity = Gravity.BOTTOM
+                    view.setBackgroundColor(Color.parseColor("#56D309"))
+                    view.layoutParams = layoutParams
                 }
+                snackbar.setTextColor(Color.parseColor("#000000"))
+                snackbar.show()
             }
 
+        }.addOnFailureListener { e ->
+            Log.w("TAG2", "Transaction failure.", e)
+        }
+
+        db.collection("llibres").whereEqualTo("mail", user?.email).get()
+            .addOnSuccessListener { doc ->
+
+                doc?.forEach {
+                    val sfDocRefLlibres = db.collection("llibres").document(it.id)
+
+                    db.runTransaction { transaction ->
+
+                        transaction.update(
+                            sfDocRefLlibres,
+                            "poblacio",
+                            poblacio
+                        )
+
+                        null
+                    }.addOnSuccessListener {
+                        Log.d("TAG", "Transaction success!")
+                    }.addOnFailureListener { exception ->
+                        Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+                    }
+                }
+            }
     }
 
     private fun modificarContrasenya() {
@@ -178,9 +206,40 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
+    //Esborra els llibres publicats per l'usuari i el dona de baixa
     private fun baixaUsuari(usuariId: String) {
+
         val sfDocRef = db.collection("usuaris").document(usuariId)
 
+        val mail = user?.email
+
+        //Consulta per extreure el les dades dels llibres del usuari segons el mail
+        db.collection("llibres").whereEqualTo("mail", mail).get()
+            .addOnSuccessListener { document ->
+                document?.forEach {
+
+                    //Extreu la id del document
+                    val llibresId = it.id
+
+                    val sfDocRefLlibres = db.collection("llibres").document(llibresId)
+
+                    //Esborra els llibres publicats per l'usuari
+                    db.runTransaction { transaction ->
+                        //agafem el ID
+                        val snapshot = transaction.get(sfDocRefLlibres)
+                        //actualitzem el id amb el mail del usuari identificat i guardem els camps
+                        snapshot.getString("mail")!!
+
+                        //esborrem usuari del Firestore
+                        transaction.delete(sfDocRefLlibres)
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+            }
+
+        // Esborra les dades del usuari i l'usuari
         db.runTransaction { transaction ->
             //agafem el ID
             val snapshot = transaction.get(sfDocRef)
@@ -198,6 +257,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun alertaModificarDades(usuariId: String) {
 
         if (binding.editTextNomModificar.text.toString().isNotEmpty()) {

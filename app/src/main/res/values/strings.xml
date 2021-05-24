@@ -73,4 +73,5 @@
     <string name="noDisponible">No disponible</string>
     <string name="modifica_llibre">Modifica el teu llibre</string>
     <string name="puntuaciDosPunts">Puntuació:</string>
+    <string name="dadesCorrectes">Dades actualitzades correctament</string>
 </resources>

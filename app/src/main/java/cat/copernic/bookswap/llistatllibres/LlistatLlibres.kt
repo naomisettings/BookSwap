@@ -1,5 +1,6 @@
 package cat.copernic.bookswap.llistatllibres
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.os.Build
 import android.os.Bundle
@@ -48,6 +49,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
     private var entraVeureLlibres = true
 
+    @SuppressLint("ShowToast")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -112,20 +114,40 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                             foto = llibresDC[x].foto,
                             poblacio = llibresDC[x].poblacio,
                             id = llibresDC[x].id,
-                            mail = llibresDC[x].mail
+                            mail = llibresDC[x].mail,
                         )
+
                         //Afegeix el llibre al llistat llibres por mostrar-los al recycler view
                         llibres.add(llib)
 
                     }
 
-                    entraVeureLlibres = false
+                    db.collection("usuaris").whereEqualTo("mail", user?.email).get()
+                        .addOnSuccessListener { doc ->
 
-                    arrayLlibresNoCaracters()
+                            val usuariDC = doc.toObjects(UsuariDC::class.java)
 
-                    //Carregem el recyclerView
-                    carregarLlibresRyclrView(llibres)
+                            val llibresUsuariIterator = llibres.iterator()
+                            while (llibresUsuariIterator.hasNext()) {
+                                if (llibresUsuariIterator.next().mail.contains(usuariDC[0].mail))
+                                    llibresUsuariIterator.remove()
+                            }
+                            llibres.forEach {
+                                it.poblacio_login = usuariDC[0].poblacio
+                            }
 
+                            entraVeureLlibres = false
+
+                            arrayLlibresNoCaracters()
+
+                            //Carregem el recyclerView
+                            carregarLlibresRyclrView(llibres)
+
+                        }.addOnFailureListener { exception ->
+                            Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+
+
+                        }
                 }
             }.addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents: ", exception)
@@ -143,9 +165,9 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
             //S'executa la funció que modifica els caràcters especias a ASCII i retorna un tres
             //variables amb els tres caràcters que permetran filtrar.
-                val poblacioNoAscii = noCaractersEspecials(llib.poblacio)
-                val assignaturaNoAscii = noCaractersEspecials(llib.assignatura)
-                val cursNoAscii = noCaractersEspecials(llib.curs)
+            val poblacioNoAscii = noCaractersEspecials(llib.poblacio)
+            val assignaturaNoAscii = noCaractersEspecials(llib.assignatura)
+            val cursNoAscii = noCaractersEspecials(llib.curs)
 
             val llibrLliure = Llibre(
                 poblacio = poblacioNoAscii,
@@ -156,7 +178,8 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                 estat = llib.estat,
                 foto = llib.foto,
                 id = llib.id,
-                mail = llib.mail
+                mail = llib.mail,
+                poblacio_login = llib.poblacio_login
 
             )
             //Afegeix el llibre al llistat sense caràcters ASCII
