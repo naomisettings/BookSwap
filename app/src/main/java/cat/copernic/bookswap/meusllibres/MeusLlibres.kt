@@ -23,6 +23,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
+
 class MeusLlibres : Fragment() {
     private lateinit var binding: FragmentMeusLlibresBinding
     //instancia a firebase
@@ -31,8 +32,6 @@ class MeusLlibres : Fragment() {
     //adapter
     private lateinit var adapterMeus: Adapter
 
-    //recylerView
-//    var rvLlibres = binding.meusLlibresList
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,12 +59,13 @@ class MeusLlibres : Fragment() {
     }
 
     private fun veureLlibres(rvLlibres: RecyclerView) {
+        llibres.clear()
         //guardem les dades del usuari identificat
         val user = Firebase.auth.currentUser
         //agafem el mail com a identificador unic de l'usuari
         val mail = user?.email.toString()
         //buidem l/array de llibres perque no es vagin duplicant
-        llibres.clear()
+        //llibres.clear()
         //busquem a la col.leccio llibres els que tenen el mail de l'usuari identificat
         db.collection("llibres").whereEqualTo("mail", mail).get()
             .addOnSuccessListener { document ->
@@ -79,7 +79,8 @@ class MeusLlibres : Fragment() {
                             editorial = llibresDC[i].editorial,
                             curs = llibresDC[i].curs,
                             estat = llibresDC[i].estat,
-                            foto = llibresDC[i].foto
+                            foto = llibresDC[i].foto,
+                            id = llibresDC[i].id
 
                         )
                         llibres.add(llibresConsulta)

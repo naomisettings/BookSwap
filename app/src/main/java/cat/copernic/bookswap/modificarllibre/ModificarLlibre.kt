@@ -1,6 +1,11 @@
 package cat.copernic.bookswap.modificarllibre
 
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,16 +14,19 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import cat.copernic.bookswap.R
-import cat.copernic.bookswap.databinding.FragmentAfegirLlibreBinding
 import cat.copernic.bookswap.databinding.FragmentModificarLlibreBinding
 import cat.copernic.bookswap.utils.Llibres
 import coil.api.load
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ModificarLlibre : Fragment() {
     //instancia a firebase
@@ -34,6 +42,22 @@ class ModificarLlibre : Fragment() {
     private var curs = ""
     private var assignatura=""
 
+    private lateinit var imgfoto: ImageView
+
+    //variable de la imatge a pujar al storage amb data i hora local
+    var fileName: String = SimpleDateFormat(
+        ModificarLlibre.FILENAME_FORMAT, Locale.US
+    ).format(System.currentTimeMillis()) + ".jpg"
+
+    //instancia que referencia al storage
+    var refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
+
+    companion object {
+        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private const val CAMERA_PERMISSION_CODE = 1
+        private const val CAMERA_REQUEST_CODE = 2
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,16 +68,39 @@ class ModificarLlibre : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_modificar_llibre, container, false)
         //rebre dades del llibre seleccionat
         args = ModificarLlibreArgs.fromBundle(requireArguments())
-        var idLlibre = args.id
-        Log.i("llibre", idLlibre)
+
         //funcio per carregar les dades del llibre seleccionat
         mostrarLlibre()
 
 
         binding.btnActualitzarLlibre.setOnClickListener {
+            //cridem a la funcio per actualitzar el llibre passant com argument el id del llibre
             actualitzarLlibre(args.id)
             view?.findNavController()?.navigate(R.id.action_modificarLlibre_to_meusLlibres)
         }
+
+        //activa la camara per fer foto del llibre
+        binding.imageViewFotoModificar.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    android.Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                //obre l'activity de la camara
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, CAMERA_REQUEST_CODE)
+            } else {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(android.Manifest.permission.CAMERA),
+                    CAMERA_PERMISSION_CODE
+                )
+            }
+            imgfoto = binding.imageViewModificarLlibre
+
+
+        }
+
 
 
         return binding.root
@@ -61,49 +108,63 @@ class ModificarLlibre : Fragment() {
 
     private fun actualitzarLlibre(idLlibre:String) {
         //guardem el id del llibre
-        var idLlibre = args.id
+        //var idLlibre = args.id
        // Log.d("id", idLlibre)
        //agafem el llibre de la coleccio amb el seu ID
         Log.i("idLlibre", idLlibre)
+        val actualitza = db.collection("llibres").addSnapshotListener { snapshot, error ->
+            //guardem els documents
+            val doc = snapshot?.documents
+            //iterem pels documents dels llibres
+            doc?.forEach {
+                val llibreConsulta = it.toObject(Llibres::class.java)
+                if (llibreConsulta?.id == idLlibre){
+                    //guardem el id del document del llibre seleccionat
+                    val llibreId = it.id
+                    //agafem el id del llibre
+                    val sfDocRef = db.collection("llibres").document(llibreId)
 
-                     //agafem el id del tiquet
-                     val sfDocRef = db.collection("llibres").document(idLlibre)
+                    Log.i("idLlibre", llibreId)
 
-                    Log.i("idLlibre", idLlibre)
+                    //agafem els valors dels spinners
+                    assignatura = spinnerModificarAssignatura.selectedItem.toString()
+                    curs = spinnerModificarCurs.selectedItem.toString()
+                    estat = spinnerModificarEstat.selectedItem.toString()
 
-                     //agafem els valors dels spinners
-                     assignatura = spinnerModificarAssignatura.toString()
-                     curs = spinnerModificarCurs.selectedItem.toString()
-                     estat = spinnerModificarEstat.selectedItem.toString()
+                    //actualitzem les dades
+                    db.runTransaction { transaction ->
+                        val snapshot = transaction.get(sfDocRef)
+                        transaction.update(sfDocRef,"titol", binding.editTextTitolModificar.text.toString())
+                        transaction.update(sfDocRef, "assignatura", assignatura)
+                        transaction.update(sfDocRef, "editorial", binding.editTextEditorialModificar.text.toString())
+                        transaction.update(sfDocRef, "curs", curs)
+                        transaction.update(sfDocRef, "estat", estat)
+                        transaction.update(sfDocRef, "foto", fileName)
 
-                     //actualitzem les dades
-                     db.runTransaction { transaction ->
-                         val snapshot = transaction.get(sfDocRef)
-                         transaction.update(sfDocRef,"titol", binding.editTextTitolModificar.text.toString())
-                         transaction.update(sfDocRef, "assignatura", assignatura)
-                         transaction.update(sfDocRef, "editorial", binding.editTextEditorialModificar.text.toString())
-                         transaction.update(sfDocRef, "curs", curs)
-                         transaction.update(sfDocRef, "estat", estat)
-                         // transaction.update(sfDocRef, "foto", foto)
+                    }.addOnSuccessListener {
+                        Log.d("TAG", "Transaction success!")
+                        view?.let {
+                            Snackbar.make(
+                                it,
+                                "Llibre actualitzat",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                    }.addOnFailureListener { e ->
+                        Log.w("TAG2", "Transaction failure.", e)
+                        view?.let {
 
-                     }.addOnSuccessListener {
-                         Log.d("TAG", "Transaction success!")
-                         view?.let {
-                             Snackbar.make(
-                                 it,
-                                 "Llibre actualitzat",
-                                 Snackbar.LENGTH_LONG
-                             ).show()
-                         }
-                     }.addOnFailureListener { e ->
-                         Log.w("TAG2", "Transaction failure.", e)
-                         view?.let {
+                            Snackbar.make(it, "Error a l'actualitzar el llibre", Snackbar.LENGTH_LONG)
+                                .show()
+                        }
 
-                             Snackbar.make(it, "Error a l'actualitzar el llibre", Snackbar.LENGTH_LONG)
-                                 .show()
-                         }
+                    }
+                }
+            }
+        }
 
-                     }
+
+
 
 
 
@@ -179,6 +240,38 @@ class ModificarLlibre : Fragment() {
         }.addOnFailureListener {  }
 
         Log.i("idmostrar", args.id)
+
+    }
+
+    //comprova els permisos de la camara
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+    ) {
+        if (requestCode ==  CAMERA_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, CAMERA_REQUEST_CODE)
+
+            } else {
+                Snackbar.make(
+                    requireView(), "Has denegat els permisos de la camara. \n"
+                            + "Els pots modificar a la configuració del mòbil", Snackbar.LENGTH_LONG
+                ).show()
+
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == CAMERA_REQUEST_CODE) {
+                val foto: Bitmap = data!!.extras!!.get("data") as Bitmap
+                imgfoto.setImageBitmap(foto)
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+
 
     }
 
