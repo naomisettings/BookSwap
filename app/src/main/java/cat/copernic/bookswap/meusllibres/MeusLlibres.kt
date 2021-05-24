@@ -59,13 +59,13 @@ class MeusLlibres : Fragment() {
     }
 
     private fun veureLlibres(rvLlibres: RecyclerView) {
-        llibres.clear()
+
         //guardem les dades del usuari identificat
         val user = Firebase.auth.currentUser
         //agafem el mail com a identificador unic de l'usuari
         val mail = user?.email.toString()
         //buidem l/array de llibres perque no es vagin duplicant
-        //llibres.clear()
+        llibres.clear()
         //busquem a la col.leccio llibres els que tenen el mail de l'usuari identificat
         db.collection("llibres").whereEqualTo("mail", mail).get()
             .addOnSuccessListener { document ->

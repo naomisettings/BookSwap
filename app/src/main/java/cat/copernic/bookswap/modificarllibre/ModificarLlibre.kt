@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -25,12 +26,13 @@ import coil.api.load
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ModificarLlibre : Fragment() {
     //instancia a firebase
-    val db = FirebaseFirestore.getInstance()
+    private val db = FirebaseFirestore.getInstance()
     private lateinit var binding: FragmentModificarLlibreBinding
     private lateinit var args: ModificarLlibreArgs
 
@@ -45,8 +47,8 @@ class ModificarLlibre : Fragment() {
     private lateinit var imgfoto: ImageView
 
     //variable de la imatge a pujar al storage amb data i hora local
-    var fileName: String = SimpleDateFormat(
-        ModificarLlibre.FILENAME_FORMAT, Locale.US
+    private var fileName: String = SimpleDateFormat(
+        FILENAME_FORMAT, Locale.US
     ).format(System.currentTimeMillis()) + ".jpg"
 
     //instancia que referencia al storage
@@ -62,7 +64,7 @@ class ModificarLlibre : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_modificar_llibre, container, false)
@@ -74,6 +76,20 @@ class ModificarLlibre : Fragment() {
 
 
         binding.btnActualitzarLlibre.setOnClickListener {
+            //guardem la foto a la variable bitmap
+            val bitmap = (imgfoto.drawable as BitmapDrawable).bitmap
+            val baos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+            //pugem la foto al Storage
+            val uploadTask = refStorage.putBytes(data)
+            uploadTask.addOnFailureListener {
+                Snackbar.make(requireView(), "Error al guardar la foto", Snackbar.LENGTH_LONG).show()
+
+            }.addOnSuccessListener { taskSnapshot ->
+                //Snackbar.make(view, "Foto guardada", Snackbar.LENGTH_LONG).show()
+
+            }
             //cridem a la funcio per actualitzar el llibre passant com argument el id del llibre
             actualitzarLlibre(args.id)
             view?.findNavController()?.navigate(R.id.action_modificarLlibre_to_meusLlibres)
@@ -107,12 +123,10 @@ class ModificarLlibre : Fragment() {
     }
 
     private fun actualitzarLlibre(idLlibre:String) {
-        //guardem el id del llibre
-        //var idLlibre = args.id
-       // Log.d("id", idLlibre)
+
        //agafem el llibre de la coleccio amb el seu ID
         Log.i("idLlibre", idLlibre)
-        val actualitza = db.collection("llibres").addSnapshotListener { snapshot, error ->
+        db.collection("llibres").addSnapshotListener { snapshot, error ->
             //guardem els documents
             val doc = snapshot?.documents
             //iterem pels documents dels llibres
@@ -123,7 +137,6 @@ class ModificarLlibre : Fragment() {
                     val llibreId = it.id
                     //agafem el id del llibre
                     val sfDocRef = db.collection("llibres").document(llibreId)
-
                     Log.i("idLlibre", llibreId)
 
                     //agafem els valors dels spinners
@@ -133,7 +146,7 @@ class ModificarLlibre : Fragment() {
 
                     //actualitzem les dades
                     db.runTransaction { transaction ->
-                        val snapshot = transaction.get(sfDocRef)
+
                         transaction.update(sfDocRef,"titol", binding.editTextTitolModificar.text.toString())
                         transaction.update(sfDocRef, "assignatura", assignatura)
                         transaction.update(sfDocRef, "editorial", binding.editTextEditorialModificar.text.toString())
