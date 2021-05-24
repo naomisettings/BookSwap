@@ -8,5 +8,6 @@ class Llibre(
     var estat: String = "",
     var foto: String = "",
     var id: String = "",
-    var poblacio: String = ""
+    var poblacio: String = "",
+    var mail: String = ""
     )
