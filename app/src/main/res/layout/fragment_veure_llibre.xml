@@ -34,7 +34,6 @@
 
                 android:layout_marginTop="20dp"
 
-                android:text="Aquí el títol"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -67,17 +66,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtCurs" />
 
             <TextView
-                android:id="@+id/txtPoblacioVeureLl"
-                style="@style/CampsText"
-                android:layout_width="90dp"
-                android:layout_height="27dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/poblacioDosPunts"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
-
-            <TextView
                 android:id="@+id/txtCompartir"
                 style="@style/CampsText"
                 android:layout_width="90dp"
@@ -97,54 +85,30 @@
                 android:layout_marginTop="20dp"
                 android:text="Puntuació:"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPoblacioVeureLl" />
+                app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/editCurs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="75dp"
                 android:layout_marginEnd="20dp"
-                android:text="TextView"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtCurs"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txtCurs" />
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="20dp"
-                android:text="TextView"
-                app:layout_constraintBaseline_toBaselineOf="@+id/txtLogin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtLogin" />
-
-            <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/editEditorial"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="47dp"
                 android:layout_marginEnd="20dp"
-                android:text="TextView"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtEditorial"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txtEditorial" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:layout_marginEnd="20dp"
-                android:text="TextView"
-                app:layout_constraintBaseline_toBaselineOf="@+id/txtPoblacioVeureLl"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtPoblacioVeureLl" />
-
             <ImageButton
-                android:id="@+id/imageButton5"
+                android:id="@+id/bttnWhatsapp"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginStart="120dp"
@@ -155,14 +119,14 @@
                 app:srcCompat="@drawable/whatsapp" />
 
             <RatingBar
-                android:id="@+id/ratingBar2"
+                android:id="@+id/ratingBarPuntuacio"
                 android:layout_width="240dp"
                 android:layout_height="44dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="17dp"
+                android:layout_marginTop="15dp"
                 android:isIndicator="true"
                 app:layout_constraintStart_toEndOf="@+id/txtValoracioUsuari"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintTop_toBottomOf="@+id/editEditorial" />
 
             <Button
                 android:id="@+id/bttnValorar"
@@ -173,7 +137,15 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/valorar_usuari"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageButton5" />
+                app:layout_constraintTop_toBottomOf="@+id/bttnWhatsapp" />
+
+            <TextView
+                android:id="@+id/edAssignatura"
+                android:layout_width="255dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="17dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/txtLogin"
+                app:layout_constraintStart_toEndOf="@+id/txtLogin" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

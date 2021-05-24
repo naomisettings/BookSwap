@@ -89,7 +89,7 @@ class MeusLlibres : Fragment() {
 
                 }
                 adapterMeus = Adapter(llibres,
-                    CellClickListener {titol, assignatura, editorial, curs, estat, foto, id ->
+                    CellClickListener {titol, assignatura, editorial, curs, estat, foto, id, mail->
                         findNavController().navigate(
                             MeusLlibresDirections.actionMeusLlibresToModificarLlibre(
                                 titol,

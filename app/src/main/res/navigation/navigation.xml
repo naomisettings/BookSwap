@@ -45,13 +45,13 @@
             android:id="@+id/action_llistatLlibres_to_veureLlibre"
             app:destination="@id/veureLlibre" />
         <argument
-            android:name="assignatura"
-            app:argType="string" />
-        <argument
             android:name="titol"
             app:argType="string" />
         <argument
             android:name="curs"
+            app:argType="string" />
+        <argument
+            android:name="assignatura"
             app:argType="string" />
         <argument
             android:name="editorial"
@@ -64,6 +64,9 @@
             app:argType="string" />
         <argument
             android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="mail"
             app:argType="string" />
     </fragment>
     <fragment
@@ -160,25 +163,28 @@
             android:id="@+id/action_veureLlibre_to_llistatLlibres"
             app:destination="@id/llistatLlibres" />
         <argument
-            android:name="assignatura"
-            app:argType="string" />
-        <argument
             android:name="titol"
-            app:argType="string" />
-        <argument
-            android:name="estat"
             app:argType="string" />
         <argument
             android:name="curs"
             app:argType="string" />
         <argument
+            android:name="assignatura"
+            app:argType="string" />
+        <argument
             android:name="editorial"
+            app:argType="string" />
+        <argument
+            android:name="estat"
             app:argType="string" />
         <argument
             android:name="foto"
             app:argType="string" />
         <argument
             android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="mail"
             app:argType="string" />
     </fragment>
 </navigation>

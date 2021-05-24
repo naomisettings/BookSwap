@@ -266,12 +266,14 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
         //Comprova que el titol estigui emplenat
         if (titolEditText != "") {
+            //Treure caracters especials del edit text
+            val titolEdTxtNoCaracters = noCaractersEspecials(titolEditText)
             //Inicialitza el iterator
             val llibresIterator = llibresNoCaractersFiltrar.iterator()
             while (llibresIterator.hasNext()) {
                 //En el cas que un llibre NO sigui contingui el valor del editText titol s'esborra
                 //del llistat de llibres per mostar aquest llistat al recycler view
-                if (!llibresIterator.next().titol.contains(titolEditText))
+                if (!llibresIterator.next().titol.contains(titolEdTxtNoCaracters))
                     llibresIterator.remove()
             }
         }
@@ -283,7 +285,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         //En el cas que de premer un llibre s'obra el fragment veure llibre
         adapter = Adapter(
             llib,
-            CellClickListener { titol, assignatura, editorial, curs, estat, foto, id ->
+            CellClickListener { titol, assignatura, editorial, curs, estat, foto, id, mail ->
                 findNavController().navigate(
                     LlistatLlibresDirections.actionLlistatLlibresToVeureLlibre(
                         titol,
@@ -293,6 +295,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                         estat,
                         foto,
                         id,
+                        mail,
                     )
                 )
             })

@@ -71,9 +71,9 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
 }
 //Listener que gestiona els clics al elements del RecyclerView
 open class CellClickListener(val clickListener: (titol: String, assignatura: String,
-                                                 editorial: String, curs: String, estat:String, foto:String, id: String) -> Unit) {
+                                                 editorial: String, curs: String, estat:String, foto:String, id: String, mail:String) -> Unit) {
     fun onCellClickListener(data: Llibre) {
-        clickListener(data.titol, data.assignatura, data.editorial, data.curs, data.estat, data.foto, data.id)
+        clickListener(data.titol, data.assignatura, data.editorial, data.curs, data.estat, data.foto, data.id, data.mail)
 
     }
 }
