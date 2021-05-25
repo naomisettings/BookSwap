@@ -160,7 +160,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
                 val snackbar = Snackbar.make(it, R.string.dadesCorrectes, Snackbar.LENGTH_LONG).apply {
                     val layoutParams = ActionBar.LayoutParams(this.view.layoutParams)
                     layoutParams.gravity = Gravity.BOTTOM
-                    view.setBackgroundColor(Color.parseColor("#56D309"))
+                    view.setBackgroundColor(Color.parseColor("#FFFFFF"))
                     view.layoutParams = layoutParams
                 }
                 snackbar.setTextColor(Color.parseColor("#000000"))
