@@ -105,7 +105,7 @@ class ValoracionsFragment : Fragment() {
                 val usuariId = it.id
                 if(usuariConsulta[0].mail == mail){
                     val sfDocRef = db.collection("usuaris").document(usuariId)
-                    if(usuariConsulta[0].valoracio == 0){
+                    if(usuariConsulta[0].valoracio == 0.0){
 
                         db.runTransaction { transaction ->
 
