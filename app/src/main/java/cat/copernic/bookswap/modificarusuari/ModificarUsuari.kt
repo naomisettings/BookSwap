@@ -111,14 +111,21 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
 
                         //Dins aquesta funció es truca a modificarDadesBBDD i a modificar contrasenya
                         alertaModificarDades(usuariId)
+                    }
 
-
+                    if (usuari[0].admin){
+                        binding.bttnBaixaUsuari.visibility = View.INVISIBLE
+                        binding.bttnEsborrarUsuaris.visibility = View.VISIBLE
                     }
 
                     binding.bttnBaixaUsuari.setOnClickListener {
                         alertaBaixaUsuari(usuariId)
                     }
 
+                    binding.bttnEsborrarUsuaris.setOnClickListener{
+                        findNavController().navigate(R.id.action_modificarUsuari_to_esborrarUsuaris)
+
+                    }
                 }
             }
             .addOnFailureListener { exception ->
@@ -156,7 +163,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
             null
         }.addOnSuccessListener {
             Log.d("TAG", "Transaction success!")
-            view?.let {
+            /*view?.let {
                 val snackbar = Snackbar.make(it, R.string.dadesCorrectes, Snackbar.LENGTH_LONG).apply {
                     val layoutParams = ActionBar.LayoutParams(this.view.layoutParams)
                     layoutParams.gravity = Gravity.BOTTOM
@@ -166,6 +173,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
                 snackbar.setTextColor(Color.parseColor("#000000"))
                 snackbar.show()
             }
+             */
 
         }.addOnFailureListener { e ->
             Log.w("TAG2", "Transaction failure.", e)
@@ -349,6 +357,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
         }
         dialog!!.show()
     }
+
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 

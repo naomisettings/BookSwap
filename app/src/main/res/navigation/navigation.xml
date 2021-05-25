@@ -123,6 +123,9 @@
         <action
             android:id="@+id/action_modificarUsuari_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_modificarUsuari_to_esborrarUsuaris"
+            app:destination="@id/esborrarUsuaris" />
     </fragment>
     <fragment
         android:id="@+id/modificarLlibre"
@@ -222,5 +225,14 @@
         <argument
             android:name="mail"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/esborrarUsuaris"
+        android:name="cat.copernic.bookswap.esborrarusuaris.EsborrarUsuaris"
+        android:label="EsborrarUsuaris"
+        tools:layout="@layout/fragment_esborrar_usuaris">
+        <action
+            android:id="@+id/action_esborrarUsuaris_to_modificarUsuari"
+            app:destination="@id/modificarUsuari" />
     </fragment>
 </navigation>

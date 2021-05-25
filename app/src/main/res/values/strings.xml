@@ -74,4 +74,6 @@
     <string name="modifica_llibre">Modifica el teu llibre</string>
     <string name="puntuaciDosPunts">Puntuació:</string>
     <string name="dadesCorrectes">Dades actualitzades correctament</string>
+    <string name="esborrarUsuaris">Esborrar Usuaris</string>
+    <string name="esborrar">Esborrar</string>
 </resources>
