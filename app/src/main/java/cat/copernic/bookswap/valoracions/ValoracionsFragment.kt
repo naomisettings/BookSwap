@@ -16,6 +16,7 @@ import cat.copernic.bookswap.veurellibre.VeureLlibreArgs
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.getField
+import kotlin.math.roundToLong
 
 class ValoracionsFragment : Fragment() {
 
@@ -95,22 +96,22 @@ class ValoracionsFragment : Fragment() {
         Log.i("estat", estat.toString())
         Log.i("satisfaccio", satisfaccio.toString())
         Log.i("valoracioTotal", valoracioTotal.toString())
-        db.collection("usuaris").addSnapshotListener{ snapshot, error ->
-            //guardem els documents
-            val doc = snapshot?.documents
+        db.collection("usuaris").whereEqualTo("mail", mail).get().addOnSuccessListener{ docs ->
+
+            val usuariConsulta = docs.toObjects(UsuariDC::class.java)
             Log.i("inicifor", "inicifor")
-            doc?.forEach {
-                val usuariConsulta = it.toObject(UsuariDC::class.java)
+            docs?.forEach {
+
                 val usuariId = it.id
-                if(usuariConsulta?.mail == mail){
+                if(usuariConsulta[0].mail == mail){
                     val sfDocRef = db.collection("usuaris").document(usuariId)
-                    if(usuariConsulta.valoracio == 0){
+                    if(usuariConsulta[0].valoracio == 0){
 
                         db.runTransaction { transaction ->
 
                             transaction.update(sfDocRef, "valoracio", valoracioTotal)
 
-                        null
+
                         }.addOnSuccessListener {
                             Log.d("TAG", "Transaction success!")
                             view?.let {
@@ -131,16 +132,15 @@ class ValoracionsFragment : Fragment() {
                         }
                         Log.i("fi del if", "fi del if")
                     }else{
-                    //if(usuariConsulta?.valoracio != 0){
-
                         val valoracioMitjaConsulta = it.get("valoracio")
                         val mitjaConsulta: Double = valoracioMitjaConsulta as Double
                         val mitjana: Double = (mitjaConsulta + valoracioTotal) /2
+
                         Log.i("valoracioMitja", valoracioMitjaConsulta.toString())
-                        Log.i("mitjana", mitjana.toString())
+                        Log.i("mitjana", mitjana.toString().format("%.2f"))
                         db.runTransaction { transaction ->
                             transaction.update(sfDocRef, "valoracio", mitjana)
-                            null
+
                         }.addOnSuccessListener {
                         Log.d("TAG", "Transaction success!")
                         view?.let {
