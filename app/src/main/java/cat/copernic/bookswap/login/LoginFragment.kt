@@ -8,11 +8,13 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentLoginBinding
+import cat.copernic.bookswap.utils.UsuariDC
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -173,7 +175,9 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 "telefon" to telefon,
                 "poblacio" to poblacioStr,
                 "valoracio" to 0,
-                "comptador_valoracions" to 0
+                "comptador_valoracions" to 0,
+                "admin" to false,
+                "expulsat" to false
             )
 
             //Insert
@@ -209,14 +213,22 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         //Fa els editTextVisibles (estaven invisibles)
                         edTextVisibles()
 
+
                     } else {
+                        val usuarisDC = document.toObjects(UsuariDC::class.java)
+                        if (usuarisDC[0].expulsat) {
+                            edTextVisibles()
+                            binding.bttnGuardar.visibility = View.INVISIBLE
+                            alertaExpulsat()
 
-                        //Fa el navBar visible
-                        edTextInvisibles()
-                        val navBar: BottomNavigationView =
-                            requireActivity().findViewById(R.id.nav_view)
+                        }else {
+                            //Fa el navBar visible
+                            edTextInvisibles()
+                            val navBar: BottomNavigationView =
+                                requireActivity().findViewById(R.id.nav_view)
 
-                        navBar.visibility = View.VISIBLE
+                            navBar.visibility = View.VISIBLE
+                        }
                     }
                 }
         }
@@ -253,6 +265,25 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             navBar.visibility = View.GONE
         }
+    }
+
+    private fun alertaExpulsat() {
+
+        val dialog = context?.let {
+            AlertDialog.Builder(it)
+                .setIcon(R.drawable.bookswaplogo)
+                .setTitle(R.string.expulsatTitol)
+                .setMessage(R.string.expulsat)
+                .setNegativeButton(R.string.acceptar) { view, _ ->
+                    view.dismiss()
+                }
+                .setPositiveButton(R.string.cancelar) { view, _ ->
+                    view.cancel()
+                }
+                .setCancelable(false)
+                .create()
+        }
+        dialog!!.show()
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

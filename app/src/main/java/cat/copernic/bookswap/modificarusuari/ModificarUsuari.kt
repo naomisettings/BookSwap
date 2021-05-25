@@ -1,8 +1,6 @@
 package cat.copernic.bookswap.modificarusuari
 
-import android.app.ActionBar
 import android.content.ContentValues
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
