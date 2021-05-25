@@ -175,6 +175,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bttnSingOut" />
 
+            <Button
+                android:id="@+id/bttnEsborrarUsuaris"
+                style="@style/buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/esborrarUsuaris"
+                android:visibility = "invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bttnSingOut" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
