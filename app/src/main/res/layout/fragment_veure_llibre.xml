@@ -73,7 +73,7 @@
                 android:layout_height="27dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/compartir"
+                android:text="Contacte:"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtValoracioUsuari" />
 
@@ -114,24 +114,35 @@
                 android:id="@+id/bttnWhatsapp"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginStart="120dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="20dp"
                 android:contentDescription="@string/whatssapp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtCompartir"
                 app:layout_constraintTop_toBottomOf="@+id/txtValoracioUsuari"
                 app:srcCompat="@drawable/whatsapp" />
+
+            <ImageButton
+                android:id="@+id/bttnMail"
+                android:layout_width="67dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/whatssapp"
+                app:layout_constraintStart_toEndOf="@+id/bttnWhatsapp"
+                app:layout_constraintTop_toBottomOf="@+id/txtValoracioUsuari"
+                app:srcCompat="@drawable/email" />
 
             <RatingBar
                 android:id="@+id/ratingBarPuntuacio"
                 android:layout_width="240dp"
                 android:layout_height="44dp"
-                android:numStars="5"
-                android:stepSize="0.5"
-                android:progressTint="#FFEB3B"
-                android:progressBackgroundTint="@color/cardview_dark_background"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:isIndicator="true"
+                android:numStars="5"
+                android:progressBackgroundTint="@color/cardview_dark_background"
+                android:progressTint="#FFEB3B"
+                android:stepSize="0.5"
                 app:layout_constraintStart_toEndOf="@+id/txtValoracioUsuari"
                 app:layout_constraintTop_toBottomOf="@+id/editEditorial" />
 
@@ -140,17 +151,18 @@
                 style="@style/buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="100dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/valorar_usuari"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bttnWhatsapp"/>
-                <!-- android:visibility="invisible"-->
+                app:layout_constraintTop_toBottomOf="@+id/bttnWhatsapp" />
+            <!-- android:visibility="invisible"-->
 
             <TextView
                 android:id="@+id/edAssignatura"
                 android:layout_width="255dp"
-                android:layout_height="19dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
                 android:textSize="18sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtLogin"

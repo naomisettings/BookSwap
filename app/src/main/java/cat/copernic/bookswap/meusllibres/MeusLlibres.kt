@@ -80,7 +80,8 @@ class MeusLlibres : Fragment() {
                             curs = llibresDC[i].curs,
                             estat = llibresDC[i].estat,
                             foto = llibresDC[i].foto,
-                            id = llibresDC[i].id
+                            id = llibresDC[i].id,
+                            poblacio = llibresDC[i].poblacio
 
                         )
                         llibres.add(llibresConsulta)
