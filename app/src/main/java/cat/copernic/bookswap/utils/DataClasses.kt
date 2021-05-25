@@ -5,7 +5,8 @@ data class UsuariDC(
     var nom: String = "",
     var telefon: String = "",
     var poblacio: String = "",
-    var valoracio: Int = 6
+    var valoracio: Int = 6,
+    var comptador_valoracions: Int = 0
 )
 data class Llibres(
     var titol: String ="",

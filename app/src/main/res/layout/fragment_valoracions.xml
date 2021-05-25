@@ -50,6 +50,10 @@
             android:id="@+id/ratingBarTemps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:progressTint="#FFEB3B"
+            android:progressBackgroundTint="@color/cardview_dark_background"
             android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -60,6 +64,10 @@
             android:id="@+id/ratingBarSatisfaccio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:progressTint="#FFEB3B"
+            android:progressBackgroundTint="@color/cardview_dark_background"
             android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -70,6 +78,10 @@
             android:id="@+id/ratingBarEstat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:progressTint="#FFEB3B"
+            android:progressBackgroundTint="@color/cardview_dark_background"
             android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -101,6 +113,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingBarEstat" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

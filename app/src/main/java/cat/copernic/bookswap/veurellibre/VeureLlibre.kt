@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentVeureLlibreBinding
 import cat.copernic.bookswap.llistatllibres.LlistatLlibresArgs
@@ -37,6 +38,19 @@ class VeureLlibre : Fragment() {
         mostrarImatgePicasso()
 
         consultaPuntuacioUsuariLlibre()
+
+        binding.bttnValorar.setOnClickListener { view: View ->
+            view.findNavController().navigate(VeureLlibreDirections.actionVeureLlibreToValoracionsFragment(
+                args.titol,
+                args.assignatura,
+                args.editorial,
+                args.curs,
+                args.estat,
+                args.foto,
+                args.id,
+                args.mail))
+
+        }
 
 
         return binding.root
