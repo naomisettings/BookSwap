@@ -7,7 +7,8 @@ data class UsuariDC(
     var poblacio: String = "",
     var valoracio: Double = 6.0,
     var comptador_valoracions: Int = 0,
-    var admin: Boolean = false
+    var admin: Boolean = false,
+    var expulsat: Boolean = false
 )
 data class Llibres(
     var titol: String ="",
