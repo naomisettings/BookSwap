@@ -25,7 +25,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtTitolAfegirLlibre"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/bookswaplogo" />
 
             <TextView
                 android:id="@+id/txtTitolAfegirLlibre"
