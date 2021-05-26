@@ -78,4 +78,5 @@
     <string name="esborrar">Esborrar</string>
     <string name="expulsat">Has sigut expulsat de Book Swap!&#xD;Gràcies per confiar en nosaltres!</string>
     <string name="expulsatTitol">Expulsat</string>
+    <string name="filtrarLlibresBuit">No hi ha llibres disponibles amb aquest filtre</string>
 </resources>
