@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.bookswap.databinding.ItemLlibreBinding
 import coil.api.load
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.storage.FirebaseStorage
 import kotlin.coroutines.coroutineContext
 
@@ -30,11 +32,12 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
     // i torna el nou objecte ViewHolder que conté aquest disseny
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-
-
         //return ViewHolder(binding)
         return ViewHolder(ItemLlibreBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
+
+
+
 
     // lliguem els ítems amb cada ítem de la llista mLlibres quin serà
     // es mostra a la vista de reciclatge
@@ -49,8 +52,12 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
                 binding.edEstat.text=this.estat
                 binding.edPoblacio.text = this.poblacio
 
+
                 if (this.poblacio_login != this.poblacio) {
                     binding.edPoblacio.setTextColor(Color.parseColor("#FF9800"))
+                }
+                if(this.estat != "Disponible"){
+                    binding.edEstat.setTextColor(Color.parseColor("#ED1313"))
                 }
                 val media: String = mLlibres[position].foto
 
@@ -73,6 +80,7 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
             }
         }
     }
+
 
     // torna la mida de la llista mLlibres
     override fun getItemCount(): Int {
