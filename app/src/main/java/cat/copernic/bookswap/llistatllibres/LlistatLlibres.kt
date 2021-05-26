@@ -1,10 +1,12 @@
 package cat.copernic.bookswap.llistatllibres
 
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.content.ContentValues
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentLlistatLlibresBinding
 import cat.copernic.bookswap.utils.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -287,6 +290,15 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
         //Carregem el recyclerView amb els llibres amb la ortografia correcte
         carregarLlibresRyclrView(llibresFiltratsBenEscrits)
+
+        if (llibresFiltratsBenEscrits.isEmpty()) {
+            view?.let {
+                Snackbar.make(it, R.string.filtrarLlibresBuit, Snackbar.LENGTH_LONG).apply {
+                    val layoutParams = ActionBar.LayoutParams(this.view.layoutParams)
+                    layoutParams.gravity = Gravity.BOTTOM
+                }.show()
+            }
+        }
     }
 
     private fun buscarTitol() {
@@ -303,7 +315,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             while (llibresIterator.hasNext()) {
                 //En el cas que un llibre NO sigui contingui el valor del editText titol s'esborra
                 //del llistat de llibres per mostar aquest llistat al recycler view
-                    val llib = llibresIterator.next().titol
+                val llib = llibresIterator.next().titol
                 Log.d("llib", llib)
                 Log.d("llib2", titolEdTxtNoCaracters)
                 if (!llib.contains(titolEdTxtNoCaracters)) {

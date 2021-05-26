@@ -56,30 +56,30 @@
 
     <string-array name="cursos">
         <item>@string/seleccionarCurs</item>
-        <item>@string/primerprimaria</item>
-        <item>@string/segonprimaria</item>
-        <item>@string/tercerprimaria</item>
-        <item>@string/quartprimaria</item>
-        <item>@string/cinqueprimaria</item>
-        <item>@string/segonprimaria</item>
-        <item>@string/primereso</item>
-        <item>@string/segoneso</item>
-        <item>@string/tercereso</item>
-        <item>@string/quarteso</item>
+        <item>1er Primaria</item>
+        <item>2n Primaria</item>
+        <item>3er Primaria</item>
+        <item>4t Primaria</item>
+        <item>5é Primaria</item>
+        <item>6é Primaria</item>
+        <item>1er ESO</item>
+        <item>2n ESO</item>
+        <item>3er ESO</item>
+        <item>4t ESO</item>
     </string-array>
 
     <string-array name="assignatures">
         <item>@string/seleccionarAssignatura</item>
-        <item>@string/mates</item>
-        <item>@string/catala</item>
-        <item>@string/castella</item>
-        <item>@string/angles</item>
-        <item>@string/naturals</item>
-        <item>@string/socials</item>
-        <item>@string/tecnologia</item>
-        <item>@string/fisica</item>
-        <item>@string/informatica</item>
-        <item>@string/musica</item>
+        <item>Matemàtiques</item>
+        <item>Català</item>
+        <item>Castellà</item>
+        <item>Anglès</item>
+        <item>Naturals</item>
+        <item>Socials</item>
+        <item>Tecnologia</item>
+        <item>Fisica</item>
+        <item>Informàtica</item>
+        <item>Música</item>
 
     </string-array>
     <string-array name="estat">
