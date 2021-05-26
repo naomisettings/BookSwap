@@ -21,8 +21,8 @@
 
             <TextView
                 android:id="@+id/titol"
-                android:layout_width="239dp"
-                android:layout_height="wrap_content"
+                android:layout_width="213dp"
+                android:layout_height="24dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
@@ -72,40 +72,44 @@
 
             <TextView
                 android:id="@+id/edAssignatura"
-                android:layout_width="137dp"
+                android:layout_width="115dp"
                 android:layout_height="22dp"
                 android:layout_marginStart="10dp"
                 android:textSize="16sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/campAssigunatura"
+                app:layout_constraintEnd_toStartOf="@+id/imgCardView"
                 app:layout_constraintStart_toEndOf="@+id/campAssigunatura" />
 
             <TextView
                 android:id="@+id/edEditorial"
-                android:layout_width="142dp"
-                android:layout_height="20dp"
+                android:layout_width="118dp"
+                android:layout_height="21dp"
                 android:layout_marginStart="34dp"
                 android:textSize="16sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/campEditorial"
+                app:layout_constraintEnd_toStartOf="@+id/imgCardView"
                 app:layout_constraintStart_toEndOf="@+id/campEditorial" />
 
             <TextView
                 android:id="@+id/edCurs"
-                android:layout_width="142dp"
-                android:layout_height="22dp"
+                android:layout_width="117dp"
+                android:layout_height="24dp"
                 android:layout_marginStart="34dp"
                 android:textSize="16sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/campCurs"
+                app:layout_constraintEnd_toStartOf="@+id/imgCardView"
                 app:layout_constraintStart_toEndOf="@+id/campEditorial" />
 
             <ImageView
                 android:id="@+id/imgCardView"
-                android:layout_width="103dp"
-                android:layout_height="147dp"
+                android:layout_width="96dp"
+                android:layout_height="148dp"
                 android:contentDescription="@string/imgCardView"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/titol"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/bookswaplogo" />
 
             <TextView
                 android:id="@+id/campEstat"
@@ -133,23 +137,28 @@
 
             <TextView
                 android:id="@+id/edEstat"
-                android:layout_width="143dp"
+                android:layout_width="119dp"
                 android:layout_height="21dp"
                 android:layout_marginStart="54dp"
                 android:textColor="#56D309"
                 android:textSize="16sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/campEstat"
+                app:layout_constraintEnd_toStartOf="@+id/imgCardView"
                 app:layout_constraintStart_toEndOf="@+id/campEstat" />
 
             <TextView
                 android:id="@+id/edPoblacio"
-                android:layout_width="143dp"
+                android:layout_width="117dp"
                 android:layout_height="43dp"
                 android:layout_marginStart="54dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:textColor="#56D309"
                 android:textSize="16sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/campPoblacio"
-                app:layout_constraintStart_toEndOf="@+id/campEstat" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imgCardView"
+                app:layout_constraintStart_toEndOf="@+id/campEstat"
+                app:layout_constraintTop_toBottomOf="@+id/edEstat" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
