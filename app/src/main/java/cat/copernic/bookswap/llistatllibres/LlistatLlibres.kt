@@ -78,10 +78,6 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             veureLlibres()
         }
 
-        //Botó per filtrar
-        binding.bttnBuscar.setOnClickListener {
-            filtrarPerCamp()
-        }
 
         return binding.root
     }
@@ -143,6 +139,12 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                             //Carregem el recyclerView
                             carregarLlibresRyclrView(llibres)
 
+
+                            //Botó per filtrar
+                            binding.bttnBuscar.setOnClickListener {
+                                filtrarPerCamp()
+                            }
+
                         }.addOnFailureListener { exception ->
                             Log.w(ContentValues.TAG, "Error getting documents: ", exception)
 
@@ -169,12 +171,14 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             val assignaturaNoAscii = noCaractersEspecials(llib.assignatura)
             val cursNoAscii = noCaractersEspecials(llib.curs)
 
+            val titolNoAscii = noCaractersEspecials(llib.titol)
+
             val llibrLliure = Llibre(
                 poblacio = poblacioNoAscii,
                 assignatura = assignaturaNoAscii,
                 curs = cursNoAscii,
                 editorial = llib.editorial,
-                titol = llib.titol,
+                titol = titolNoAscii,
                 estat = llib.estat,
                 foto = llib.foto,
                 id = llib.id,
@@ -192,8 +196,8 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         valor: String
     ): String {
 
-        val accents = "àèéíòóúïüç"
-        val correct = "aeeioouiuc"
+        val accents = "àáèéíòóúïüç"
+        val correct = "aaeeioouiuc"
 
         //Passa el sting a minuscula
         var valorNoAscii = valor.toLowerCase(Locale.ROOT)
@@ -214,6 +218,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         if (valorNoAscii.contains("-")) {
             valorNoAscii = valorNoAscii.replace("-", "")
         }
+
         //Retorna el string en ASCII
         return valorNoAscii
     }
@@ -298,8 +303,12 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             while (llibresIterator.hasNext()) {
                 //En el cas que un llibre NO sigui contingui el valor del editText titol s'esborra
                 //del llistat de llibres per mostar aquest llistat al recycler view
-                if (!llibresIterator.next().titol.contains(titolEdTxtNoCaracters))
+                    val llib = llibresIterator.next().titol
+                Log.d("llib", llib)
+                Log.d("llib2", titolEdTxtNoCaracters)
+                if (!llib.contains(titolEdTxtNoCaracters)) {
                     llibresIterator.remove()
+                }
             }
         }
     }
