@@ -15,10 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentMeusLlibresBinding
-import cat.copernic.bookswap.utils.Adapter
-import cat.copernic.bookswap.utils.CellClickListener
-import cat.copernic.bookswap.utils.Llibre
-import cat.copernic.bookswap.utils.Llibres
+import cat.copernic.bookswap.utils.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -26,16 +23,19 @@ import com.google.firebase.ktx.Firebase
 
 class MeusLlibres : Fragment() {
     private lateinit var binding: FragmentMeusLlibresBinding
+
     //instancia a firebase
     val db = FirebaseFirestore.getInstance()
     var llibres = arrayListOf<Llibre>()
+
     //adapter
     private lateinit var adapterMeus: Adapter
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View {
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_meus_llibres, container, false)
@@ -69,7 +69,7 @@ class MeusLlibres : Fragment() {
         //busquem a la col.leccio llibres els que tenen el mail de l'usuari identificat
         db.collection("llibres").whereEqualTo("mail", mail).get()
             .addOnSuccessListener { document ->
-                if(document != null){
+                if (document != null) {
                     val llibresDC = document.toObjects(Llibres::class.java)
                     for (i in 0 until llibresDC.size) {
 
@@ -84,34 +84,46 @@ class MeusLlibres : Fragment() {
                             poblacio = llibresDC[i].poblacio
 
                         )
+
                         llibres.add(llibresConsulta)
-
-
                     }
 
+                    db.collection("usuaris").whereEqualTo("mail", user?.email).get()
+                        .addOnSuccessListener { doc ->
+
+                            val usuariDC = doc.toObjects(UsuariDC::class.java)
+
+                            llibres.forEach {
+                                it.poblacio_login = usuariDC[0].poblacio
+                            }
+
+                            adapterMeus = Adapter(llibres,
+                                CellClickListener { titol, assignatura, editorial, curs, estat, foto, id, mail ->
+                                    findNavController().navigate(
+                                        MeusLlibresDirections.actionMeusLlibresToModificarLlibre(
+                                            titol,
+                                            assignatura,
+                                            editorial,
+                                            curs,
+                                            estat,
+                                            foto,
+                                            id,
+                                        )
+                                    )
+                                })
+                            rvLlibres.adapter = adapterMeus
+                            rvLlibres.layoutManager = LinearLayoutManager(this.context)
+
+
+                        }.addOnFailureListener { exception ->
+                            Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+                        }
                 }
-                adapterMeus = Adapter(llibres,
-                    CellClickListener {titol, assignatura, editorial, curs, estat, foto, id, mail->
-                        findNavController().navigate(
-                            MeusLlibresDirections.actionMeusLlibresToModificarLlibre(
-                                titol,
-                                assignatura,
-                                editorial,
-                                curs,
-                                estat,
-                                foto,
-                                id,
-                            )
-                        )
-                    })
-                rvLlibres.adapter = adapterMeus
-                rvLlibres.layoutManager = LinearLayoutManager(this.context)
-
-
-        }.addOnFailureListener { exception ->
+            }.addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents: ", exception)
-            }
 
+
+            }
 
 
     }
