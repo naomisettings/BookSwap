@@ -4,9 +4,7 @@ package cat.copernic.bookswap.meusllibres
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -78,7 +76,7 @@ class MeusLlibres : Fragment() {
                 esborrarLlibre(llibreEsborrarId)
 
                 //snackbar que informa que s'ha esborrat l'article i permet desfer l'accio
-                Snackbar.make(binding.root, "Esborrat!", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.root, R.string.esborrat, Snackbar.LENGTH_LONG).show()
             }
 
         }).attachToRecyclerView(binding.meusLlibresList)
@@ -86,7 +84,7 @@ class MeusLlibres : Fragment() {
 
 
 
-
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -104,11 +102,11 @@ class MeusLlibres : Fragment() {
                     //Extreu la id del document
                     val llibresId = element.id
                     Log.i("llibreEsborrarId", llibreEsborrarId)
-                    //for (x in 0 until llibreConsulta.size) {
+
                     if (llibreConsulta[index].id == llibreEsborrarId) {
                         Log.i("idLlibreConsulta", llibreConsulta[index].id)
                         val sfDocRefLlibre = db.collection("llibres").document(llibresId)
-                        Log.i("sfDocRefLlibre", sfDocRefLlibre.toString())
+
                         //Esborra els llibres publicats per l'usuari
                         db.runTransaction { transaction ->
                             //esborrem el llibre del Firestore
@@ -118,7 +116,7 @@ class MeusLlibres : Fragment() {
                             view?.let {
                                 Snackbar.make(
                                     it,
-                                    "Llibre esborrat",
+                                    R.string.llibreEsborrat,
                                     Snackbar.LENGTH_LONG
                                 ).show()
                             }
@@ -201,6 +199,14 @@ class MeusLlibres : Fragment() {
 
 
             }
+
+
+    }
+    //carreguem el menus per descarregar el manual d'usuari
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.manual, menu)
+
 
 
     }

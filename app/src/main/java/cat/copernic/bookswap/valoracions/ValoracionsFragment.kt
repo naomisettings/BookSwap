@@ -121,7 +121,7 @@ class ValoracionsFragment : Fragment() {
                             view?.let {
                                 Snackbar.make(
                                     it,
-                                    "Valoració guardada",
+                                    R.string.valoracioGuardada,
                                     Snackbar.LENGTH_LONG
                                 ).show()
                             }
@@ -131,14 +131,14 @@ class ValoracionsFragment : Fragment() {
 
                                 Snackbar.make(
                                     it,
-                                    "Error al guardar la valoració",
+                                    R.string.errorValoracio,
                                     Snackbar.LENGTH_LONG
                                 )
                                     .show()
                             }
 
                         }
-                        Log.i("fi del if", "fi del if")
+
                     } else {
                         //si l'usuari ja tenia valoracions fa la mitjana
                         //entre la nova i les existents i l'actulitzem
@@ -156,7 +156,7 @@ class ValoracionsFragment : Fragment() {
                             view?.let {
                                 Snackbar.make(
                                     it,
-                                    "Valoració guardada",
+                                    R.string.valoracioGuardada,
                                     Snackbar.LENGTH_LONG
                                 ).show()
                             }
@@ -166,7 +166,7 @@ class ValoracionsFragment : Fragment() {
 
                                 Snackbar.make(
                                     it,
-                                    "Error al guardar la valoració",
+                                    R.string.errorValoracio,
                                     Snackbar.LENGTH_LONG
                                 )
                                     .show()

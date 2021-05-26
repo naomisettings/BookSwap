@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/llistatLlibres"
         android:icon="@drawable/books"
@@ -8,10 +9,12 @@
     <item
         android:id="@+id/meusLlibres"
         android:icon="@drawable/book"
-        android:title="Els meus llibres" />
+        android:title="Meus llibres" />
     <item
         android:id="@+id/modificarUsuari"
         android:icon="@drawable/group"
         android:title="Perfil" />
+
+
 
 </menu>

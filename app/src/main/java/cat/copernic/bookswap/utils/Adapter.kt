@@ -56,7 +56,7 @@ class Adapter(var mLlibres: List<Llibre>, var cellClickListener: CellClickListen
                 if (this.poblacio_login != this.poblacio) {
                     binding.edPoblacio.setTextColor(Color.parseColor("#FF9800"))
                 }
-                if(this.estat != "Disponible"){
+                if(this.estat != "Disponible" && this.estat != "Available"){
                     binding.edEstat.setTextColor(Color.parseColor("#ED1313"))
                 }
                 val media: String = mLlibres[position].foto

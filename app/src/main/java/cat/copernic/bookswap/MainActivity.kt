@@ -2,13 +2,22 @@ package cat.copernic.bookswap
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.storage.FileDownloadTask
+import com.google.firebase.storage.FirebaseStorage
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
+    //guardem la instancia a FirebaseStorage
+    val storage = FirebaseStorage.getInstance().reference
+    //guardem la ruta i el nom de la imatge del storage
+    val docRef = storage.child("docs/Manual.pdf")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,11 +32,12 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.llistatLlibres,
                 R.id.meusLlibres,
-                R.id.modificarUsuari,))
+                R.id.modificarUsuari,
+                R.id.manual,))
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        
+
         NavigationUI.setupActionBarWithNavController(this,navController)
 
     }
@@ -35,6 +45,22 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.myNavHostFragment)
         return navController.navigateUp()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.manual -> descarregarManual()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun descarregarManual() {
+
+        docRef.child("gs://bookswap-7d63c.appspot.com/docs/Manual.pdf").downloadUrl.addOnCanceledListener {
+            Log.i("Descarrega", "Descarrega correcta")
+        }.addOnFailureListener {
+            Log.i("ErrorDescarrega", "Descarrega incorrecta")
+        }
     }
 
 

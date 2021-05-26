@@ -141,7 +141,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
             if (TextUtils.isEmpty(binding.editTextTitolAfegir.text) ||
                  TextUtils.isEmpty(binding.editTextEditorial.text)
             ) {
-                Snackbar.make(view, "Has d'omplir tots els camps", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(view, R.string.omplirCamps, Snackbar.LENGTH_LONG).show()
             } else {
                 //guardem la foto a la variable bitmap
                 val bitmap = (imgfoto.drawable as BitmapDrawable).bitmap
@@ -151,7 +151,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                 //pugem la foto al Storage
                 val uploadTask = refStorage.putBytes(data)
                 uploadTask.addOnFailureListener {
-                    Snackbar.make(view, "Error al guardar la foto", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(view, R.string.errorFoto, Snackbar.LENGTH_LONG).show()
 
                 }.addOnSuccessListener { taskSnapshot ->
                     //Snackbar.make(view, "Foto guardada", Snackbar.LENGTH_LONG).show()
@@ -173,11 +173,11 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                 assignatura = spinnerAssignatura.selectedItem.toString()
                 //comprovem que s'ha seleccionat un valor als spinners
                 if(positionSpnEstat ==0){
-                    Snackbar.make(view, "Selecciona un estat", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(view, R.string.seleccionaEstat, Snackbar.LENGTH_LONG).show()
                 }else if(positionSpnAssignatura== 0){
-                    Snackbar.make(view, "Selecciona una assignatura", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(view, R.string.seleccionaAssignatura, Snackbar.LENGTH_LONG).show()
                 }else if(positionSpnCurs== 0){
-                    Snackbar.make(view, "Selecciona un curs", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(view, R.string.seleccionaCurs, Snackbar.LENGTH_LONG).show()
                 }else {
                     //cridem a la funcio afegirLlibre per guardar el nou llibre
                     afegirLlibre()
@@ -263,8 +263,8 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
 
             } else {
                 Snackbar.make(
-                    requireView(), "Has denegat els permisos de la camara. \n"
-                            + "Els pots modificar a la configuració del mòbil", Snackbar.LENGTH_LONG
+                    requireView(), R.string.permisosCamara +
+                            + R.string.infoCamara, Snackbar.LENGTH_LONG
                 ).show()
 
             }
