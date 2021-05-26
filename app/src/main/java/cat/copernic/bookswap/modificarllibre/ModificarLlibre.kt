@@ -42,7 +42,7 @@ class ModificarLlibre : Fragment() {
     private lateinit var spinnerModificarAssignatura: Spinner
     private var estat = ""
     private var curs = ""
-    private var assignatura=""
+    private var assignatura = ""
 
     private lateinit var imgfoto: ImageView
 
@@ -84,7 +84,8 @@ class ModificarLlibre : Fragment() {
             //pugem la foto al Storage
             val uploadTask = refStorage.putBytes(data)
             uploadTask.addOnFailureListener {
-                Snackbar.make(requireView(), "Error al guardar la foto", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(requireView(), "Error al guardar la foto", Snackbar.LENGTH_LONG)
+                    .show()
 
             }.addOnSuccessListener { taskSnapshot ->
                 //Snackbar.make(view, "Foto guardada", Snackbar.LENGTH_LONG).show()
@@ -117,14 +118,12 @@ class ModificarLlibre : Fragment() {
 
         }
 
-
-
         return binding.root
     }
 
-    private fun actualitzarLlibre(idLlibre:String) {
+    private fun actualitzarLlibre(idLlibre: String) {
 
-       //agafem el llibre de la coleccio amb el seu ID
+        //agafem el llibre de la coleccio amb el seu ID
         Log.i("idLlibre", idLlibre)
         db.collection("llibres").addSnapshotListener { snapshot, error ->
             //guardem els documents
@@ -132,7 +131,7 @@ class ModificarLlibre : Fragment() {
             //iterem pels documents dels llibres
             doc?.forEach {
                 val llibreConsulta = it.toObject(Llibres::class.java)
-                if (llibreConsulta?.id == idLlibre){
+                if (llibreConsulta?.id == idLlibre) {
                     //guardem el id del document del llibre seleccionat
                     val llibreId = it.id
                     //agafem el id del llibre
@@ -147,9 +146,17 @@ class ModificarLlibre : Fragment() {
                     //actualitzem les dades
                     db.runTransaction { transaction ->
 
-                        transaction.update(sfDocRef,"titol", binding.editTextTitolModificar.text.toString())
+                        transaction.update(
+                            sfDocRef,
+                            "titol",
+                            binding.editTextTitolModificar.text.toString()
+                        )
                         transaction.update(sfDocRef, "assignatura", assignatura)
-                        transaction.update(sfDocRef, "editorial", binding.editTextEditorialModificar.text.toString())
+                        transaction.update(
+                            sfDocRef,
+                            "editorial",
+                            binding.editTextEditorialModificar.text.toString()
+                        )
                         transaction.update(sfDocRef, "curs", curs)
                         transaction.update(sfDocRef, "estat", estat)
                         transaction.update(sfDocRef, "foto", fileName)
@@ -167,7 +174,11 @@ class ModificarLlibre : Fragment() {
                         Log.w("TAG2", "Transaction failure.", e)
                         view?.let {
 
-                            Snackbar.make(it, "Error a l'actualitzar el llibre", Snackbar.LENGTH_LONG)
+                            Snackbar.make(
+                                it,
+                                "Error a l'actualitzar el llibre",
+                                Snackbar.LENGTH_LONG
+                            )
                                 .show()
                         }
 
@@ -175,16 +186,6 @@ class ModificarLlibre : Fragment() {
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
 
 
     }
@@ -203,7 +204,7 @@ class ModificarLlibre : Fragment() {
         spinnerModificarEstat = binding.spnModificarEstat
         //carreguem els possibles estats a l'spinner
         context?.let {
-            ArrayAdapter.createFromResource(it,R.array.estat, android.R.layout.simple_spinner_item)
+            ArrayAdapter.createFromResource(it, R.array.estat, android.R.layout.simple_spinner_item)
                 .also { adapter ->
                     adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
                     //guardem la posicio del valor
@@ -217,7 +218,11 @@ class ModificarLlibre : Fragment() {
         spinnerModificarCurs = binding.spnModificarCurs
         //carreguem els possibles estats a l'spinner
         context?.let {
-            ArrayAdapter.createFromResource(it,R.array.cursos, android.R.layout.simple_spinner_item)
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.cursos,
+                android.R.layout.simple_spinner_item
+            )
                 .also { adapter ->
                     adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
                     //guardem la posicio del valor
@@ -231,7 +236,11 @@ class ModificarLlibre : Fragment() {
         spinnerModificarAssignatura = binding.spnModificarAssignatura
         //carreguem els possibles estats a l'spinner
         context?.let {
-            ArrayAdapter.createFromResource(it,R.array.assignatures, android.R.layout.simple_spinner_item)
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.assignatures,
+                android.R.layout.simple_spinner_item
+            )
                 .also { adapter ->
                     adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
                     //guardem la posicio del valor
@@ -243,14 +252,13 @@ class ModificarLlibre : Fragment() {
         }
 
 
-
         //per carregar la imatge del llibre selecionat
         val storageRef = FirebaseStorage.getInstance().reference
         val imageRef = storageRef.child("images/${args.foto}")
 
-        imageRef.downloadUrl.addOnSuccessListener { url->
+        imageRef.downloadUrl.addOnSuccessListener { url ->
             binding.imageViewModificarLlibre.load(url)
-        }.addOnFailureListener {  }
+        }.addOnFailureListener { }
 
         Log.i("idmostrar", args.id)
 
@@ -260,7 +268,7 @@ class ModificarLlibre : Fragment() {
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
-        if (requestCode ==  CAMERA_PERMISSION_CODE) {
+        if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(intent, CAMERA_REQUEST_CODE)

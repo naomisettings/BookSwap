@@ -12,11 +12,8 @@ import androidx.navigation.findNavController
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentValoracionsBinding
 import cat.copernic.bookswap.utils.UsuariDC
-import cat.copernic.bookswap.veurellibre.VeureLlibreArgs
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.getField
-import kotlin.math.roundToLong
 
 class ValoracionsFragment : Fragment() {
 
@@ -59,30 +56,36 @@ class ValoracionsFragment : Fragment() {
         }
 
 
-
+        //guardem les valoracions enviant les dades del llibre al fragment VeureLLibre
         binding.btnOk.setOnClickListener {
-            valoracions(tempsValor,estatValor,satisfaccioValor)
-            view?.findNavController()?.navigate(ValoracionsFragmentDirections.actionValoracionsFragmentToVeureLlibre(
-                args.titol,
-                args.assignatura,
-                args.editorial,
-                args.curs,
-                args.estat,
-                args.foto,
-                args.id,
-                args.mail))
+            valoracions(tempsValor, estatValor, satisfaccioValor)
+            view?.findNavController()?.navigate(
+                ValoracionsFragmentDirections.actionValoracionsFragmentToVeureLlibre(
+                    args.titol,
+                    args.assignatura,
+                    args.editorial,
+                    args.curs,
+                    args.estat,
+                    args.foto,
+                    args.id,
+                    args.mail
+                )
+            )
         }
-
+        //cancelem les valoracions enviant les dades del llibre al fragment VeureLLibre
         binding.btnCancelar.setOnClickListener {
-            view?.findNavController()?.navigate(ValoracionsFragmentDirections.actionValoracionsFragmentToVeureLlibre(
-                args.titol,
-                args.assignatura,
-                args.editorial,
-                args.curs,
-                args.estat,
-                args.foto,
-                args.id,
-                args.mail))
+            view?.findNavController()?.navigate(
+                ValoracionsFragmentDirections.actionValoracionsFragmentToVeureLlibre(
+                    args.titol,
+                    args.assignatura,
+                    args.editorial,
+                    args.curs,
+                    args.estat,
+                    args.foto,
+                    args.id,
+                    args.mail
+                )
+            )
         }
 
         return binding.root
@@ -90,22 +93,23 @@ class ValoracionsFragment : Fragment() {
 
     private fun valoracions(temps: Double, estat: Double, satisfaccio: Double) {
         args = ValoracionsFragmentArgs.fromBundle(requireArguments())
+        //guardem la mitja de les 3 valoracions entrades
         val valoracioTotal = (temps + estat + satisfaccio) / 3
         val mail = args.mail
         Log.i("temps", temps.toString())
         Log.i("estat", estat.toString())
         Log.i("satisfaccio", satisfaccio.toString())
         Log.i("valoracioTotal", valoracioTotal.toString())
-        db.collection("usuaris").whereEqualTo("mail", mail).get().addOnSuccessListener{ docs ->
+        db.collection("usuaris").whereEqualTo("mail", mail).get().addOnSuccessListener { docs ->
 
             val usuariConsulta = docs.toObjects(UsuariDC::class.java)
             Log.i("inicifor", "inicifor")
             docs?.forEach {
-
+                //comprobem si l'usuari te valoracions, si no en te afegeix l'actual
                 val usuariId = it.id
-                if(usuariConsulta[0].mail == mail){
+                if (usuariConsulta[0].mail == mail) {
                     val sfDocRef = db.collection("usuaris").document(usuariId)
-                    if(usuariConsulta[0].valoracio == 0.0){
+                    if (usuariConsulta[0].valoracio == 0.0) {
 
                         db.runTransaction { transaction ->
 
@@ -125,16 +129,22 @@ class ValoracionsFragment : Fragment() {
                             Log.w("TAG2", "Transaction failure.", e)
                             view?.let {
 
-                                Snackbar.make(it, "Error al guardar la valoració", Snackbar.LENGTH_LONG)
+                                Snackbar.make(
+                                    it,
+                                    "Error al guardar la valoració",
+                                    Snackbar.LENGTH_LONG
+                                )
                                     .show()
                             }
 
                         }
                         Log.i("fi del if", "fi del if")
-                    }else{
+                    } else {
+                        //si l'usuari ja tenia valoracions fa la mitjana
+                        //entre la nova i les existents i l'actulitzem
                         val valoracioMitjaConsulta = it.get("valoracio")
                         val mitjaConsulta: Double = valoracioMitjaConsulta as Double
-                        val mitjana: Double = (mitjaConsulta + valoracioTotal) /2
+                        val mitjana: Double = (mitjaConsulta + valoracioTotal) / 2
 
                         Log.i("valoracioMitja", valoracioMitjaConsulta.toString())
                         Log.i("mitjana", mitjana.toString().format("%.2f"))
@@ -142,23 +152,27 @@ class ValoracionsFragment : Fragment() {
                             transaction.update(sfDocRef, "valoracio", mitjana)
 
                         }.addOnSuccessListener {
-                        Log.d("TAG", "Transaction success!")
-                        view?.let {
-                            Snackbar.make(
-                                it,
-                                "Valoració guardada",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        }
-                    }.addOnFailureListener { e ->
-                        Log.w("TAG2", "Transaction failure.", e)
-                        view?.let {
+                            Log.d("TAG", "Transaction success!")
+                            view?.let {
+                                Snackbar.make(
+                                    it,
+                                    "Valoració guardada",
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
+                        }.addOnFailureListener { e ->
+                            Log.w("TAG2", "Transaction failure.", e)
+                            view?.let {
 
-                            Snackbar.make(it, "Error al guardar la valoració", Snackbar.LENGTH_LONG)
-                                .show()
-                        }
+                                Snackbar.make(
+                                    it,
+                                    "Error al guardar la valoració",
+                                    Snackbar.LENGTH_LONG
+                                )
+                                    .show()
+                            }
 
-                    }
+                        }
 
 
                     }

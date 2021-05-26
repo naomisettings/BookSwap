@@ -25,7 +25,7 @@ import com.google.firebase.ktx.Firebase
 
 class MeusLlibres : Fragment() {
     private lateinit var binding: FragmentMeusLlibresBinding
-
+    //recyclerview
     private lateinit var rvLlibres: RecyclerView
 
     //adapter

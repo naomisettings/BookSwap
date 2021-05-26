@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,25 +20,19 @@ import android.widget.Spinner
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentAfegirLlibreBinding
 import cat.copernic.bookswap.utils.Llibre
-import cat.copernic.bookswap.utils.Llibres
-import cat.copernic.bookswap.utils.UsuariDC
-import cat.copernic.bookswap.utils.poblacio
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
-import java.util.*
-import kotlin.collections.HashMap
 import java.text.SimpleDateFormat
-import kotlin.collections.ArrayList
+import java.util.*
 
 
 class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
@@ -51,7 +44,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var spinnerAssignatura: Spinner
 
     //instancia a firebase
-    val db = FirebaseFirestore.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     //inicialitzem les variables dels camps d'afegir llibre
     var titol: String = ""
@@ -223,8 +216,8 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                     Log.d("dades", "${document.id} => ${document.data}")
                 }
 
-                var poblacioConsulta = documents.toObjects(Llibre::class.java)
-                var poblacio = poblacioConsulta[0].poblacio
+                val poblacioConsulta = documents.toObjects(Llibre::class.java)
+                val poblacio = poblacioConsulta[0].poblacio
                 Log.d("poblacio", poblacio)
 
                 //generar idenditificar aleatori del llibre
