@@ -56,7 +56,7 @@
     <string name="dadesCorrectes">Data updated correctly</string>
     <string name="esborrarUsuaris">Delete Users</string>
     <string name="esborrar">Delete</string>
-
+    <string name="expulsat">You have been banned from Book Swapp!&#xD;Thanks for trusting us!</string>
     <string name="expulsatTitol">Dropout</string>
     <string name="filtrarLlibresBuit">There are no books available for this research.</string>
     <string name="omplirCamps">You have to fill in all the fields</string>
@@ -69,5 +69,13 @@
     <string name="valoracioGuardada">Saved rating</string>
     <string name="errorValoracio">Failed to save rating</string>
     <string name="seleccionaAssignatura">Select a subject</string>
-    <string name="expulsat">You have been expelled from Book Swap!</string>
+    <string name="llibres">Books</string>
+    <string name="perfil">Profile</string>
+    <string name="inici">Login</string>
+    <string name="llistat">Books List</string>
+    <string name="modificar_usuari">Modify User</string>
+    <string name="modificar_llibre">Modify Book</string>
+    <string name="veure_llibre">See Book</string>
+    <string name="valoracions">Ratings</string>
+
 </resources>

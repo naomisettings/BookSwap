@@ -69,4 +69,12 @@
     <string name="llibreEsborrat">Libro eliminado</string>
     <string name="valoracioGuardada">Valoración guardada</string>
     <string name="errorValoracio">Error al guardar la valoración</string>
+    <string name="llibres">Libros</string>
+    <string name="perfil">Perfil</string>
+    <string name="inici">Inicio Sesión</string>
+    <string name="llistat">Listado Libros</string>
+    <string name="modificar_usuari">Modificar Usuario</string>
+    <string name="modificar_llibre">Modificar LLibro</string>
+    <string name="veure_llibre">Ver Libro</string>
+    <string name="valoracions">Valoraciones</string>
 </resources>

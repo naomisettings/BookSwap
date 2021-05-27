@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="cat.copernic.bookswap.login.LoginFragment"
-        android:label="Login Fragment"
+        android:label="@string/inici"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_llistatLlibres"
@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/afegirLlibre"
         android:name="cat.copernic.bookswap.afegirllibre.AfegirLlibre"
-        android:label="Afegir Llibre"
+        android:label="@string/afegir_llibre"
         tools:layout="@layout/fragment_afegir_llibre">
         <action
             android:id="@+id/action_afegirLlibre_to_meusLlibres"
@@ -33,7 +33,7 @@
     <fragment
         android:id="@+id/llistatLlibres"
         android:name="cat.copernic.bookswap.llistatllibres.LlistatLlibres"
-        android:label="Llistat Llibres"
+        android:label="@string/llistat"
         tools:layout="@layout/fragment_llistat_llibres">
         <action
             android:id="@+id/action_llistatLlibres_to_meusLlibres"
@@ -72,7 +72,7 @@
     <fragment
         android:id="@+id/meusLlibres"
         android:name="cat.copernic.bookswap.meusllibres.MeusLlibres"
-        android:label="Meus Llibres"
+        android:label="@string/els_meus_llibres"
         tools:layout="@layout/fragment_meus_llibres">
         <action
             android:id="@+id/action_meusLlibres_to_modificarUsuari"
@@ -111,7 +111,7 @@
     <fragment
         android:id="@+id/modificarUsuari"
         android:name="cat.copernic.bookswap.modificarusuari.ModificarUsuari"
-        android:label="Modificar Usuari"
+        android:label="@string/modificar_usuari"
         tools:layout="@layout/fragment_modificar_usuari">
         <action
             android:id="@+id/action_modificarUsuari_to_llistatLlibres"
@@ -130,7 +130,7 @@
     <fragment
         android:id="@+id/modificarLlibre"
         android:name="cat.copernic.bookswap.modificarllibre.ModificarLlibre"
-        android:label="Modificar Llibre"
+        android:label="@string/modificar_llibre"
         tools:layout="@layout/fragment_modificar_llibre">
         <action
             android:id="@+id/action_modificarLlibre_to_meusLlibres"
@@ -160,7 +160,7 @@
     <fragment
         android:id="@+id/veureLlibre"
         android:name="cat.copernic.bookswap.veurellibre.VeureLlibre"
-        android:label="VeureLlibre"
+        android:label="@string/veure_llibre"
         tools:layout="@layout/fragment_veure_llibre">
         <action
             android:id="@+id/action_veureLlibre_to_llistatLlibres"
@@ -196,7 +196,7 @@
     <fragment
         android:id="@+id/valoracionsFragment"
         android:name="cat.copernic.bookswap.valoracions.ValoracionsFragment"
-        android:label="ValoracionsFragment"
+        android:label="@string/valoracions"
         tools:layout="@layout/fragment_valoracions">
         <action
             android:id="@+id/action_valoracionsFragment_to_veureLlibre"
@@ -229,7 +229,7 @@
     <fragment
         android:id="@+id/esborrarUsuaris"
         android:name="cat.copernic.bookswap.esborrarusuaris.EsborrarUsuaris"
-        android:label="EsborrarUsuaris"
+        android:label="@string/esborrarUsuaris"
         tools:layout="@layout/fragment_esborrar_usuaris">
         <action
             android:id="@+id/action_esborrarUsuaris_to_modificarUsuari"

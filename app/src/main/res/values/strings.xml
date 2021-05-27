@@ -68,4 +68,12 @@
     <string name="valoracioGuardada">Valoració guardada</string>
     <string name="errorValoracio">Error al guardar la valoració</string>
     <string name="seleccionaAssignatura">Selecciona una assignatura</string>
+    <string name="llibres">Llibres</string>
+    <string name="perfil">Perfil</string>
+    <string name="inici">Inici Sessió</string>
+    <string name="llistat">Llistat Llibres</string>
+    <string name="modificar_usuari">Modificar Usuari</string>
+    <string name="modificar_llibre">Modificar Llibre</string>
+    <string name="veure_llibre">Veure Llibre</string>
+    <string name="valoracions">Valoracions</string>
 </resources>

@@ -4,16 +4,16 @@
     <item
         android:id="@+id/llistatLlibres"
         android:icon="@drawable/books"
-        android:title="Llibres" />
+        android:title="@string/llibres" />
 
     <item
         android:id="@+id/meusLlibres"
         android:icon="@drawable/book"
-        android:title="Meus llibres" />
+        android:title="@string/els_meus_llibres" />
     <item
         android:id="@+id/modificarUsuari"
         android:icon="@drawable/group"
-        android:title="Perfil" />
+        android:title="@string/perfil" />
 
 
 

@@ -84,7 +84,7 @@ class MeusLlibres : Fragment() {
 
 
 
-        setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -202,14 +202,7 @@ class MeusLlibres : Fragment() {
 
 
     }
-    //carreguem el menus per descarregar el manual d'usuari
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.manual, menu)
 
-
-
-    }
 }
 
 

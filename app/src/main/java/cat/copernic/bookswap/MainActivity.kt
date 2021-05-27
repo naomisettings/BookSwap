@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.llistatLlibres,
                 R.id.meusLlibres,
                 R.id.modificarUsuari,
-                R.id.manual,))
+                ))
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -47,21 +47,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.manual -> descarregarManual()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
-    private fun descarregarManual() {
-
-        docRef.child("gs://bookswap-7d63c.appspot.com/docs/Manual.pdf").downloadUrl.addOnCanceledListener {
-            Log.i("Descarrega", "Descarrega correcta")
-        }.addOnFailureListener {
-            Log.i("ErrorDescarrega", "Descarrega incorrecta")
-        }
-    }
 
 
 }
