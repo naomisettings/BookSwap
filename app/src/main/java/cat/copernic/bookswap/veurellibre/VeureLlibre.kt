@@ -1,8 +1,10 @@
 package cat.copernic.bookswap.veurellibre
 
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -49,6 +52,9 @@ class VeureLlibre : Fragment() {
         binding.bttnMail.setOnClickListener {
             contactarMail()
         }
+        binding.bttnTelefon.setOnClickListener {
+            contactarTelefon()
+        }
         //enviem les dades del llibre actual al fragment valorar usuari
         binding.bttnValorar.setOnClickListener { view: View ->
             view.findNavController().navigate(
@@ -67,7 +73,35 @@ class VeureLlibre : Fragment() {
         }
         return binding.root
     }
+    //funcio trucar a l'usuari que ha publicat el llibre
+    private fun contactarTelefon() {
+        //Consulta per extreure el les dades del usuari que ha publicat el llibre segons el mail
+        db.collection("usuaris").whereEqualTo("mail", args.mail).get()
+            .addOnSuccessListener { document ->
+                try {
+                    val usuari = document.toObjects(UsuariDC::class.java)
+                    //assignem el telefon de l'usuari que ha publicat el llibre
+                    val telefonUsuari = "+34" + usuari[0].telefon
+                    //assignem un missatge per defecte amb el titol del llibre
+                    Log.i("telefonUsuari", telefonUsuari)
+                    val sendIntent = Intent()
+                    //enviem el missatge per whatsapp
+                    sendIntent.action = Intent.ACTION_DIAL
+                    sendIntent.setData(Uri.parse("tel:" + telefonUsuari))
 
+                    startActivity(sendIntent)
+                } catch (ex: ActivityNotFoundException) {
+                    Toast.makeText(
+                        requireContext(),
+                        "No tens acces al WhatsApp.", Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            }
+
+    }
+
+    //funcio per enviar un WhatsApp a l'usuari que ha publicat el llibre
     private fun contactarWhatsApp() {
         //Consulta per extreure el les dades del usuari que ha publicat el llibre segons el mail
         db.collection("usuaris").whereEqualTo("mail", args.mail).get()

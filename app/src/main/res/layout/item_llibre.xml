@@ -104,12 +104,12 @@
                 android:id="@+id/imgCardView"
                 android:layout_width="96dp"
                 android:layout_height="148dp"
+                android:background="@color/white"
                 android:contentDescription="@string/imgCardView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/titol"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bookswaplogo" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/campEstat"

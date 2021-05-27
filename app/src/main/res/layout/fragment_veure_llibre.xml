@@ -73,7 +73,7 @@
                 android:layout_height="27dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="Contacte:"
+                android:text="@string/contacte"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtValoracioUsuari" />
 
@@ -114,12 +114,22 @@
                 android:id="@+id/bttnWhatsapp"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/whatssapp"
+                app:layout_constraintStart_toEndOf="@+id/bttnTelefon"
+                app:layout_constraintTop_toBottomOf="@+id/txtValoracioUsuari"
+                app:srcCompat="@drawable/whatsapp" />
+            <ImageButton
+                android:id="@+id/bttnTelefon"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="20dp"
                 android:contentDescription="@string/whatssapp"
                 app:layout_constraintStart_toEndOf="@+id/txtCompartir"
                 app:layout_constraintTop_toBottomOf="@+id/txtValoracioUsuari"
-                app:srcCompat="@drawable/whatsapp" />
+                app:srcCompat="@drawable/telefono" />
 
             <ImageButton
                 android:id="@+id/bttnMail"

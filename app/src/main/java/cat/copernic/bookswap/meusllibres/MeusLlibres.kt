@@ -89,7 +89,6 @@ class MeusLlibres : Fragment() {
     }
 
     private fun esborrarLlibre(llibreEsborrarId: String) {
-
         //guardem les dades del usuari identificat
         val user = Firebase.auth.currentUser
         //agafem el mail com a identificador unic de l'usuari
@@ -129,7 +128,6 @@ class MeusLlibres : Fragment() {
                 }
 
             }
-
     }
 
 

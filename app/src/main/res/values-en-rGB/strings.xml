@@ -45,7 +45,6 @@
     <string name="totesPoblacions">Todas las ciudades</string>
     <string name="filtrarLlibres">Press the filter button to get the books for your population.</string>
     <string name="poblacioDosPunts">Town:</string>
-    <string name="compartir">Share:</string>
     <string name="valorar_usuari">Rate User</string>
     <string name="whatssapp">WhatssApp</string>
     <string name="seleccionaEstat">Select Condition:</string>
@@ -77,5 +76,6 @@
     <string name="modificar_llibre">Modify Book</string>
     <string name="veure_llibre">See Book</string>
     <string name="valoracions">Ratings</string>
+    <string name="contacte">Contact:</string>
 
 </resources>

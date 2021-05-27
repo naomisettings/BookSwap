@@ -137,7 +137,8 @@
                 android:layout_marginTop="35dp"
                 android:text="@string/camp_estat"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
+                app:layout_constraintTop_toBottomOf="@+id/txtEditorial"
+                android:visibility="gone"/>
 
             <Spinner
                 android:id="@+id/spnAfegirEstat"
@@ -149,7 +150,8 @@
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textViewEstatAfegir"
-                app:layout_constraintTop_toBottomOf="@+id/editTextEditorial" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextEditorial"
+                android:visibility="gone"/>
 
             <Spinner
                 android:id="@+id/spnAfegirAssignatura"

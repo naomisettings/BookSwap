@@ -39,7 +39,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentAfegirLlibreBinding
     private lateinit var imgfoto: ImageView
-    private lateinit var spinnerEstat: Spinner
+   // private lateinit var spinnerEstat: Spinner
     private lateinit var spinnerCurs:Spinner
     private lateinit var spinnerAssignatura: Spinner
 
@@ -82,7 +82,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
             DataBindingUtil.inflate(inflater, R.layout.fragment_afegir_llibre, container, false)
 
         //inicialitzem spinner estat
-        spinnerEstat = binding.spnAfegirEstat
+       /* spinnerEstat = binding.spnAfegirEstat
         //carreguem els possibles estats a l'spinner
         context?.let {
             ArrayAdapter.createFromResource(it,R.array.estat, android.R.layout.simple_spinner_item)
@@ -90,7 +90,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                     adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
                     spinnerEstat.adapter = adapter
                 }
-        }
+        }*/
         //inicialitzem spinner curs
         spinnerCurs = binding.spnAfegirCurs
         //carreguem els possibles estats a l'spinner
@@ -158,23 +158,23 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
 
                 }
                 //Permet seleccionar un camp del spinner
-                spinnerEstat.onItemSelectedListener = this
+                //spinnerEstat.onItemSelectedListener = this
                 spinnerCurs.onItemSelectedListener = this
                 spinnerAssignatura.onItemSelectedListener = this
 
                 //obtenim la posicio de l'item selecionat de cada spinner
-                val positionSpnEstat = spinnerEstat.selectedItemPosition
+                //val positionSpnEstat = spinnerEstat.selectedItemPosition
                 val positionSpnCurs = spinnerCurs.selectedItemPosition
                 val positionSpnAssignatura = spinnerAssignatura.selectedItemPosition
 
                 //assignem els valors dels spinner
-                estat = spinnerEstat.selectedItem.toString()
+                //estat = spinnerEstat.selectedItem.toString()
                 curs = spinnerCurs.selectedItem.toString()
                 assignatura = spinnerAssignatura.selectedItem.toString()
                 //comprovem que s'ha seleccionat un valor als spinners
-                if(positionSpnEstat ==0){
+               /* if(positionSpnEstat ==0){
                     Snackbar.make(view, R.string.seleccionaEstat, Snackbar.LENGTH_LONG).show()
-                }else if(positionSpnAssignatura== 0){
+                }else */if(positionSpnAssignatura== 0){
                     Snackbar.make(view, R.string.seleccionaAssignatura, Snackbar.LENGTH_LONG).show()
                 }else if(positionSpnCurs== 0){
                     Snackbar.make(view, R.string.seleccionaCurs, Snackbar.LENGTH_LONG).show()
@@ -206,7 +206,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
         curs = spinnerCurs.selectedItem.toString()
         assignatura = spinnerAssignatura.selectedItem.toString()
         editorial = binding.editTextEditorial.text.toString()
-        estat = spinnerEstat.selectedItem.toString()
+        //estat = spinnerEstat.selectedItem.toString()
 
         //accedeim a la col.lecció usuaris per recollir la poblacio de l'usuari identificat
          db.collection("usuaris").whereEqualTo("mail",mail).get()
@@ -232,7 +232,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                     "id" to identificador,
                     "foto" to fileName,
                     "poblacio" to poblacio,
-                    "estat" to estat
+                    "estat" to "Disponible"
                 )
 
                 //guardem el llibre a la col.leccio

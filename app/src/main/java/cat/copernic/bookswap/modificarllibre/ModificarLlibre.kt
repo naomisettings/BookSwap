@@ -44,7 +44,7 @@ class ModificarLlibre : Fragment() {
     private var curs = ""
     private var assignatura = ""
 
-    private lateinit var imgfoto: ImageView
+    var imgfoto: ImageView? = null
 
     //variable de la imatge a pujar al storage amb data i hora local
     private var fileName: String = SimpleDateFormat(
@@ -76,21 +76,25 @@ class ModificarLlibre : Fragment() {
 
 
         binding.btnActualitzarLlibre.setOnClickListener {
-            //guardem la foto a la variable bitmap
-            val bitmap = (imgfoto.drawable as BitmapDrawable).bitmap
-            val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val data = baos.toByteArray()
-            //pugem la foto al Storage
-            val uploadTask = refStorage.putBytes(data)
-            uploadTask.addOnFailureListener {
-                Snackbar.make(requireView(), "Error al guardar la foto", Snackbar.LENGTH_LONG)
-                    .show()
+            if(imgfoto != null){
+                //guardem la foto a la variable bitmap
+                val bitmap = (imgfoto?.drawable as BitmapDrawable).bitmap
+                val baos = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val data = baos.toByteArray()
+                //pugem la foto al Storage
+                val uploadTask = refStorage.putBytes(data)
+                uploadTask.addOnFailureListener {
+                    Snackbar.make(requireView(), "Error al guardar la foto", Snackbar.LENGTH_LONG)
+                        .show()
 
-            }.addOnSuccessListener { taskSnapshot ->
-                //Snackbar.make(view, "Foto guardada", Snackbar.LENGTH_LONG).show()
+                }.addOnSuccessListener { taskSnapshot ->
+                    //Snackbar.make(view, "Foto guardada", Snackbar.LENGTH_LONG).show()
+
+                }
 
             }
+
             //cridem a la funcio per actualitzar el llibre passant com argument el id del llibre
             actualitzarLlibre(args.id)
             view?.findNavController()?.navigate(R.id.action_modificarLlibre_to_meusLlibres)
@@ -288,7 +292,7 @@ class ModificarLlibre : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == CAMERA_REQUEST_CODE) {
                 val foto: Bitmap = data!!.extras!!.get("data") as Bitmap
-                imgfoto.setImageBitmap(foto)
+                imgfoto?.setImageBitmap(foto)
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
