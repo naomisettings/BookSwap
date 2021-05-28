@@ -64,7 +64,7 @@
     <string name="permisosCamara">Has denegat els permisos de la camara</string>
     <string name="infoCamara">Els pots modificar a la configuració del mòbil</string>
     <string name="esborrat">Eliminat!</string>
-    <string name="llibreEsborrat">Llibre eliminat</string>
+    <string name="llibreEsborrat">Llibre eliminat!</string>
     <string name="valoracioGuardada">Valoració guardada</string>
     <string name="errorValoracio">Error al guardar la valoració</string>
     <string name="seleccionaAssignatura">Selecciona una assignatura</string>
@@ -76,4 +76,5 @@
     <string name="modificar_llibre">Modificar Llibre</string>
     <string name="veure_llibre">Veure Llibre</string>
     <string name="valoracions">Valoracions</string>
+    <string name="introdueix_llibre">Introdueix llibre</string>
 </resources>

@@ -64,7 +64,7 @@
     <string name="permisosCamara">You have denied camera permissions</string>
     <string name="infoCamara">You can modify the mobile settings</string>
     <string name="esborrat">Deleted!</string>
-    <string name="llibreEsborrat">Deleted book</string>
+    <string name="llibreEsborrat">Deleted book!</string>
     <string name="valoracioGuardada">Saved rating</string>
     <string name="errorValoracio">Failed to save rating</string>
     <string name="seleccionaAssignatura">Select a subject</string>
@@ -77,5 +77,6 @@
     <string name="veure_llibre">See Book</string>
     <string name="valoracions">Ratings</string>
     <string name="contacte">Contact:</string>
+    <string name="introdueix_llibre">Add Book</string>
 
 </resources>
