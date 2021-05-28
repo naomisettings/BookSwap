@@ -81,16 +81,6 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_afegir_llibre, container, false)
 
-        //inicialitzem spinner estat
-       /* spinnerEstat = binding.spnAfegirEstat
-        //carreguem els possibles estats a l'spinner
-        context?.let {
-            ArrayAdapter.createFromResource(it,R.array.estat, android.R.layout.simple_spinner_item)
-                .also { adapter ->
-                    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
-                    spinnerEstat.adapter = adapter
-                }
-        }*/
         //inicialitzem spinner curs
         spinnerCurs = binding.spnAfegirCurs
         //carreguem els possibles estats a l'spinner
@@ -158,7 +148,6 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
 
                 }
                 //Permet seleccionar un camp del spinner
-                //spinnerEstat.onItemSelectedListener = this
                 spinnerCurs.onItemSelectedListener = this
                 spinnerAssignatura.onItemSelectedListener = this
 
@@ -172,9 +161,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                 curs = spinnerCurs.selectedItem.toString()
                 assignatura = spinnerAssignatura.selectedItem.toString()
                 //comprovem que s'ha seleccionat un valor als spinners
-               /* if(positionSpnEstat ==0){
-                    Snackbar.make(view, R.string.seleccionaEstat, Snackbar.LENGTH_LONG).show()
-                }else */if(positionSpnAssignatura== 0){
+               if(positionSpnAssignatura== 0){
                     Snackbar.make(view, R.string.seleccionaAssignatura, Snackbar.LENGTH_LONG).show()
                 }else if(positionSpnCurs== 0){
                     Snackbar.make(view, R.string.seleccionaCurs, Snackbar.LENGTH_LONG).show()
