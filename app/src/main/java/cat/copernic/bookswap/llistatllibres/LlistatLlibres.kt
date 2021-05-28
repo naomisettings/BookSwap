@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,8 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,12 +24,12 @@ import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentLlistatLlibresBinding
 import cat.copernic.bookswap.utils.*
+import cat.copernic.bookswap.viewmodel.LlistatLlibresViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
-import kotlin.collections.ArrayList
 
 class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -57,6 +58,8 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
     private var llibreEsborrarId = ""
     private var filtrat = false
 
+    private val viewModel: LlistatLlibresViewModel by viewModels()
+
     @SuppressLint("ShowToast")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -66,6 +69,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         // Inflate the layout for this fragment
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_llistat_llibres, container, false)
+
 
         rvLlibres = binding.rcyViewLlibres
 
@@ -80,6 +84,8 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
         //Inicialitza el spinner
         inicailitzarCurs()
+
+        carregarLlibresRyclrView(llibres)
 
         //Mostra els llibres
         if (entraVeureLlibres) {
@@ -194,10 +200,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
                 llibreEsborrarId =
                     adapter.mLlibres[viewHolder.bindingAdapterPosition].id
-                Log.i(
-                    "position",
-                    adapter.mLlibres[viewHolder.bindingAdapterPosition].id
-                )
+
                 esborrarLlibre()
 
             //snackbar que informa que s'ha esborrat l'article i permet desfer l'accio
@@ -387,25 +390,29 @@ private fun buscarTitol() {
 
 private fun carregarLlibresRyclrView(llib: ArrayList<Llibre>) {
 
-    //En el cas que de premer un llibre s'obra el fragment veure llibre
-    adapter = Adapter(
-        llib,
-        CellClickListener { titol, assignatura, editorial, curs, estat, foto, id, mail ->
-            findNavController().navigate(
-                LlistatLlibresDirections.actionLlistatLlibresToVeureLlibre(
-                    titol,
-                    assignatura,
-                    curs,
-                    editorial,
-                    estat,
-                    foto,
-                    id,
-                    mail,
+    viewModel.fetchEventData().observe(requireActivity(), { llibres ->
+        //En el cas que de premer un llibre s'obra el fragment veure llibre
+        adapter = Adapter(
+            llibres,
+            CellClickListener { titol, assignatura, editorial, curs, estat, foto, id, mail ->
+                findNavController().navigate(
+                    LlistatLlibresDirections.actionLlistatLlibresToVeureLlibre(
+                        titol,
+                        assignatura,
+                        curs,
+                        editorial,
+                        estat,
+                        foto,
+                        id,
+                        mail,
+                    )
                 )
-            )
-        })
-    rvLlibres.adapter = adapter
-    rvLlibres.layoutManager = LinearLayoutManager(this.context)
+            })
+        rvLlibres.adapter = adapter
+        rvLlibres.layoutManager = LinearLayoutManager(this.context)
+
+
+    })
 
 }
 

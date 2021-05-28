@@ -86,4 +86,11 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     //picasso
     implementation 'io.coil-kt:coil:0.11.0'
+
+    //ViewModelProviders
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
+
+
+
 }

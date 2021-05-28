@@ -1,5 +1,8 @@
 package cat.copernic.bookswap.utils
 
+import com.google.android.gms.common.api.Response
+//import com.ptrbrynt.firestorelivedata.FirestoreModel
+
 class Llibre(
     var titol: String = "",
     var curs: String = "",
@@ -11,4 +14,5 @@ class Llibre(
     var poblacio: String = "",
     var mail: String = "",
     var poblacio_login: String = ""
+
     )
