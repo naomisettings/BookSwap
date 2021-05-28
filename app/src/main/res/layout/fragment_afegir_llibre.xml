@@ -3,175 +3,176 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".afegirllibre.AfegirLlibre">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/backgroundbook">
 
-            <ImageView
-                android:id="@+id/imageViewLlibre"
-                android:layout_width="200dp"
-                android:layout_height="131dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtTitolAfegirLlibre"
-                app:srcCompat="@drawable/bookswaplogo" />
+                <ImageView
+                    android:id="@+id/imageViewLlibre"
+                    android:layout_width="200dp"
+                    android:layout_height="131dp"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@string/imatgeCamera"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTitolAfegirLlibre"
+                    app:srcCompat="@drawable/bookswaplogo" />
 
-            <TextView
-                android:id="@+id/txtTitolAfegirLlibre"
-                style="@style/titolPrincipal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Introdueix llibre"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/txtTitolAfegirLlibre"
+                    style="@style/titolPrincipal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/introdueix_llibre"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txtLogin"
-                style="@style/CampsText"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="35dp"
-                android:text="@string/assignatura"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtIdioma" />
+                <TextView
+                    android:id="@+id/txtLogin"
+                    style="@style/CampsText"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/assignatura"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtIdioma" />
 
-            <TextView
-                android:id="@+id/txtCurs"
-                style="@style/CampsText"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="35dp"
-                android:text="@string/campCurs"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtLogin" />
+                <TextView
+                    android:id="@+id/txtCurs"
+                    style="@style/CampsText"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/campCurs"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtLogin" />
 
-            <TextView
-                android:id="@+id/txtEditorial"
-                style="@style/CampsText"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="35dp"
-                android:text="@string/editorialCamp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtCurs" />
+                <TextView
+                    android:id="@+id/txtEditorial"
+                    style="@style/CampsText"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/editorialCamp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtCurs" />
 
-            <EditText
-                android:id="@+id/editTextEditorial"
-                style="@style/EditTexts"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="15dp"
-                android:autofillHints=""
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtEditorial"
-                app:layout_constraintTop_toBottomOf="@+id/spnAfegirCurs"
-                tools:ignore="LabelFor" />
+                <EditText
+                    android:id="@+id/editTextEditorial"
+                    style="@style/EditTexts"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="20dp"
+                    android:autofillHints=""
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spnAfegirCurs"
+                    tools:ignore="LabelFor" />
 
-            <TextView
-                android:id="@+id/txtIdioma"
-                style="@style/CampsText"
-                android:layout_marginStart="20dp"
-                android:text="@string/titolCamp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextTitolAfegir"
-                app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/txtIdioma"
+                    style="@style/CampsText"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/titolCamp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/editTextTitolAfegir"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <EditText
-                android:id="@+id/editTextTitolAfegir"
-                style="@style/EditTexts"
-                android:layout_marginStart="82dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="15dp"
-                android:autofillHints=""
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtIdioma"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewLlibre"
-                tools:ignore="LabelFor" />
+                <EditText
+                    android:id="@+id/editTextTitolAfegir"
+                    style="@style/EditTexts"
+                    android:layout_marginStart="82dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:autofillHints=""
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewLlibre"
+                    tools:ignore="LabelFor" />
 
-            <TextView
-                android:id="@+id/txtFoto"
-                style="@style/CampsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="35dp"
-                android:text="@string/fotoCamp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewEstatAfegir" />
+                <TextView
+                    android:id="@+id/txtFoto"
+                    style="@style/CampsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/fotoCamp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewEstatAfegir" />
 
-            <Button
-                android:id="@+id/bttnGuardarAfegirLli"
-                style="@style/buttons"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="45dp"
-                android:layout_marginEnd="30dp"
-                android:text="@string/guardarText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageViewFoto"
-                app:layout_constraintTop_toBottomOf="@+id/spnAfegirEstat" />
+                <Button
+                    android:id="@+id/bttnGuardarAfegirLli"
+                    style="@style/buttons"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginEnd="40dp"
+                    android:text="@string/guardarText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imageViewFoto"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
 
-            <ImageView
-                android:id="@+id/imageViewFoto"
-                android:layout_width="111dp"
-                android:layout_height="106dp"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="15dp"
-                android:clickable="true"
-                android:contentDescription="@string/imatgeCamera"
-                android:src="@drawable/camera"
-                app:layout_constraintStart_toEndOf="@+id/txtFoto"
-                app:layout_constraintTop_toBottomOf="@+id/spnAfegirEstat" />
+                <ImageView
+                    android:id="@+id/imageViewFoto"
+                    android:layout_width="111dp"
+                    android:layout_height="106dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="153dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/imatgeCamera"
+                    android:focusable="true"
+                    android:src="@drawable/camera"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spnAfegirEstat" />
 
-            <TextView
-                android:id="@+id/textViewEstatAfegir"
-                style="@style/CampsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="35dp"
-                android:text="@string/camp_estat"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEditorial"
-                android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/textViewEstatAfegir"
+                    style="@style/CampsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/camp_estat"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
 
-            <Spinner
-                android:id="@+id/spnAfegirEstat"
-                android:layout_width="224dp"
-                android:layout_height="34dp"
-                style="@style/EditTexts"
-                android:layout_marginStart="75dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textViewEstatAfegir"
-                app:layout_constraintTop_toBottomOf="@+id/editTextEditorial"
-                android:visibility="gone"/>
+                <Spinner
+                    android:id="@+id/spnAfegirEstat"
+                    style="@style/EditTexts"
+                    android:layout_width="224dp"
+                    android:layout_height="34dp"
+                    android:layout_marginStart="75dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="20dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextEditorial" />
 
-            <Spinner
-                android:id="@+id/spnAfegirAssignatura"
-                android:layout_width="224dp"
-                android:layout_height="34dp"
-                style="@style/EditTexts"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTitolAfegir" />
+                <Spinner
+                    android:id="@+id/spnAfegirAssignatura"
+                    style="@style/EditTexts"
+                    android:layout_width="224dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTitolAfegir" />
 
-            <Spinner
-                android:id="@+id/spnAfegirCurs"
-                android:layout_width="224dp"
-                android:layout_height="34dp"
-                style="@style/EditTexts"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spnAfegirAssignatura" />
+                <Spinner
+                    android:id="@+id/spnAfegirCurs"
+                    style="@style/EditTexts"
+                    android:layout_width="224dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spnAfegirAssignatura" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
