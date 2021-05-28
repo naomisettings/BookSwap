@@ -38,8 +38,7 @@ import java.util.*
 class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentAfegirLlibreBinding
-    private lateinit var imgfoto: ImageView
-   // private lateinit var spinnerEstat: Spinner
+
     private lateinit var spinnerCurs:Spinner
     private lateinit var spinnerAssignatura: Spinner
 
@@ -47,11 +46,14 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
     private val db = FirebaseFirestore.getInstance()
 
     //inicialitzem les variables dels camps d'afegir llibre
-    var titol: String = ""
-    var assignatura: String = ""
-    var curs: String = ""
-    var editorial: String = ""
-    var estat: String = ""
+    private var titol: String = ""
+    private var assignatura: String = ""
+    private var curs: String = ""
+    private var editorial: String = ""
+    private var estat: String = ""
+    private var imgfoto: ImageView? = null
+
+
 
     //variable de la imatge a pujar al storage amb data i hora local
     var fileName: String = SimpleDateFormat(
@@ -81,16 +83,6 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_afegir_llibre, container, false)
 
-        //inicialitzem spinner estat
-       /* spinnerEstat = binding.spnAfegirEstat
-        //carreguem els possibles estats a l'spinner
-        context?.let {
-            ArrayAdapter.createFromResource(it,R.array.estat, android.R.layout.simple_spinner_item)
-                .also { adapter ->
-                    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
-                    spinnerEstat.adapter = adapter
-                }
-        }*/
         //inicialitzem spinner curs
         spinnerCurs = binding.spnAfegirCurs
         //carreguem els possibles estats a l'spinner
@@ -137,28 +129,32 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
 
         binding.bttnGuardarAfegirLli.setOnClickListener { view: View ->
             //comprovem que els camps no estiguin buits
-            //i que el spinner no tingui posicio 0, perque seria el valor selecciona estat
+
             if (TextUtils.isEmpty(binding.editTextTitolAfegir.text) ||
                  TextUtils.isEmpty(binding.editTextEditorial.text)
             ) {
                 Snackbar.make(view, R.string.omplirCamps, Snackbar.LENGTH_LONG).show()
-            } else {
-                //guardem la foto a la variable bitmap
-                val bitmap = (imgfoto.drawable as BitmapDrawable).bitmap
-                val baos = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                val data = baos.toByteArray()
-                //pugem la foto al Storage
-                val uploadTask = refStorage.putBytes(data)
-                uploadTask.addOnFailureListener {
-                    Snackbar.make(view, R.string.errorFoto, Snackbar.LENGTH_LONG).show()
+            }else{
+                if(imgfoto?.drawable != null){
+                    //guardem la foto a la variable bitmap
+                    val bitmap = (imgfoto?.drawable as BitmapDrawable).bitmap
+                    Log.i("bitmap", bitmap.toString())
+                    val baos = ByteArrayOutputStream()
 
-                }.addOnSuccessListener { taskSnapshot ->
-                    //Snackbar.make(view, "Foto guardada", Snackbar.LENGTH_LONG).show()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    val data = baos.toByteArray()
+                    //pugem la foto al Storage
+                    val uploadTask = refStorage.putBytes(data)
+                    uploadTask.addOnFailureListener {
+                        Snackbar.make(view, R.string.errorFoto, Snackbar.LENGTH_LONG).show()
 
+                    }.addOnSuccessListener { taskSnapshot ->
+                        //Snackbar.make(view, "Foto guardada", Snackbar.LENGTH_LONG).show()
+
+                    }
                 }
+
                 //Permet seleccionar un camp del spinner
-                //spinnerEstat.onItemSelectedListener = this
                 spinnerCurs.onItemSelectedListener = this
                 spinnerAssignatura.onItemSelectedListener = this
 
@@ -172,9 +168,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                 curs = spinnerCurs.selectedItem.toString()
                 assignatura = spinnerAssignatura.selectedItem.toString()
                 //comprovem que s'ha seleccionat un valor als spinners
-               /* if(positionSpnEstat ==0){
-                    Snackbar.make(view, R.string.seleccionaEstat, Snackbar.LENGTH_LONG).show()
-                }else */if(positionSpnAssignatura== 0){
+               if(positionSpnAssignatura== 0){
                     Snackbar.make(view, R.string.seleccionaAssignatura, Snackbar.LENGTH_LONG).show()
                 }else if(positionSpnCurs== 0){
                     Snackbar.make(view, R.string.seleccionaCurs, Snackbar.LENGTH_LONG).show()
@@ -192,6 +186,23 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
         }
         return binding.root
     }
+    fun guardarFoto(){
+        //guardem la foto a la variable bitmap
+        val bitmap = (imgfoto?.drawable as BitmapDrawable).bitmap
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+        //pugem la foto al Storage
+        val uploadTask = refStorage.putBytes(data)
+        uploadTask.addOnFailureListener {
+            Snackbar.make(requireView(), R.string.errorFoto, Snackbar.LENGTH_LONG).show()
+
+        }.addOnSuccessListener { taskSnapshot ->
+            //Snackbar.make(view, "Foto guardada", Snackbar.LENGTH_LONG).show()
+
+        }
+
+    }
 
     //funcio per guardar el llibre a l'usuari identificat
     fun afegirLlibre() {
@@ -206,7 +217,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
         curs = spinnerCurs.selectedItem.toString()
         assignatura = spinnerAssignatura.selectedItem.toString()
         editorial = binding.editTextEditorial.text.toString()
-        //estat = spinnerEstat.selectedItem.toString()
+
 
         //accedeim a la col.lecció usuaris per recollir la poblacio de l'usuari identificat
          db.collection("usuaris").whereEqualTo("mail",mail).get()
@@ -222,6 +233,10 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
 
                 //generar idenditificar aleatori del llibre
                 identificador = UUID.randomUUID().toString()
+                if(imgfoto?.drawable == null){
+                    fileName = ""
+
+                }
 
                 val llibre = hashMapOf(
                     "mail" to mail,
@@ -276,7 +291,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == CAMERA_REQUEST_CODE) {
                 val foto: Bitmap = data!!.extras!!.get("data") as Bitmap
-                imgfoto.setImageBitmap(foto)
+                imgfoto?.setImageBitmap(foto)
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

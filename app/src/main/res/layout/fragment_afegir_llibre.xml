@@ -104,7 +104,7 @@
                     android:layout_marginTop="35dp"
                     android:text="@string/fotoCamp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewEstatAfegir" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
 
                 <Button
                     android:id="@+id/bttnGuardarAfegirLli"
@@ -127,30 +127,6 @@
                     android:contentDescription="@string/imatgeCamera"
                     android:focusable="true"
                     android:src="@drawable/camera"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/spnAfegirEstat" />
-
-                <TextView
-                    android:id="@+id/textViewEstatAfegir"
-                    style="@style/CampsText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="35dp"
-                    android:text="@string/camp_estat"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtEditorial" />
-
-                <Spinner
-                    android:id="@+id/spnAfegirEstat"
-                    style="@style/EditTexts"
-                    android:layout_width="224dp"
-                    android:layout_height="34dp"
-                    android:layout_marginStart="75dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="20dp"
-                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/editTextEditorial" />
 

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
@@ -30,7 +31,7 @@ import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ModificarLlibre : Fragment() {
+class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
     //instancia a firebase
     private val db = FirebaseFirestore.getInstance()
     private lateinit var binding: FragmentModificarLlibreBinding
@@ -144,6 +145,7 @@ class ModificarLlibre : Fragment() {
 
                     //agafem els valors dels spinners
                     assignatura = spinnerModificarAssignatura.selectedItem.toString()
+                    Log.i("assignatura", assignatura)
                     curs = spinnerModificarCurs.selectedItem.toString()
                     estat = spinnerModificarEstat.selectedItem.toString()
 
@@ -164,7 +166,7 @@ class ModificarLlibre : Fragment() {
                         transaction.update(sfDocRef, "curs", curs)
                         transaction.update(sfDocRef, "estat", estat)
                         transaction.update(sfDocRef, "foto", fileName)
-
+                    null
                     }.addOnSuccessListener {
                         Log.d("TAG", "Transaction success!")
                         view?.let {
@@ -176,7 +178,7 @@ class ModificarLlibre : Fragment() {
                         }
                     }.addOnFailureListener { e ->
                         Log.w("TAG2", "Transaction failure.", e)
-                        view?.let {
+                        /*view?.let {
 
                             Snackbar.make(
                                 it,
@@ -184,7 +186,7 @@ class ModificarLlibre : Fragment() {
                                 Snackbar.LENGTH_LONG
                             )
                                 .show()
-                        }
+                        }*/
 
                     }
                 }
@@ -297,6 +299,13 @@ class ModificarLlibre : Fragment() {
         }
         super.onActivityResult(requestCode, resultCode, data)
 
+
+    }
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
 
