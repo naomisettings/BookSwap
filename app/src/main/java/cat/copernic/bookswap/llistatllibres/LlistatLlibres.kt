@@ -6,7 +6,6 @@ import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -37,14 +36,17 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var rvLlibres: RecyclerView
     private val viewModel: ViewModel by viewModels()
 
+    //Spinners
     private lateinit var spinner: Spinner
     private lateinit var spinnercurs: Spinner
     private lateinit var spinnerassignatura: Spinner
 
+    //id del llibre que es vol esborrar (s'extreu del adapter)
     private var llibreEsborrarId = ""
+    //Boolean per saber si s'ha relitzat un filtre
     private var filtrat = false
 
-    private var llibres: ArrayList<Llibre> = arrayListOf()
+    //Llistats per relitzar els filtres
     private var llibresNoCaracters: ArrayList<Llibre> = arrayListOf()
     private var llibresNoCaractersFiltrar: ArrayList<Llibre> = arrayListOf()
     private val llibresFiltratsBenEscrits: ArrayList<Llibre> = arrayListOf()
@@ -59,21 +61,19 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_llistat_llibres, container, false)
 
-
+        //Inicialitzar recicler view
         rvLlibres = binding.rcyViewLlibres
 
-        spinner = binding.spnPoblacio
-        spinnercurs = binding.spnPoblacio
-
-        //Inicialitza el spinner
+        //Inicialitza el spinner població
         inicalitzarPoblacio()
 
-        //Inicialitza el spinner
+        //Inicialitza el spinner assignatura
         inicailitzarAssignatura()
 
-        //Inicialitza el spinner
+        //Inicialitza el spinner curs
         inicailitzarCurs()
 
+        //Carrega el recycler view del llistat llibres en view model
         carregarLlibresRyclrViewModel()
 
         return binding.root
@@ -82,19 +82,24 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun carregarLlibresRyclrViewModel() {
 
+        //Truca a la consulta del view model per vereure tots els llibres
         viewModel.totsLlibresVM().observe(requireActivity(), { llibresRV ->
 
+            //Truca a la consulta del view model per extreure les dades del usuari loginat
             viewModel.usuari().observe(requireActivity(), { usuari ->
 
-
+                //Esborra els llibres del usuari loginat de la llista llibresRV extreta de la consulta
+                //dels llibres
                 val llibresUsuariIterator = llibresRV.iterator()
                 while (llibresUsuariIterator.hasNext()) {
                     val llibresNext = llibresUsuariIterator.next()
+
+                    //Esborra els llibres del llistat que contenen el mail de l'usuari o que no estan disponibles
                     if (llibresNext.mail.contains(usuari.mail) || llibresNext.estat.contains("No disponible")) {
                         llibresUsuariIterator.remove()
                     }
                 }
-
+                //Adapter del llistat dels llibres
                 //En el cas que de premer un llibre s'obra el fragment veure llibre
                 adapter = Adapter(
                     llibresRV,
@@ -119,22 +124,23 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                     it.poblacio_login = usuari.poblacio
                 }
 
+                //Transorma el llistat dels llibres a minúsculas i sense accents per fer
+                //el filtratge per titol
                 arrayLlibresNoCaracters(llibresRV)
 
+                //En cas que el usuari sigui admin podrà esborrar qualsevol llibre
                 if (usuari.admin) {
                     swipePerEsborrar()
                 }
-
-                //Botó per filtrar
+                //Botó per filtrar els llibres
                 binding.bttnBuscar.setOnClickListener {
                     filtrarPerCamp(usuari.admin, llibresRV)
+
+                    //Override que amaga el teclat
                     hideKeyboard()
                 }
-
             })
-
         })
-
     }
 
     private fun swipePerEsborrar() {
@@ -150,7 +156,6 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             ): Boolean {
 
                 return false
-
             }
 
             //funcio que fa que si es desplaça l'item a l'esquerra o dreta es pot esborrar
@@ -159,10 +164,11 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                 viewHolder: RecyclerView.ViewHolder,
                 direction: Int
             ) {
-
+                //Extreu la id del llibre carregat al recycler view per esborrar-lo de la base de dades
                 llibreEsborrarId =
                     adapter.mLlibres[viewHolder.bindingAdapterPosition].id
 
+                //Funció que esborra el llibre
                 esborrarLlibre()
 
                 //snackbar que informa que s'ha esborrat l'article i permet desfer l'accio
@@ -174,26 +180,26 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
         }).attachToRecyclerView(binding.rcyViewLlibres)
-
     }
 
-    // Igual que la consulta, només s'executa la primera vegada que s'obre el fragment
+    // Només s'executa la primera vegada que s'obre el fragment o el view model
     private fun arrayLlibresNoCaracters(llibresRV: MutableList<Llibre>) {
 
-        //Després de realitzar la consulta reasignem el llistat de llibres per treure els caràcters
-        //no ASCII dels camps que volem filtrar
+        //Després de realitzar la consulta per extreure els llibres,
+        // reasignem el llistat de llibres per extreure els caràcters
+        //no ASCII dels camps que volem filtrar i canviar-los
         val llibresIterator = llibresRV.iterator()
         while (llibresIterator.hasNext()) {
             val llib = llibresIterator.next()
 
-            //S'executa la funció que modifica els caràcters especias a ASCII i retorna un tres
-            //variables amb els tres caràcters que permetran filtrar.
+            //S'executa la funció que modifica els caràcters especias a ASCII i retorna un quatre
+            //variables en forma de string
             val poblacioNoAscii = noCaractersEspecials(llib.poblacio)
             val assignaturaNoAscii = noCaractersEspecials(llib.assignatura)
             val cursNoAscii = noCaractersEspecials(llib.curs)
-
             val titolNoAscii = noCaractersEspecials(llib.titol)
 
+            //Instanciem Llibre per modifcar les dades sense caràctres ASCII
             val llibrLliure = Llibre(
                 poblacio = poblacioNoAscii,
                 assignatura = assignaturaNoAscii,
@@ -205,7 +211,6 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                 id = llib.id,
                 mail = llib.mail,
                 poblacio_login = llib.poblacio_login
-
             )
             //Afegeix el llibre al llistat sense caràcters ASCII
             llibresNoCaracters.add(llibrLliure)
@@ -223,7 +228,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         //Passa el sting a minuscula
         var valorNoAscii = valor.toLowerCase(Locale.ROOT)
 
-        //Intercanvia els accens i les ç a caràcters ASCII
+        //Intercanvia els accens, les díeresi i les ç a caràcters ASCII
         for (i in accents.indices) {
             val posLletra = valorNoAscii.indexOf(accents[i])
             if (posLletra != -1) {
@@ -234,7 +239,6 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                     )
             }
         }
-
         //Remplaça el caràcter - per un esapi en blanc
         if (valorNoAscii.contains("-")) {
             valorNoAscii = valorNoAscii.replace("-", "")
@@ -244,9 +248,9 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         return valorNoAscii
     }
 
-
     @RequiresApi(Build.VERSION_CODES.N)
     private fun filtrarPerCamp(admin: Boolean, llibresRV: MutableList<Llibre>) {
+        //Serveix per saber si hem utilitzat el filtre
         filtrat = true
 
         //Neteja la llista dels llibres filtrats
@@ -256,7 +260,6 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         //Afegeix el llistat tipus "Llibre" a un nou array per filtrar i no haver de repetir
         //la consulta cada vegada que l'usuari filtra
         llibresNoCaractersFiltrar.addAll(llibresNoCaracters)
-        Log.d("prova", llibresNoCaractersFiltrar[0].poblacio_login)
 
         //Extreu les dades dels spinners
         val poblacioSeleccionada = spinner.selectedItem.toString()
@@ -277,30 +280,29 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         }
         //Del llitat de tots els llibres sense caràcters ASCII, s'esborren els camps extrets del filtre
         //per mostar aquest llistat al recycler view
+        //Els dos filtres posteriors funcionen igual
         llibresNoCaractersFiltrar.removeAll(noTotesPoblacions)
 
-        //Mateix filtre pels cursos
         val noTotsCursos = llibresNoCaractersFiltrar.filter {
             it.curs != curs &&
                     spinnercurs.selectedItemPosition != 0
         }
-        //Mateix mètode d'esborrar pels cursos
         llibresNoCaractersFiltrar.removeAll(noTotsCursos)
 
-        //Mateix filtre per les assignatures
         val noTotesAssignaures = llibresNoCaractersFiltrar.filter {
             it.assignatura != assignatura &&
                     spinnerassignatura.selectedItemPosition != 0
         }
-        //Mateix mètode d'esborrar per les assignatures
         llibresNoCaractersFiltrar.removeAll(noTotesAssignaures)
 
         //Filtra segons el titol (Contingut, no pararula completa)
+        //i no és sensible als caràcters no ASCII
         val titolBuscat = buscarTitol()
 
 
-        //Compara el llistat de llibres filtrats amb els del llistat amb la ortografia correcta
-        //per mostar aquests al recycler view
+        //Compara el llistat de llibres filtrats amb els del llistat original
+        //per mostar aquests al recycler view. Creant dos llistats finals amb llibres ben escrits,
+        //el llistat original i el llistat amb llibres filtrats
         llibresNoCaractersFiltrar.forEach { filtrar ->
             llibresRV.forEach { llibreEscrit ->
                 if (filtrar.id == llibreEscrit.id) {
@@ -309,20 +311,26 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             }
         }
 
+        //En el cas que l'usuari sigui admin podrà esborrar llibres del llistat públic
         if (admin) {
             swipePerEsborrar()
         }
 
         //Carregem el recyclerView amb els llibres amb la ortografia correcte
+        //En el cas que s'hagi esborrat tots els filtres i premi el botó filtrar
+        //Per veure'ls tots es carrega autoàticament el recicyler view fent la consulta
+        //del view model
         if (titolBuscat && poblacioSeleccionada == "Totes les Poblacions"
             && cursSeleccionada == "Tote els Cursos"
             && assignaturaSeleccionada == "Totes les Assignatures"
         ) {
             carregarLlibresRyclrViewModel()
         } else {
+            //En cas contrari carrega els llibres filtrats
             carregarLlibresRyclrView(llibresFiltratsBenEscrits)
         }
 
+        //En el cas que no hi hagin llibres i s'hagi filtrat es mostra un snackbar
         if (llibresFiltratsBenEscrits.isEmpty()) {
             view?.let {
                 Snackbar.make(it, R.string.filtrarLlibresBuit, Snackbar.LENGTH_LONG).apply {
@@ -340,25 +348,27 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
         //Comprova que el titol estigui emplenat
         if (titolEditText != "") {
-            //Treure caracters especials del edit text
+            //Extreu caracters especials del edit text amb el titol introduit per l'usuari
             val titolEdTxtNoCaracters = noCaractersEspecials(titolEditText)
-            //Inicialitza el iterator
+            //Inicialitza el iterator amb el array dels llibres filtrats
             val llibresIterator = llibresNoCaractersFiltrar.iterator()
             while (llibresIterator.hasNext()) {
-                //En el cas que un llibre NO sigui contingui el valor del editText titol s'esborra
-                //del llistat de llibres per mostar aquest llistat al recycler view
+                //En el cas que un llibre NO contingui el valor del editText del titol, s'esborra
+                //del llistat de llibres per mostar els que sí coincideixen al recycler view
                 val llib = llibresIterator.next().titol
                 if (!llib.contains(titolEdTxtNoCaracters)) {
                     llibresIterator.remove()
                 }
             }
+            //Retorna true o false perque la funcó buscar() sàpiga si s'ha relitzat un filtre
+            //o no
             return true
         } else {
             return false
         }
     }
 
-
+    //Recycler view per carregar els llibres filtrats
     private fun carregarLlibresRyclrView(llib: ArrayList<Llibre>) {
 
         //En el cas que de premer un llibre s'obra el fragment veure llibre
@@ -383,38 +393,36 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         rvLlibres.layoutManager = LinearLayoutManager(this.context)
     }
 
-
+    //Funció que es truca des del swipe per esborrar els llibres deslliçant-los cap un costat
     @RequiresApi(Build.VERSION_CODES.N)
     private fun esborrarLlibre() {
+        //Truca a la consutlta del view modle i li passem el paràmetre extret del adapter a la
+        //funció onSwipe perque esborri el llibre que toca i retorna true o false si s'ha esborrat
+        //el llibre
         viewModel.esborrarLlibre(llibreEsborrarId).observe(requireActivity(), {
 
             if (it) {
-                val llibresIterator = llibres.iterator()
-                while (llibresIterator.hasNext()) {
-                    if (llibresIterator.next().id == llibreEsborrarId) {
-                        llibresIterator.remove()
-                    }
-                }
+                //Esborra el llibre també del llistat de llibres filtrats per si
+                //l'usuari estava utilitzatn un filtre
                 val llibresFiltrarIterator = llibresFiltratsBenEscrits.iterator()
                 while (llibresFiltrarIterator.hasNext()) {
                     if (llibresFiltrarIterator.next().id == llibreEsborrarId) {
                         llibresFiltrarIterator.remove()
                     }
-
                 }
-                Log.d("prova", filtrat.toString())
-
             }
+            //En el cas que l'usuari hagi utilitzat un filtre s'executarà el recycler view
+            //de llibres filtrats o el del view model amb tots els llibres
             if (filtrat) {
                 carregarLlibresRyclrView(llibresFiltratsBenEscrits)
                 filtrat = false
             } else {
                 carregarLlibresRyclrViewModel()
-
             }
         })
     }
 
+    //Inicialitza la població al spinner
     private fun inicalitzarPoblacio() {
 
         //Inicialitzar spinner
@@ -431,14 +439,13 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
                 //Assignar l'adapter al spinner
                 spinner.adapter = adapter
-
             }
         }
-
         //Permet seleccionar un camp del spinner
         spinner.onItemSelectedListener = this
     }
 
+    //Inicialitza el curs al spinner
     private fun inicailitzarCurs() {
 
         //Inicialitzar spinner
@@ -453,18 +460,15 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             ).also { adapter ->
                 adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
 
-
                 //Assignar l'adapter al spinner
                 spinnercurs.adapter = adapter
             }
         }
-
         //Permet seleccionar un camp del spinner
         spinnercurs.onItemSelectedListener = this
-
-
     }
 
+    //Inicialitza l'assignatura al spinner
     private fun inicailitzarAssignatura() {
 
         //Inicialitzar spinner
@@ -479,43 +483,35 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
             ).also { adapter ->
                 adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
 
-
                 //Assignar l'adapter al spinner
                 spinnerassignatura.adapter = adapter
             }
         }
-
         //Permet seleccionar un camp del spinner
         spinnerassignatura.onItemSelectedListener = this
-
-
     }
 
-
+    //Serveix perque el cardview del recycler view es pugui aptretar
     override fun onItemSelected(
         parent: AdapterView<*>?,
         view: View?,
         position: Int,
         id: Long
     ) {
-
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-
     }
 
     //Amagar teclat
-    fun Context.hideKeyboard(view: View) {
+    private fun Context.hideKeyboard(view: View) {
         val inputMethodManager =
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     //Amagar teclat
-    fun Fragment.hideKeyboard() {
+    private fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }
-
-
 }
