@@ -14,7 +14,7 @@ import com.google.firebase.ktx.Firebase
 object Consultes {
 
     private val user = Firebase.auth.currentUser
-
+    //consulta per extreure tot els llibres
     fun totsLlibres(): LiveData<MutableList<Llibre>> {
 
         val data = MutableLiveData<MutableList<Llibre>>()
@@ -31,7 +31,24 @@ object Consultes {
             }
         return data
     }
+    //consulta per extreure els llibres de l'usuari identificat
+    fun meusLlibres(): LiveData<MutableList<Llibre>> {
 
+        val data = MutableLiveData<MutableList<Llibre>>()
+
+        FirebaseFirestore.getInstance()
+            .collection("llibres").whereEqualTo("mail", user?.email)
+            .get().addOnSuccessListener {
+
+                val llibresDC = it.toObjects(Llibre::class.java)
+                data.value = llibresDC
+
+            }.addOnFailureListener {exception ->
+                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+            }
+        return data
+    }
+    //consulta per extreure mail de l'usuari identificat
     fun usuariMail(): LiveData<Usuari>{
 
         val usuari = MutableLiveData<Usuari>()

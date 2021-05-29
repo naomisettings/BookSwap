@@ -18,6 +18,15 @@ class ViewModel : ViewModel() {
         return mutableData
 
     }
+    fun meusLlibresVM(): LiveData<MutableList<Llibre>> {
+        val mutableData = MutableLiveData<MutableList<Llibre>>()
+        Consultes.meusLlibres().observeForever { eventList ->
+            mutableData.value = eventList
+        }
+
+        return mutableData
+
+    }
 
     fun usuari(): LiveData<Usuari>{
         val usuariMail = MutableLiveData<Usuari>()

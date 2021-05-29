@@ -1,6 +1,7 @@
 package cat.copernic.bookswap.modificarllibre
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
@@ -51,7 +53,6 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
     private var fileName: String = SimpleDateFormat(
         FILENAME_FORMAT, Locale.US
     ).format(System.currentTimeMillis()) + ".jpg"
-
     //instancia que referencia al storage
     var refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
 
@@ -60,7 +61,6 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
         private const val CAMERA_PERMISSION_CODE = 1
         private const val CAMERA_REQUEST_CODE = 2
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,9 +75,9 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
         //funcio per carregar les dades del llibre seleccionat
         mostrarLlibre()
 
-
         binding.btnActualitzarLlibre.setOnClickListener {
             if(imgfoto != null){
+
                 //guardem la foto a la variable bitmap
                 val bitmap = (imgfoto?.drawable as BitmapDrawable).bitmap
                 val baos = ByteArrayOutputStream()
@@ -90,7 +90,6 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
                         .show()
 
                 }.addOnSuccessListener { taskSnapshot ->
-                    //Snackbar.make(view, "Foto guardada", Snackbar.LENGTH_LONG).show()
 
                 }
 
@@ -98,6 +97,7 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
 
             //cridem a la funcio per actualitzar el llibre passant com argument el id del llibre
             actualitzarLlibre(args.id)
+
             view?.findNavController()?.navigate(R.id.action_modificarLlibre_to_meusLlibres)
         }
 
@@ -134,9 +134,9 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
             //guardem els documents
             val doc = snapshot?.documents
             //iterem pels documents dels llibres
-            doc?.forEach {
+            snapshot?.forEach {
                 val llibreConsulta = it.toObject(Llibres::class.java)
-                if (llibreConsulta?.id == idLlibre) {
+                if (it.id == idLlibre) {
                     //guardem el id del document del llibre seleccionat
                     val llibreId = it.id
                     //agafem el id del llibre
@@ -178,15 +178,6 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
                         }
                     }.addOnFailureListener { e ->
                         Log.w("TAG2", "Transaction failure.", e)
-                        /*view?.let {
-
-                            Snackbar.make(
-                                it,
-                                "Error a l'actualitzar el llibre",
-                                Snackbar.LENGTH_LONG
-                            )
-                                .show()
-                        }*/
 
                     }
                 }
@@ -198,8 +189,7 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
 
     //funcio que mostra les dades del llibre seleccionat
     private fun mostrarLlibre() {
-        //rebre dades del llibre seleccionat
-        //val args = ModificarLlibreArgs.fromBundle(requireArguments())
+
         //guardem els valors als editText
         binding.editTextTitolModificar.setText(args.titol)
         binding.editTextEditorialModificar.setText(args.editorial)
@@ -257,7 +247,6 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
                 }
         }
 
-
         //per carregar la imatge del llibre selecionat
         val storageRef = FirebaseStorage.getInstance().reference
         val imageRef = storageRef.child("images/${args.foto}")
@@ -308,6 +297,7 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
+
 
 
 }
