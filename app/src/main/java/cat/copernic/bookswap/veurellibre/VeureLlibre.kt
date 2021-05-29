@@ -15,10 +15,12 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentVeureLlibreBinding
 import cat.copernic.bookswap.utils.UsuariDC
+import cat.copernic.bookswap.viewmodel.ViewModel
 import coil.api.load
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -30,6 +32,8 @@ class VeureLlibre : Fragment() {
 
     private lateinit var args: VeureLlibreArgs
     private lateinit var binding: FragmentVeureLlibreBinding
+    private val viewModel: ViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,43 +77,44 @@ class VeureLlibre : Fragment() {
         }
         return binding.root
     }
+
     //funcio trucar a l'usuari que ha publicat el llibre
     private fun contactarTelefon() {
-        //Consulta per extreure el les dades del usuari que ha publicat el llibre segons el mail
-        db.collection("usuaris").whereEqualTo("mail", args.mail).get()
-            .addOnSuccessListener { document ->
-                try {
-                    val usuari = document.toObjects(UsuariDC::class.java)
-                    //assignem el telefon de l'usuari que ha publicat el llibre
-                    val telefonUsuari = "+34" + usuari[0].telefon
-                    //assignem un missatge per defecte amb el titol del llibre
-                    Log.i("telefonUsuari", telefonUsuari)
-                    val sendIntent = Intent()
-                    //enviem el missatge per whatsapp
-                    sendIntent.action = Intent.ACTION_DIAL
-                    sendIntent.setData(Uri.parse("tel:" + telefonUsuari))
+        val mail = args.mail
+        //enviem a la consulta mitjançant el viewModel el mail de l'usuari
+        viewModel.usuariPublicat(mail).observe(requireActivity(), { usuari ->
 
-                    startActivity(sendIntent)
-                } catch (ex: ActivityNotFoundException) {
-                    Toast.makeText(
-                        requireContext(),
-                        "No tens acces al WhatsApp.", Toast.LENGTH_SHORT
-                    ).show()
-                }
+            try {
+                //assignem el telefon de l'usuari que ha publicat el llibre
+                val telefonUsuari = "+34" + usuari.telefon
+                //assignem un missatge per defecte amb el titol del llibre
+                Log.i("telefonUsuari", telefonUsuari)
+                val sendIntent = Intent()
+                //enviem l'acció de trucada amb el telefon de l'usuari
+                sendIntent.action = Intent.ACTION_DIAL
+                sendIntent.setData(Uri.parse("tel:" + telefonUsuari))
 
+                startActivity(sendIntent)
+
+            } catch (ex: ActivityNotFoundException) {
+                Toast.makeText(
+                    requireContext(),
+                    "No tens acces a les trucades.", Toast.LENGTH_SHORT
+                ).show()
             }
 
+
+        })
     }
 
     //funcio per enviar un WhatsApp a l'usuari que ha publicat el llibre
     private fun contactarWhatsApp() {
-        //Consulta per extreure el les dades del usuari que ha publicat el llibre segons el mail
-        db.collection("usuaris").whereEqualTo("mail", args.mail).get()
-            .addOnSuccessListener { document ->
+        val mail = args.mail
+        //enviem a la consulta mitjançant el viewModel el mail de l'usuari
+        viewModel.usuariPublicat(mail).observe(requireActivity(), { usuari ->
                 try {
-                    val usuari = document.toObjects(UsuariDC::class.java)
                     //assignem el telefon de l'usuari que ha publicat el llibre
-                    val telefonUsuari = "+34" + usuari[0].telefon
+                    val telefonUsuari = "+34" + usuari.telefon
                     //assignem un missatge per defecte amb el titol del llibre
                     val missatge =
                         "Hola,\n" + "M'agradaria rebre informació d'aquest llibre: \n" + args.titol
@@ -126,15 +131,14 @@ class VeureLlibre : Fragment() {
                     ).show()
                 }
 
-            }
+            })
 
     }
 
     //funcio per enviar un mail a l'usuari que ha publicat el llibre
     private fun contactarMail() {
-        val args = VeureLlibreArgs.fromBundle(requireArguments())
-        //guardem el mail del destinatari amb el format correcte
         val mail = args.mail
+        //guardem el mail del destinatari amb el format correcte
         val formatMail = mail.replace("%", "@")
         val to = formatMail
         val sendIntent = Intent()
@@ -195,21 +199,15 @@ class VeureLlibre : Fragment() {
 
     //funcio per veure la valoració de l'usuari
     private fun consultaPuntuacioUsuariLlibre() {
-
+        val mail = args.mail
         Log.d("valoraciousuari", args.mail)
-
-        //Consulta per extreure el les dades del usuari que ven el llibre segons el mail
-        db.collection("usuaris").whereEqualTo("mail", args.mail).get()
-            .addOnSuccessListener { document ->
-                val usuari = document.toObjects(UsuariDC::class.java)
-                val valoracioUsuari = usuari[0].valoracio
-                //assignem el valor de la puntuacio que te l'usuari -1 perque compta des des 0
-                binding.ratingBarPuntuacio.rating = valoracioUsuari.toFloat() - 1
+        //enviem a la consulta mitjançant el viewModel el mail de l'usuari
+        viewModel.usuariPublicat(mail).observe(requireActivity(), { usuari ->
+                val valoracioUsuari = usuari.valoracio
+                //assignem el valor de la puntuacio que te l'usuari 
+                binding.ratingBarPuntuacio.rating = valoracioUsuari.toFloat()
                 Log.i("valoraciousuari", valoracioUsuari.toString())
-            }
-            .addOnFailureListener { exception ->
-                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
-            }
+            })
     }
 
 }
