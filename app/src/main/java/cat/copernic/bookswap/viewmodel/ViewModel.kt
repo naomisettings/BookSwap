@@ -5,39 +5,55 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import cat.copernic.bookswap.utils.Llibre
 import cat.copernic.bookswap.utils.Usuari
+import java.util.HashMap
 
 
 //Conté les consultes, updates i deletes fetes en ViewModel
 class ViewModel : ViewModel() {
+
+    //********** CONSULTES **********
 
     fun totsLlibresVM(): LiveData<MutableList<Llibre>> {
         val mutableData = MutableLiveData<MutableList<Llibre>>()
         Consultes.totsLlibres().observeForever { eventList ->
             mutableData.value = eventList
         }
-
         return mutableData
-
     }
+
     fun meusLlibresVM(): LiveData<MutableList<Llibre>> {
         val mutableData = MutableLiveData<MutableList<Llibre>>()
         Consultes.meusLlibres().observeForever { eventList ->
             mutableData.value = eventList
         }
-
         return mutableData
-
     }
 
-    fun usuari(): LiveData<Usuari>{
+    fun usuariLoginat(): LiveData<Usuari>{
         val usuariMail = MutableLiveData<Usuari>()
-        Consultes.usuariMail().observeForever { usuari ->
+        Consultes.usuariLoginat().observeForever { usuari ->
             usuariMail.value = usuari
         }
-
         return usuariMail
-
     }
+
+    fun usuariLlibrePublicat(mailUsuari: String): MutableLiveData<Usuari> {
+        val mailPublicat = MutableLiveData<Usuari>()
+        Consultes.usuariLlibrePublicat(mailUsuari).observeForever{ usuari ->
+            mailPublicat.value = usuari
+        }
+        return mailPublicat
+    }
+
+    fun totsUsuaris(): LiveData<MutableList<Usuari>> {
+        val usuaris = MutableLiveData<MutableList<Usuari>>()
+        Consultes.totsUsuaris().observeForever { eventList ->
+            usuaris.value = eventList
+        }
+        return usuaris
+    }
+
+    //********** DELETES **********
 
     fun esborrarLlibre(idLlibre: String): MutableLiveData<Boolean> {
         val esborrat = MutableLiveData<Boolean>()
@@ -47,11 +63,18 @@ class ViewModel : ViewModel() {
         return esborrat
 
     }
-    fun usuariPublicat(mailUsuari: String): MutableLiveData<Usuari> {
-        val mailPublicat = MutableLiveData<Usuari>()
-        Consultes.llibrePublicat(mailUsuari).observeForever{ usuari ->
-            mailPublicat.value = usuari
+
+    //********** UPDATES **********
+
+    //********** INSERTS **********
+
+    fun insertarUsuari(usuari: HashMap<String, out Any>): MutableLiveData<Boolean> {
+        val esborrat = MutableLiveData<Boolean>()
+        Inserts.insertarUsuari(usuari).observeForever{ fet ->
+            esborrat.value = fet
         }
-        return mailPublicat
+        return esborrat
+
     }
+
 }

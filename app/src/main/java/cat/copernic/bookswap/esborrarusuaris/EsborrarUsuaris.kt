@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentEsborrarUsuarisBinding
-import cat.copernic.bookswap.utils.UsuariDC
+import cat.copernic.bookswap.utils.Usuari
+import cat.copernic.bookswap.viewmodel.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 class EsborrarUsuaris : Fragment() {
@@ -20,9 +22,10 @@ class EsborrarUsuaris : Fragment() {
     private lateinit var binding: FragmentEsborrarUsuarisBinding
 
     private lateinit var adapter: AdapterUsuaris
-
     private lateinit var rvUsuaris: RecyclerView
-    private var usuaris: MutableList<Usuari> = mutableListOf()
+    private val viewModel: ViewModel by viewModels()
+
+    private var usuarisList: MutableList<Usuari> = mutableListOf()
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -45,41 +48,31 @@ class EsborrarUsuaris : Fragment() {
     }
 
     private fun carregarLlibresLlistat() {
-        db.collection("usuaris").get()
-            .addOnSuccessListener { document ->
-                val usuarisDC = document.toObjects(UsuariDC::class.java)
-                for (i in 0 until usuarisDC.size) {
-                    val usu = Usuari(
-                        nomUsuari = usuarisDC[i].nom,
-                        mailUsuari = usuarisDC[i].mail,
-                        checkBox = false
-                    )
-                    if (!usuarisDC[i].expulsat) {
-                        usuaris.add(usu)
-                    }
 
-                    veureRecyclerView()
+        //Truca a la consulta del view model per extreure les dades del usuari loginat
+        viewModel.totsUsuaris().observe(requireActivity(), { usuaris ->
 
-                    binding.bttnEsborrar.setOnClickListener {
-
-                        baixaUsuari(adapter.checkedUsuaris)
-
-                        usuaris.removeAll(adapter.checkedUsuaris)
-
-                        rvUsuaris.removeAllViews()
-
-
-                    }
+            usuaris?.forEach { usuari ->
+                if (!usuari.expulsat) {
+                    usuarisList.add(usuari)
                 }
-            }.addOnFailureListener { exception ->
-                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+            }
+            veureRecyclerView()
+
+            binding.bttnEsborrar.setOnClickListener {
+
+                baixaUsuari(adapter.checkedUsuaris)
+
+                usuarisList.removeAll(adapter.checkedUsuaris)
+
+                rvUsuaris.removeAllViews()
             }
 
-
+        })
     }
 
     private fun veureRecyclerView() {
-        adapter = AdapterUsuaris(usuaris)
+        adapter = AdapterUsuaris(usuarisList)
         this.rvUsuaris.adapter = adapter
         this.rvUsuaris.layoutManager = LinearLayoutManager(this.context)
 
@@ -87,7 +80,7 @@ class EsborrarUsuaris : Fragment() {
 
     private fun baixaUsuari(checkedUsuaris: MutableList<Usuari>) {
         for (i in 0 until checkedUsuaris.size) {
-            db.collection("usuaris").whereEqualTo("mail", checkedUsuaris[i].mailUsuari).get()
+            db.collection("usuaris").whereEqualTo("mail", checkedUsuaris[i].mail).get()
                 .addOnSuccessListener { document ->
                     document?.forEach { doc ->
                         val sfDocRef = db.collection("usuaris").document(doc.id)
@@ -106,7 +99,7 @@ class EsborrarUsuaris : Fragment() {
                             Log.w("TAG2", "Transaction failure.", e)
                         }
 
-                        db.collection("llibres").whereEqualTo("mail", checkedUsuaris[i].mailUsuari)
+                        db.collection("llibres").whereEqualTo("mail", checkedUsuaris[i].mail)
                             .get()
                             .addOnSuccessListener { document ->
                                 document?.forEach {

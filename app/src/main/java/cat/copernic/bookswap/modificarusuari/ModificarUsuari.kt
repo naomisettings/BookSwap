@@ -12,10 +12,11 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentModificarUsuariBinding
-import cat.copernic.bookswap.utils.UsuariDC
+import cat.copernic.bookswap.viewmodel.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,6 +27,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentModificarUsuariBinding
 
+    private val viewModel: ViewModel by viewModels()
     private val db = FirebaseFirestore.getInstance()
 
     //Guarda les dades del usuari connectat a la constant user
@@ -60,76 +62,63 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun mostrarDades() {
 
-        //Guarda el mail del usuari que ha fet login
-        val mail = user?.email.toString()
+        //Truca a la consulta del view model per extreure les dades del usuari loginat
+        viewModel.usuariLoginat().observe(requireActivity(), { usuari ->
+            //Mostra les dades del usuari als editText
+            binding.apply {
+                editTextNomModificar.setText(usuari.nom)
+                editTextTelefonModificar.setText(usuari.telefon)
+                editTextContrasenyaModificar.setText("******")
+            }
 
-        //Consulta per extreure el les dades del usuari segons el mail
-        db.collection("usuaris").whereEqualTo("mail", mail).get()
-            .addOnSuccessListener { document ->
-                document?.forEach { doc ->
-                    val usuari = document.toObjects(UsuariDC::class.java)
+            //Inicialitzar spinner
+            spinner = binding.spnPoblacio
 
-                    //Mostra les dades del usuari als editText
-                    binding.apply {
-                        editTextNomModificar.setText(usuari[0].nom)
-                        editTextTelefonModificar.setText(usuari[0].telefon)
-                        editTextContrasenyaModificar.setText("******")
-                    }
+            //Crear l'adapter per el spinner
+            context?.let {
+                ArrayAdapter.createFromResource(
+                    it,
+                    R.array.poblacions,
+                    android.R.layout.simple_spinner_item
+                ).also { adapter ->
+                    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
 
-                    //Inicialitzar spinner
-                    spinner = binding.spnPoblacio
+                    //Obtenir la poblacio preestablerta per l'usuari
+                    val posicioSpinner = adapter.getPosition(usuari.poblacio)
 
-                    //Crear l'adapter per el spinner
-                    context?.let {
-                        ArrayAdapter.createFromResource(
-                            it,
-                            R.array.poblacions,
-                            android.R.layout.simple_spinner_item
-                        ).also { adapter ->
-                            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                    //Assignar l'adapter al spinner
+                    spinner.adapter = adapter
 
-                            //Obtenir la poblacio preestablerta per l'usuari
-                            val posicioSpinner = adapter.getPosition(usuari[0].poblacio)
-
-                            //Assignar l'adapter al spinner
-                            spinner.adapter = adapter
-
-                            //Assignar la posició de la població preestagblerta al spinner
-                            spinner.setSelection(posicioSpinner)
-                        }
-                    }
-
-                    //Permet seleccionar un camp del spinner
-                    spinner.onItemSelectedListener = this
-
-                    //Extreu la id del document
-                    val usuariId = doc.id
-
-                    binding.bttnActualitzar.setOnClickListener {
-
-                        //Dins aquesta funció es truca a modificarDadesBBDD i a modificar contrasenya
-                        alertaModificarDades(usuariId)
-                    }
-
-                    if (usuari[0].admin){
-                        binding.bttnBaixaUsuari.visibility = View.INVISIBLE
-                        binding.bttnEsborrarUsuaris.visibility = View.VISIBLE
-                    }
-
-                    binding.bttnBaixaUsuari.setOnClickListener {
-                        alertaBaixaUsuari(usuariId)
-                    }
-
-                    binding.bttnEsborrarUsuaris.setOnClickListener{
-                        findNavController().navigate(R.id.action_modificarUsuari_to_esborrarUsuaris)
-
-                    }
+                    //Assignar la posició de la població preestagblerta al spinner
+                    spinner.setSelection(posicioSpinner)
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+
+            //Permet seleccionar un camp del spinner
+            spinner.onItemSelectedListener = this
+
+            binding.bttnActualitzar.setOnClickListener {
+
+                //Dins aquesta funció es truca a modificarDadesBBDD i a modificar contrasenya
+                alertaModificarDades("123")
             }
+
+            if (usuari.admin) {
+                binding.bttnBaixaUsuari.visibility = View.INVISIBLE
+                binding.bttnEsborrarUsuaris.visibility = View.VISIBLE
+            }
+
+            binding.bttnBaixaUsuari.setOnClickListener {
+                alertaBaixaUsuari("123")
+            }
+
+            binding.bttnEsborrarUsuaris.setOnClickListener {
+                findNavController().navigate(R.id.action_modificarUsuari_to_esborrarUsuaris)
+
+            }
+        })
     }
+
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun modificarDades(usuariId: String) {
@@ -161,17 +150,6 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
             null
         }.addOnSuccessListener {
             Log.d("TAG", "Transaction success!")
-            /*view?.let {
-                val snackbar = Snackbar.make(it, R.string.dadesCorrectes, Snackbar.LENGTH_LONG).apply {
-                    val layoutParams = ActionBar.LayoutParams(this.view.layoutParams)
-                    layoutParams.gravity = Gravity.BOTTOM
-                    view.setBackgroundColor(Color.parseColor("#FFFFFF"))
-                    view.layoutParams = layoutParams
-                }
-                snackbar.setTextColor(Color.parseColor("#000000"))
-                snackbar.show()
-            }
-             */
 
         }.addOnFailureListener { e ->
             Log.w("TAG2", "Transaction failure.", e)
@@ -291,6 +269,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
 
                                     //Truca a la funció modificar dades
                                     modificarDades(usuariId)
+
                                     //Actualitza la contrasenya de l'usuari
                                     modificarContrasenya()
                                     view.dismiss()

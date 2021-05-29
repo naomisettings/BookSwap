@@ -43,6 +43,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
     //id del llibre que es vol esborrar (s'extreu del adapter)
     private var llibreEsborrarId = ""
+
     //Boolean per saber si s'ha relitzat un filtre
     private var filtrat = false
 
@@ -86,19 +87,16 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
         viewModel.totsLlibresVM().observe(requireActivity(), { llibresRV ->
 
             //Truca a la consulta del view model per extreure les dades del usuari loginat
-            viewModel.usuari().observe(requireActivity(), { usuari ->
+            viewModel.usuariLoginat().observe(requireActivity(), { usuari ->
 
-                //Esborra els llibres del usuari loginat de la llista llibresRV extreta de la consulta
-                //dels llibres
-                val llibresUsuariIterator = llibresRV.iterator()
-                while (llibresUsuariIterator.hasNext()) {
-                    val llibresNext = llibresUsuariIterator.next()
-
-                    //Esborra els llibres del llistat que contenen el mail de l'usuari o que no estan disponibles
-                    if (llibresNext.mail.contains(usuari.mail) || llibresNext.estat.contains("No disponible")) {
-                        llibresUsuariIterator.remove()
+                //Esborra els llibres amb el mateix mail que el del usuari loginat
+                val llibresIter = llibresRV.iterator()
+                while (llibresIter.hasNext()) {
+                    if (llibresIter.next().mail == usuari.mail) {
+                        llibresIter.remove()
                     }
                 }
+
                 //Adapter del llistat dels llibres
                 //En el cas que de premer un llibre s'obra el fragment veure llibre
                 adapter = Adapter(

@@ -146,7 +146,7 @@ class MeusLlibres : Fragment() {
     private fun veureLlibres(rvLlibres: RecyclerView) {
         viewModel.meusLlibresVM().observe(requireActivity(), { llibresRV ->
 
-            viewModel.usuari().observe(requireActivity(), { usuari ->
+            viewModel.usuariLoginat().observe(requireActivity(), { usuari ->
 
                     llibresRV.forEach {
                         it.poblacio_login = usuari.poblacio

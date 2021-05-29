@@ -1,6 +1,5 @@
 package cat.copernic.bookswap.login
 
-import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,9 +11,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentLoginBinding
-import cat.copernic.bookswap.utils.UsuariDC
+import cat.copernic.bookswap.viewmodel.ViewModel
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -27,6 +27,8 @@ private const val AUTH_REQUEST_CODE = 2002
 class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     lateinit var binding: FragmentLoginBinding
+
+    private val viewModel: ViewModel by viewModels()
 
     //Telèfon i població extrets de l'usuari loginat
     private var telefon = ""
@@ -49,9 +51,10 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val navBar: BottomNavigationView =
             requireActivity().findViewById(R.id.nav_view)
 
-        //Visibilitat del menú inferiro
+        //Amagar menú inferior
         navBar.visibility = View.GONE
 
+        //Funció pel registre o el login
         login()
 
         //Fer editTextInvisibles
@@ -60,7 +63,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
         //Inicialitzar spinner
         spinner = binding.spnPoblacio
 
-        //Crear l'adapter per el spinner
+        //Mostra el spinner de les poblacions
         context?.let {
             ArrayAdapter.createFromResource(
                 it,
@@ -75,6 +78,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
         //Permet seleccionar un camp del spinner
         spinner.onItemSelectedListener = this
 
+        //Botó per guardar dades
         botoGuardarDades()
 
         return binding.root
@@ -87,7 +91,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
             AuthUI.IdpConfig.EmailBuilder().build(),
             AuthUI.IdpConfig.GoogleBuilder().build(),
         )
-        //Obra l'activity del registre i login
+        //Obra l'activity for result del registre i login
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder()
                 .setAvailableProviders(proveedors)
@@ -169,7 +173,7 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             //El telèfon i la població s'extreu dels edit text declarats com a variables
             //a la classe
-            val usuaris = hashMapOf(
+            val usuari = hashMapOf(
                 "mail" to mail,
                 "nom" to nom,
                 "telefon" to telefon,
@@ -180,58 +184,41 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 "expulsat" to false
             )
 
-            //Insert
-            db.collection("usuaris").add(usuaris)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(
-                        ContentValues.TAG,
-                        "DocumentSnapshot added with ID: ${documentReference.id}"
-                    )
-
-                }.addOnFailureListener { e ->
-                    Log.w(ContentValues.TAG, "Error adding document", e)
-                }
+            viewModel.insertarUsuari(usuari).observe(requireActivity(), { insertatOk ->
+                Log.i("Usuari Insertat", insertatOk.toString())
+            })
         }
     }
 
     //Segons si l'uauari ja ha introduït el telèfon i la població, mostrarà un missatge de
-//benvinguda o els editText per introduir aquestes dades.
+    //benvinguda o els editText per introduir aquestes dades.
     private fun visibilitatNavigationBotton() {
 
-        //Saber quin usuari està loginat
-        val user = FirebaseAuth.getInstance().currentUser
-        user?.let {
-            // Obté adreça electrònica del usuari
-            val mail = user.email
+        //Truca a la consulta del view model per extreure les dades del usuari loginat
+        viewModel.usuariLoginat().observe(requireActivity(), { usuari ->
 
-            db.collection("usuaris").whereEqualTo("mail", mail).get()
-                .addOnSuccessListener { document ->
+            //Comprova si el document està buit o hi ha dades
+            if (usuari != null) {
+                //L'adiministrador ha d'haber expulsat l'usuari al fragment EsborrarUsuaris
+                if (usuari.expulsat) {
+                    edTextVisibles()
+                    //Fa invisible el botó guardar perque l'usuari no pugui entrar a l'aplicació
+                    binding.bttnGuardar.visibility = View.INVISIBLE
+                    alertaExpulsat()
 
-                    //Comprova si el document està buit o hi ha dades
-                    if (document.isEmpty) {
+                } else {
+                    //Fa el navBar visible
+                    edTextInvisibles()
+                    val navBar: BottomNavigationView =
+                        requireActivity().findViewById(R.id.nav_view)
 
-                        //Fa els editTextVisibles (estaven invisibles)
-                        edTextVisibles()
-
-
-                    } else {
-                        val usuarisDC = document.toObjects(UsuariDC::class.java)
-                        if (usuarisDC[0].expulsat) {
-                            edTextVisibles()
-                            binding.bttnGuardar.visibility = View.INVISIBLE
-                            alertaExpulsat()
-
-                        }else {
-                            //Fa el navBar visible
-                            edTextInvisibles()
-                            val navBar: BottomNavigationView =
-                                requireActivity().findViewById(R.id.nav_view)
-
-                            navBar.visibility = View.VISIBLE
-                        }
-                    }
+                    navBar.visibility = View.VISIBLE
                 }
-        }
+            }else{
+                edTextVisibles()
+                binding.bttnGuardar.visibility = View.VISIBLE
+            }
+        })
     }
 
     private fun edTextInvisibles() {

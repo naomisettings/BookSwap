@@ -82,7 +82,7 @@ class VeureLlibre : Fragment() {
     private fun contactarTelefon() {
         val mail = args.mail
         //enviem a la consulta mitjançant el viewModel el mail de l'usuari
-        viewModel.usuariPublicat(mail).observe(requireActivity(), { usuari ->
+        viewModel.usuariLlibrePublicat(mail).observe(requireActivity(), { usuari ->
 
             try {
                 //assignem el telefon de l'usuari que ha publicat el llibre
@@ -111,7 +111,7 @@ class VeureLlibre : Fragment() {
     private fun contactarWhatsApp() {
         val mail = args.mail
         //enviem a la consulta mitjançant el viewModel el mail de l'usuari
-        viewModel.usuariPublicat(mail).observe(requireActivity(), { usuari ->
+        viewModel.usuariLlibrePublicat(mail).observe(requireActivity(), { usuari ->
                 try {
                     //assignem el telefon de l'usuari que ha publicat el llibre
                     val telefonUsuari = "+34" + usuari.telefon
@@ -202,7 +202,7 @@ class VeureLlibre : Fragment() {
         val mail = args.mail
         Log.d("valoraciousuari", args.mail)
         //enviem a la consulta mitjançant el viewModel el mail de l'usuari
-        viewModel.usuariPublicat(mail).observe(requireActivity(), { usuari ->
+        viewModel.usuariLlibrePublicat(mail).observe(requireActivity(), { usuari ->
                 val valoracioUsuari = usuari.valoracio
                 //assignem el valor de la puntuacio que te l'usuari 
                 binding.ratingBarPuntuacio.rating = valoracioUsuari.toFloat()

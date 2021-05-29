@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import cat.copernic.bookswap.utils.Llibre
 import cat.copernic.bookswap.utils.Usuari
-import cat.copernic.bookswap.utils.UsuariDC
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -16,13 +15,13 @@ object Consultes {
 
     private val user = Firebase.auth.currentUser
 
-    //consulta per extreure tot els llibres
+    //Consulta per extreure tot els llibres excepte els que no estan dispoinble
     fun totsLlibres(): LiveData<MutableList<Llibre>> {
 
         val data = MutableLiveData<MutableList<Llibre>>()
 
         FirebaseFirestore.getInstance()
-            .collection("llibres")
+            .collection("llibres").whereEqualTo("estat", "Disponible")
             .get().addOnSuccessListener {
 
                 val llibresDC = it.toObjects(Llibre::class.java)
@@ -53,9 +52,9 @@ object Consultes {
     }
 
     //consulta per extreure mail de l'usuari identificat
-    fun usuariMail(): LiveData<Usuari> {
+    fun usuariLoginat(): MutableLiveData<Usuari?> {
 
-        val usuari = MutableLiveData<Usuari>()
+        val usuari = MutableLiveData<Usuari?>()
 
         FirebaseFirestore.getInstance()
             .collection("usuaris").whereEqualTo("mail", user?.email)
@@ -63,9 +62,12 @@ object Consultes {
             .addOnSuccessListener {
 
                 val usuariDC = it.toObjects(Usuari::class.java)
-                usuari.value = usuariDC[0]
 
-
+                if (usuariDC.isNullOrEmpty()) {
+                    usuari.value = null
+                } else {
+                    usuari.value = usuariDC[0]
+                }
             }.addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents: ", exception)
 
@@ -74,11 +76,11 @@ object Consultes {
     }
 
     //consulta per extreure les dades de l'usuari que ha publicat el llibre
-    fun llibrePublicat(mailUsuari: String): LiveData<Usuari> {
-        var mail = mailUsuari
+    fun usuariLlibrePublicat(mailUsuari: String): LiveData<Usuari> {
+
         val usuari = MutableLiveData<Usuari>()
         FirebaseFirestore.getInstance()
-            .collection("usuaris").whereEqualTo("mail", mail)
+            .collection("usuaris").whereEqualTo("mail", mailUsuari)
             .get()
             .addOnSuccessListener {
                 val usuariDC = it.toObjects(Usuari::class.java)
@@ -87,5 +89,23 @@ object Consultes {
                 Log.w(ContentValues.TAG, "Error getting documents: ", exception)
             }
         return usuari
+    }
+
+    //consulta per extreure tot els usuaris excepte el loginat
+    fun totsUsuaris(): LiveData<MutableList<Usuari>> {
+
+        val usuaris = MutableLiveData<MutableList<Usuari>>()
+
+        FirebaseFirestore.getInstance()
+            .collection("usuaris").whereNotEqualTo("mail", user?.email)
+            .get().addOnSuccessListener {
+
+                val usuariDC = it.toObjects(Usuari::class.java)
+                usuaris.value = usuariDC
+
+            }.addOnFailureListener { exception ->
+                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+            }
+        return usuaris
     }
 }

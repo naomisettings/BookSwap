@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.bookswap.databinding.ItemEsborrarUsuarisBinding
 import cat.copernic.bookswap.databinding.FragmentEsborrarUsuarisBinding
+import cat.copernic.bookswap.utils.Usuari
 import java.util.ArrayList
 
 
@@ -46,8 +47,8 @@ class AdapterUsuaris(var mUsuaris: MutableList<Usuari>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(mUsuaris[position]) {
-                binding.nomUsuari.text = this.nomUsuari
-                binding.mailUsuari.text = this.mailUsuari
+                binding.nomUsuari.text = this.nom
+                binding.mailUsuari.text = this.mail
             }
 
             this.binding.ckBoxEsborrar.setOnClickListener {
