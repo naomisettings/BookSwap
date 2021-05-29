@@ -2,6 +2,8 @@ package cat.copernic.bookswap.llistatllibres
 
 import android.annotation.SuppressLint
 import android.app.ActionBar
+import android.app.Activity
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +11,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -86,8 +89,8 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
                 val llibresUsuariIterator = llibresRV.iterator()
                 while (llibresUsuariIterator.hasNext()) {
-
-                    if (llibresUsuariIterator.next().mail.contains(usuari.mail)) {
+                    val llibresNext = llibresUsuariIterator.next()
+                    if (llibresNext.mail.contains(usuari.mail) || llibresNext.estat.contains("No disponible")) {
                         llibresUsuariIterator.remove()
                     }
                 }
@@ -125,6 +128,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                 //Botó per filtrar
                 binding.bttnBuscar.setOnClickListener {
                     filtrarPerCamp(usuari.admin, llibresRV)
+                    hideKeyboard()
                 }
 
             })
@@ -356,7 +360,6 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
 
     private fun carregarLlibresRyclrView(llib: ArrayList<Llibre>) {
-        Log.d("prova", llib[0].poblacio_login)
 
         //En el cas que de premer un llibre s'obra el fragment veure llibre
         adapter = Adapter(
@@ -390,7 +393,6 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                 while (llibresIterator.hasNext()) {
                     if (llibresIterator.next().id == llibreEsborrarId) {
                         llibresIterator.remove()
-                        Log.d("prova", llibreEsborrarId)
                     }
                 }
                 val llibresFiltrarIterator = llibresFiltratsBenEscrits.iterator()
@@ -398,6 +400,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
                     if (llibresFiltrarIterator.next().id == llibreEsborrarId) {
                         llibresFiltrarIterator.remove()
                     }
+
                 }
                 Log.d("prova", filtrat.toString())
 
@@ -414,38 +417,26 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun inicalitzarPoblacio() {
 
-        //Consulta per extreure el les dades del usuari segons el mail
-        viewModel.usuari().observe(requireActivity(), { usuari ->
+        //Inicialitzar spinner
+        spinner = binding.spnPoblacio
 
-            //Inicialitzar spinner
-            spinner = binding.spnPoblacio
+        //Crear l'adapter per el spinner
+        context?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.poblacionsFiltre,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
 
-            //Crear l'adapter per el spinner
-            context?.let {
-                ArrayAdapter.createFromResource(
-                    it,
-                    R.array.poblacionsFiltre,
-                    android.R.layout.simple_spinner_item
-                ).also { adapter ->
-                    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                //Assignar l'adapter al spinner
+                spinner.adapter = adapter
 
-                    //Obtenir la poblacio preestablerta per l'usuari
-                    val posicioSpinner = adapter.getPosition(usuari.poblacio)
-
-
-                    //Assignar l'adapter al spinner
-                    spinner.adapter = adapter
-
-                    //Assignar la posició de la població preestagblerta al spinner
-                    spinner.setSelection(posicioSpinner)
-                }
             }
+        }
 
-            //Permet seleccionar un camp del spinner
-            spinner.onItemSelectedListener = this
-
-
-        })
+        //Permet seleccionar un camp del spinner
+        spinner.onItemSelectedListener = this
     }
 
     private fun inicailitzarCurs() {
@@ -513,4 +504,18 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
+
+    //Amagar teclat
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    //Amagar teclat
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+
 }
