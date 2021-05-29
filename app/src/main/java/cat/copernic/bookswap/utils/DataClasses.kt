@@ -10,6 +10,8 @@ data class UsuariDC(
     var admin: Boolean = false,
     var expulsat: Boolean = false
 )
+
+
 data class Llibres(
     var titol: String ="",
     var curs: String ="",
@@ -21,6 +23,7 @@ data class Llibres(
     var mail: String = "",
     var poblacio: String = ""
 )
+
 
 data class poblacio(
     val poblacionsList: ArrayList<String> = arrayListOf(
