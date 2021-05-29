@@ -7,6 +7,7 @@ import cat.copernic.bookswap.utils.Llibre
 import cat.copernic.bookswap.utils.Usuari
 
 
+//Conté les consultes, updates i deletes fetes en ViewModel
 class ViewModel : ViewModel() {
 
     fun totsLlibresVM(): LiveData<MutableList<Llibre>> {
@@ -42,7 +43,6 @@ class ViewModel : ViewModel() {
         val esborrat = MutableLiveData<Boolean>()
         Deletes.esborrarLlibre(idLlibre).observeForever{ fet ->
             esborrat.value = fet
-
         }
         return esborrat
 
