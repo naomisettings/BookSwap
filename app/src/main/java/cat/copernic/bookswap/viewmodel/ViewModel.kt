@@ -37,7 +37,7 @@ class ViewModel : ViewModel() {
         return usuariMail
     }
 
-    fun usuariLlibrePublicat(mailUsuari: String): MutableLiveData<Usuari> {
+    fun usuariLlibrePublicat(mailUsuari: String): LiveData<Usuari> {
         val mailPublicat = MutableLiveData<Usuari>()
         Consultes.usuariLlibrePublicat(mailUsuari).observeForever{ usuari ->
             mailPublicat.value = usuari

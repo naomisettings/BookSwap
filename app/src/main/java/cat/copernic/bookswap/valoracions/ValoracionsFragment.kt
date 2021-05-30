@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentValoracionsBinding
 import cat.copernic.bookswap.utils.UsuariDC
+import cat.copernic.bookswap.viewmodel.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -71,6 +73,7 @@ class ValoracionsFragment : Fragment() {
                     args.mail
                 )
             )
+
         }
         //cancelem les valoracions enviant les dades del llibre al fragment VeureLLibre
         binding.btnCancelar.setOnClickListener {
@@ -142,8 +145,8 @@ class ValoracionsFragment : Fragment() {
                     } else {
                         //si l'usuari ja tenia valoracions fa la mitjana
                         //entre la nova i les existents i l'actulitzem
-                        val valoracioMitjaConsulta = it.get("valoracio")
-                        val mitjaConsulta: Double = valoracioMitjaConsulta as Double
+                        val valoracioMitjaConsulta = usuariConsulta[0].valoracio
+                        val mitjaConsulta: Double = valoracioMitjaConsulta
                         val mitjana: Double = (mitjaConsulta + valoracioTotal) / 2
 
                         Log.i("valoracioMitja", valoracioMitjaConsulta.toString())

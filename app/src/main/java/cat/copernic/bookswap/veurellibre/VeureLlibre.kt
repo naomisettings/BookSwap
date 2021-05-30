@@ -200,14 +200,12 @@ class VeureLlibre : Fragment() {
     //funcio per veure la valoració de l'usuari
     private fun consultaPuntuacioUsuariLlibre() {
         val mail = args.mail
-        Log.d("valoraciousuari", args.mail)
         //enviem a la consulta mitjançant el viewModel el mail de l'usuari
-        viewModel.usuariLlibrePublicat(mail).observe(requireActivity(), { usuari ->
-                val valoracioUsuari = usuari.valoracio
-                //assignem el valor de la puntuacio que te l'usuari 
-                binding.ratingBarPuntuacio.rating = valoracioUsuari.toFloat()
-                Log.i("valoraciousuari", valoracioUsuari.toString())
-            })
+        viewModel.usuariLlibrePublicat(mail).observeForever { usuari ->
+            val valoracioUsuari = usuari.valoracio
+            //assignem el valor de la puntuacio que te l'usuari
+            binding.ratingBarPuntuacio.rating = valoracioUsuari.toFloat() - 1
+        }
     }
 
 }
