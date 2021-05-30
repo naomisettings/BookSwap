@@ -77,4 +77,5 @@
     <string name="veure_llibre">Veure Llibre</string>
     <string name="valoracions">Valoracions</string>
     <string name="introdueix_llibre">Introdueix llibre</string>
+    <string name="llibreModificat" translatable="false">Llibre Modificat!</string>
 </resources>

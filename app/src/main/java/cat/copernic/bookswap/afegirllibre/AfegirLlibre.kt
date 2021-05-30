@@ -2,6 +2,7 @@ package cat.copernic.bookswap.afegirllibre
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -11,14 +12,17 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -93,6 +97,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                     spinnerCurs.adapter = adapter
                 }
         }
+
         //inicialitzem spinner assignatura
         spinnerAssignatura = binding.spnAfegirAssignatura
         //carreguem els possibles estats a l'spinner
@@ -101,9 +106,10 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                 .also { adapter ->
                     adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
                     spinnerAssignatura.adapter = adapter
+
                 }
         }
-
+//        spinnerCurs.setOnTouchListener(this)
 
         //activa la camara per fer foto del llibre
         binding.imageViewFoto.setOnClickListener {
@@ -157,6 +163,8 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                 //Permet seleccionar un camp del spinner
                 spinnerCurs.onItemSelectedListener = this
                 spinnerAssignatura.onItemSelectedListener = this
+                spinnerCurs.onItemClickListener
+
 
                 //obtenim la posicio de l'item selecionat de cada spinner
                 //val positionSpnEstat = spinnerEstat.selectedItemPosition
@@ -217,7 +225,14 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
         curs = spinnerCurs.selectedItem.toString()
         assignatura = spinnerAssignatura.selectedItem.toString()
         editorial = binding.editTextEditorial.text.toString()
+        val teclat: View? =
+            requireActivity().currentFocus //amagem el teclat utilitzant la classe InputMethodManager cridant al metode hideSorftInputFromWindow
+        teclat?.clearFocus()
+        if (teclat != null) {
+            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view?.getWindowToken(), 0)
 
+        }
 
         //accedeim a la col.lecció usuaris per recollir la poblacio de l'usuari identificat
          db.collection("usuaris").whereEqualTo("mail",mail).get()
@@ -301,9 +316,27 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
+
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
+    //Amagar teclat
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    //Amagar teclat
+    private fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
 }
+
+
+
+
+//}

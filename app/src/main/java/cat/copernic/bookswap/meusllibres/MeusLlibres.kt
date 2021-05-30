@@ -163,6 +163,7 @@ class MeusLlibres : Fragment() {
                                     estat,
                                     foto,
                                     id,
+                                    mail,
                                 )
                             )
                         })

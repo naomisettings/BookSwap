@@ -50,9 +50,7 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
     var imgfoto: ImageView? = null
 
     //variable de la imatge a pujar al storage amb data i hora local
-    private var fileName: String = SimpleDateFormat(
-        FILENAME_FORMAT, Locale.US
-    ).format(System.currentTimeMillis()) + ".jpg"
+    private var fileName: String = ""
     //instancia que referencia al storage
     var refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
 
@@ -75,15 +73,20 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
         //funcio per carregar les dades del llibre seleccionat
         mostrarLlibre()
 
-        binding.btnActualitzarLlibre.setOnClickListener {
+        binding.btnActualitzarLlibre.setOnClickListener {view: View ->
             if(imgfoto != null){
-
+                fileName = SimpleDateFormat(
+                    FILENAME_FORMAT, Locale.US
+                ).format(System.currentTimeMillis()) + ".jpg"
                 //guardem la foto a la variable bitmap
                 val bitmap = (imgfoto?.drawable as BitmapDrawable).bitmap
                 val baos = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val data = baos.toByteArray()
+                //instancia que referencia al storage
+                refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
                 //pugem la foto al Storage
+                Log.i("foto", fileName)
                 val uploadTask = refStorage.putBytes(data)
                 uploadTask.addOnFailureListener {
                     Snackbar.make(requireView(), "Error al guardar la foto", Snackbar.LENGTH_LONG)
@@ -92,13 +95,21 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
                 }.addOnSuccessListener { taskSnapshot ->
 
                 }
+//cridem a la funcio per actualitzar el llibre passant com argument el id del llibre
+                actualitzarLlibre(args.id)
 
             }
 
-            //cridem a la funcio per actualitzar el llibre passant com argument el id del llibre
-            actualitzarLlibre(args.id)
+            //snackbar que informa que s'ha esborrat l'article i permet desfer l'accio
+           /*Snackbar.make(
+                binding.root,
+                R.string.llibreModificat,
+                Snackbar.LENGTH_LONG
+            ).show()*/
 
-            view?.findNavController()?.navigate(R.id.action_modificarLlibre_to_meusLlibres)
+            //view.findNavController().navigate(R.id.action_modificarLlibre_to_meusLlibres)
+
+
         }
 
         //activa la camara per fer foto del llibre
@@ -130,13 +141,11 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
 
         //agafem el llibre de la coleccio amb el seu ID
         Log.i("idLlibre", idLlibre)
-        db.collection("llibres").addSnapshotListener { snapshot, error ->
-            //guardem els documents
-            val doc = snapshot?.documents
+        db.collection("llibres").whereEqualTo("id",idLlibre) .get().addOnSuccessListener { doc ->
+
             //iterem pels documents dels llibres
-            snapshot?.forEach {
-                val llibreConsulta = it.toObject(Llibres::class.java)
-                if (it.id == idLlibre) {
+            doc?.forEach {
+
                     //guardem el id del document del llibre seleccionat
                     val llibreId = it.id
                     //agafem el id del llibre
@@ -165,8 +174,13 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
                         )
                         transaction.update(sfDocRef, "curs", curs)
                         transaction.update(sfDocRef, "estat", estat)
-                        transaction.update(sfDocRef, "foto", fileName)
-                    null
+                        if(fileName != ""){
+                            Log.i("abans update filename", fileName)
+                            transaction.update(sfDocRef, "foto", fileName)
+                            Log.i("despres update filename", fileName)
+                        }
+
+
                     }.addOnSuccessListener {
                         Log.d("TAG", "Transaction success!")
                         view?.let {
@@ -180,7 +194,7 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
                         Log.w("TAG2", "Transaction failure.", e)
 
                     }
-                }
+                //}
             }
         }
 
