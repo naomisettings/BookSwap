@@ -216,7 +216,7 @@ class LlistatLlibres : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     //Funció per canviar els caracters especials per ASCII
-    private fun noCaractersEspecials(
+    fun noCaractersEspecials(
         valor: String
     ): String {
 
