@@ -18,6 +18,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -95,20 +96,11 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
                 }.addOnSuccessListener { taskSnapshot ->
 
                 }
-//cridem a la funcio per actualitzar el llibre passant com argument el id del llibre
-                actualitzarLlibre(args.id)
 
             }
-
-            //snackbar que informa que s'ha esborrat l'article i permet desfer l'accio
-           /*Snackbar.make(
-                binding.root,
-                R.string.llibreModificat,
-                Snackbar.LENGTH_LONG
-            ).show()*/
-
-            //view.findNavController().navigate(R.id.action_modificarLlibre_to_meusLlibres)
-
+            //cridem a la funcio per actualitzar el llibre passant com argument el id del llibre
+            //actualitzarLlibre(args.id)
+            alertaModificarLlibre(args.id)
 
         }
 
@@ -310,6 +302,27 @@ class ModificarLlibre : Fragment(),  AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
+    }
+    private fun alertaModificarLlibre(llibreId: String) {
+
+        val dialog = context?.let {
+            AlertDialog.Builder(it)
+                .setIcon(R.drawable.bookswaplogo)
+                .setTitle(args.titol)
+                .setMessage(getString(R.string.snacbar_modificar_llibre))
+                .setNegativeButton(R.string.cancelar) { view, _ ->
+                    view.cancel()
+
+                }
+                .setPositiveButton(R.string.acceptar) { view, _ ->
+                    //Truca a la funció baixaUsuari
+                    actualitzarLlibre(llibreId)
+                    view.dismiss()
+                }
+                .setCancelable(false)
+                .create()
+        }
+        dialog!!.show()
     }
 
 

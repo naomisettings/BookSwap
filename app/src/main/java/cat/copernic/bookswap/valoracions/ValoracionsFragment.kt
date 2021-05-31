@@ -61,7 +61,7 @@ class ValoracionsFragment : Fragment() {
         //guardem les valoracions enviant les dades del llibre al fragment VeureLLibre
         binding.btnOk.setOnClickListener {
             valoracions(tempsValor, estatValor, satisfaccioValor)
-            view?.findNavController()?.navigate(
+           /* view?.findNavController()?.navigate(
                 ValoracionsFragmentDirections.actionValoracionsFragmentToVeureLlibre(
                     args.titol,
                     args.assignatura,
@@ -72,7 +72,7 @@ class ValoracionsFragment : Fragment() {
                     args.id,
                     args.mail
                 )
-            )
+            )*/
 
         }
         //cancelem les valoracions enviant les dades del llibre al fragment VeureLLibre
@@ -89,6 +89,7 @@ class ValoracionsFragment : Fragment() {
                     args.mail
                 )
             )
+
         }
 
         return binding.root

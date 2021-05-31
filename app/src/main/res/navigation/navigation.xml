@@ -27,8 +27,7 @@
         tools:layout="@layout/fragment_afegir_llibre">
         <action
             android:id="@+id/action_afegirLlibre_to_meusLlibres"
-            app:destination="@id/meusLlibres"
-            />
+            app:destination="@id/meusLlibres" />
     </fragment>
     <fragment
         android:id="@+id/llistatLlibres"
@@ -122,7 +121,7 @@
         <action
             android:id="@+id/action_modificarUsuari_to_meusLlibres"
             app:destination="@id/meusLlibres"
-            app:popUpToInclusive="true" />
+            />
         <action
             android:id="@+id/action_modificarUsuari_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -137,7 +136,8 @@
         tools:layout="@layout/fragment_modificar_llibre">
         <action
             android:id="@+id/action_modificarLlibre_to_meusLlibres"
-            app:destination="@id/meusLlibres" />
+            app:destination="@id/meusLlibres"
+            />
         <argument
             android:name="titol"
             app:argType="string" />

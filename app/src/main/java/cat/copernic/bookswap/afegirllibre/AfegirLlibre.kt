@@ -172,7 +172,6 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                 val positionSpnAssignatura = spinnerAssignatura.selectedItemPosition
 
                 //assignem els valors dels spinner
-                //estat = spinnerEstat.selectedItem.toString()
                 curs = spinnerCurs.selectedItem.toString()
                 assignatura = spinnerAssignatura.selectedItem.toString()
                 //comprovem que s'ha seleccionat un valor als spinners
@@ -272,6 +271,12 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                             ContentValues.TAG,
                             "DocumentSnapshot added with ID: ${documentReference.id}"
                         )
+                        //snackbar que informa que s'ha esborrat l'article i permet desfer l'accio
+                        Snackbar.make(
+                             binding.root,
+                             getString(R.string.llibre_afegit),
+                             Snackbar.LENGTH_LONG
+                         ).show()
 
                     }.addOnFailureListener { e ->
                         Log.w(ContentValues.TAG, "Error adding document", e)

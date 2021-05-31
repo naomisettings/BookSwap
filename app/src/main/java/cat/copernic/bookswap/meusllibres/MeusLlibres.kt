@@ -86,15 +86,9 @@ class MeusLlibres : Fragment() {
                 Log.i("position", adapterMeus.mLlibres[viewHolder.bindingAdapterPosition].id)
                 esborrarLlibre(llibreEsborrarId)
 
-                //snackbar que informa que s'ha esborrat l'article
-                Snackbar.make(binding.root, R.string.esborrat, Snackbar.LENGTH_LONG).show()
             }
 
         }).attachToRecyclerView(binding.meusLlibresList)
-
-
-
-
 
         return binding.root
     }

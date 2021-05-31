@@ -204,7 +204,7 @@ class VeureLlibre : Fragment() {
         viewModel.usuariLlibrePublicat(mail).observeForever { usuari ->
             val valoracioUsuari = usuari.valoracio
             //assignem el valor de la puntuacio que te l'usuari
-            binding.ratingBarPuntuacio.rating = valoracioUsuari.toFloat() - 1
+            binding.ratingBarPuntuacio.rating = valoracioUsuari.toFloat()
         }
     }
 

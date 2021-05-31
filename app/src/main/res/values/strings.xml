@@ -78,4 +78,6 @@
     <string name="valoracions">Valoracions</string>
     <string name="introdueix_llibre">Introdueix llibre</string>
     <string name="llibreModificat" translatable="false">Llibre Modificat!</string>
+    <string name="llibre_afegit" translatable="false">LLibre afegit!</string>
+    <string name="snacbar_modificar_llibre" translatable="false">Vols modificar aquest llibre?</string>
 </resources>
