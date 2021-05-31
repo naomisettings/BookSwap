@@ -278,7 +278,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
                                 .setIcon(R.drawable.bookswaplogo)
                                 .setTitle(user!!.email)
                                 .setMessage(R.string.alert_modificar_dades)
-                                .setNegativeButton(R.string.acceptar) { view, _ ->
+                                .setPositiveButton(R.string.acceptar) { view, _ ->
 
                                     //Truca a la funció modificar dades
                                     modificarDades(usuariId)
@@ -287,7 +287,7 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
                                     modificarContrasenya()
                                     view.dismiss()
                                 }
-                                .setPositiveButton(R.string.cancelar) { view, _ ->
+                                .setNegativeButton(R.string.cancelar) { view, _ ->
                                     view.cancel()
                                 }
                                 .setCancelable(false)
@@ -333,13 +333,13 @@ class ModificarUsuari : Fragment(), AdapterView.OnItemSelectedListener {
                 .setIcon(R.drawable.bookswaplogo)
                 .setTitle(user!!.email)
                 .setMessage(R.string.alert_baixa_dades)
-                .setNegativeButton(R.string.acceptar) { view, _ ->
+                .setPositiveButton(R.string.acceptar) { view, _ ->
 
                     //Truca a la funció baixaUsuari
                     baixaUsuari(usuariId)
                     view.dismiss()
                 }
-                .setPositiveButton(R.string.cancelar) { view, _ ->
+                .setNegativeButton(R.string.cancelar) { view, _ ->
                     view.cancel()
                 }
                 .setCancelable(false)
