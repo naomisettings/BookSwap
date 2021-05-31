@@ -182,7 +182,7 @@ class AfegirLlibre : Fragment(), AdapterView.OnItemSelectedListener {
                 }else {
                     //cridem a la funcio afegirLlibre per guardar el nou llibre
                     afegirLlibre()
-                    view.findNavController().navigate(R.id.action_afegirLlibre_to_meusLlibres)
+                    //view.findNavController().navigate(R.id.action_afegirLlibre_to_meusLlibres)
                 }
 
 
