@@ -1,5 +1,6 @@
 package cat.copernic.bookswap.login
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,12 +15,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import cat.copernic.bookswap.R
 import cat.copernic.bookswap.databinding.FragmentLoginBinding
+import cat.copernic.bookswap.utils.Usuari
+import cat.copernic.bookswap.viewmodel.Consultes
 import cat.copernic.bookswap.viewmodel.ViewModel
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 //Codi per l'activity auxiliar del login
 private const val AUTH_REQUEST_CODE = 2002
@@ -194,13 +199,17 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
     //benvinguda o els editText per introduir aquestes dades.
     private fun visibilitatNavigationBotton() {
 
-        //Truca a la consulta del view model per extreure les dades del usuari loginat
-        viewModel.usuariLoginat().observe(requireActivity(), { usuari ->
+        val user = Firebase.auth.currentUser
+        FirebaseFirestore.getInstance()
+            .collection("usuaris").whereEqualTo("mail", user?.email)
+            .get()
+            .addOnSuccessListener {
 
+                val usuariDC = it.toObjects(Usuari::class.java)
             //Comprova si el document està buit o hi ha dades
-            if (usuari != null) {
+            if (!usuariDC.isEmpty()) {
                 //L'adiministrador ha d'haber expulsat l'usuari al fragment EsborrarUsuaris
-                if (usuari.expulsat) {
+                if (usuariDC[0].expulsat) {
                     edTextVisibles()
                     //Fa invisible el botó guardar perque l'usuari no pugui entrar a l'aplicació
                     binding.bttnGuardar.visibility = View.INVISIBLE
@@ -218,7 +227,10 @@ class LoginFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 edTextVisibles()
                 binding.bttnGuardar.visibility = View.VISIBLE
             }
-        })
+        }.addOnFailureListener { exception ->
+                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+
+            }
     }
 
     private fun edTextInvisibles() {
