@@ -21,7 +21,7 @@
 
             <TextView
                 android:id="@+id/titol"
-                android:layout_width="213dp"
+                android:layout_width="354dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
@@ -104,12 +104,15 @@
                 android:id="@+id/imgCardView"
                 android:layout_width="96dp"
                 android:layout_height="148dp"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="25dp"
                 android:background="@color/white"
                 android:contentDescription="@string/imgCardView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/titol"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/campEditorial"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.6" />
 
             <TextView
                 android:id="@+id/campEstat"
