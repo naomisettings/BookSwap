@@ -95,16 +95,19 @@
                 android:layout_marginStart="75dp"
                 android:layout_marginEnd="20dp"
                 android:textSize="18sp"
+                style ="@style/CampsText"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtCurs"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txtCurs" />
 
             <TextView
                 android:id="@+id/editEditorial"
+                style="=@style/CampsText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="47dp"
                 android:layout_marginEnd="20dp"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtEditorial"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -171,6 +174,7 @@
 
             <TextView
                 android:id="@+id/edAssignatura"
+                style="@style/CampsText"
                 android:layout_width="255dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"

@@ -22,6 +22,7 @@
         <item name="android:background">@drawable/ed_style_backround</item>
         <item name="android:ems">10</item>
         <item name="android:inputType">textPersonName</item>
+
     </style>
 
     <style name="buttons">
